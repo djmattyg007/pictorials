@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Gallery - File Browser</title>
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "bootstrap.min.css"); ?>" media="all">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" media="all">
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "styles.css"); ?>" media="all">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<div class="container">
+<h1>Simple Gallery</h1>
+<h2>File Browser</h2>
+
+<div class="row">
+
+<div id="paths" class="col-xs-12 col-md-6">
+<div class="form-group">
+    <label for="paths-select">Paths</label>
+    <select id="paths-select" class="form-control">
+    <option value=""></option>
+    <?php foreach ($paths as $pathID => $path): ?>
+    <option value="<?php echo $pathID; ?>"><?php echo $path["name"]; ?></option>
+    <?php endforeach; ?>
+    </select>
+</div>
+<button type="button" id="btn-show" class="btn btn-primary">Show</button>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div id="loader" style="display:none;">
+        <img src="<?php echo assetUrl("img", "loading.gif"); ?>" alt="Loading" class="loader-img" data-loader-indicator>
+        <div class="progress" data-loader-progress style="display:none;">
+            <div data-progress-bar class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">&nbsp;</div>
+        </div>
+    </div>
+</div>
+</div>
+<br>
+
+<div id="browser-container" class="table-responsive" style="display:none;">
+<h4 id="browser-curpath" data-browser-curpath></h4>
+<button type="button" id="btn-load" data-browser-load-btn class="btn btn-secondary">Load</button>
+
+<table id="browser" class="table table-striped table-hover">
+<thead>
+<tr>
+    <th style="width: 40px;">&nbsp;</th>
+    <th style="width: 35px;">&nbsp;</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Last Modified</th>
+    <th>&nbsp;</th>
+</tr>
+</thead>
+
+<tbody data-browser-directories></tbody>
+<tbody data-browser-files></tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="modal fade" id="files-modal" tabindex="-1" role="dialog" aria-labelledby="files-modal-heading">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="files-modal-heading">Files</h4>
+        </div>
+        <div class="modal-body">
+            <button type="button" id="btn-modal-download" data-modal-download-btn>Download</button>
+            <div id="files-display" data-modal-carousel></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="application/json" id="ajax-urls">
+{
+    "filebrowser": "<?php echo scriptUrl("filebrowser"); ?>",
+    "download": "<?php echo scriptUrl("loadimage"); ?>",
+    "downloadFile": "<?php echo scriptUrl("download"); ?>",
+    "sysload": "<?php echo scriptUrl("sysload"); ?>"
+}
+</script>
+
+<div style="display:none;">
+<script type="text/x-html-template" id="browser-directory-row-template">
+<tr class="dir-row">
+    <td colspan="2">&nbsp;</td>
+    <td><a href="#" class="dir" data-relpath="#{path}">#{name}</a></td>
+    <td colspan="3">&nbsp;</td>
+</tr>
+</script>
+
+<script type="text/x-html-template" id="browser-file-row-template">
+<tr class="file-row" data-relpath="#{relpath}">
+    <td><input type="checkbox" class="checkbox file-chk"></td>
+    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-src="https://placehold.it/20/#{randthumb}.png" alt="" class="file-thumb"></td>
+    <td>#{filename}</td>
+    <td>#{size}</td>
+    <td>#{mtime}</td>
+    <td><a href="#" class="file-download">Download</a></td>
+</tr>
+</script>
+
+<script type="text/x-html-template" id="carousel-file-template">
+<div>
+    <img src="#{src}" alt="#{relpath}" title="#{filename}" data-relpath="#{relpath}" class="img-responsive img-center">
+</div>
+</script>
+</div>
+
+<div style="display:none;">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery-ajax-native.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery.shiftcheckbox.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "jquery.unveil.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
+<script type="text/javascript" src="<?php echo assetUrl("js", "key-listener.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "template.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-loader.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "downloader.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "paths.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "browser.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-viewer.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-browser.js"); ?>"></script>
+</div>
+
+</body>
+</html>

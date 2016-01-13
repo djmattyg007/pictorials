@@ -1,0 +1,19 @@
+.img-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.file-thumb {
+    width: 25px;
+}
+
+#loader {
+    position: fixed; top: 0; right: 0;
+}
+#loader .loader-img {
+    margin-bottom: 5px;
+}
+
+.slick-dots .slick-active button {
+    background-color: #A6D1DF;
+}

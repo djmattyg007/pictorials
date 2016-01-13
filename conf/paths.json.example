@@ -1,0 +1,14 @@
+[
+    {
+        "name": "My Photos",
+        "path": "/home/myuser/photos/"
+    },
+    {
+        "name": "Photos in backup",
+        "path": "/data/backup/photos/"
+    },
+    {
+        "name": "Test Path",
+        "path": "/srv/test/pictures/"
+    }
+]
