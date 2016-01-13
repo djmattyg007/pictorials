@@ -10,6 +10,7 @@ function loadSGFile($filename, array $vars = array())
     }
     return require(BASE_PATH . $filename);
 }
+loadSGFile("main/app.php");
 loadSGFile("main/func.php");
 loadSGFile("vendor/autoload.php");
 
