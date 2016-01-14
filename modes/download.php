@@ -6,7 +6,7 @@ if (empty($_POST["filename"])) {
 if (strpos($_POST["filename"], "..") !== false) {
     sendError(400);
 }
-$paths = json_decode(loadSGFile("conf/paths.json"), true);
+$paths = json_decode(loadPicFile("conf/paths.json"), true);
 if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
     sendError(400);
 }

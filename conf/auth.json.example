@@ -1,10 +1,12 @@
 [
-    {
-        "username": "testusernamehere,
-        "password": "testpasswordhere"
-    },
-    {
-        "username": "2ndtestusernamehere",
-        "password": "2ndtestpasswordhere"
-    }
+    "users": [
+        {
+            "username": "testusernamehere",
+            "password": "testpasswordhere"
+        },
+        {
+            "username": "2ndtestusernamehere",
+            "password": "2ndtestpasswordhere"
+        }
+    ]
 ]

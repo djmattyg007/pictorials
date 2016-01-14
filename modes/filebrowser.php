@@ -1,9 +1,9 @@
 <?php
 
-$paths = json_decode(loadSGFile("conf/paths.json"), true);
+$paths = json_decode(loadPicFile("conf/paths.json"), true);
 
 if (empty($_POST)) {
-    loadSGFile("templates/filebrowser.phtml", array("paths" => $paths));
+    loadPicFile("templates/filebrowser.phtml", array("paths" => $paths));
     exit();
 }
 if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {

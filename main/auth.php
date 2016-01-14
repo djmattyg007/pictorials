@@ -1,7 +1,10 @@
 <?php
 
-$authConfig = json_decode(loadSGFile("conf/auth.json"), true);
+$authConfig = json_decode(loadPicFile("conf/auth.json"), true);
+$userConfig = $authConfig["users"];
 
-$vendorAuthConfig = array_combine(array_column($authConfig, "username"), array_column($authConfig, "password"));
+$vendorAuthConfig = array_combine(array_column($userConfig, "username"), array_column($userConfig, "password"));
 $basic = new \Uauth\Basic("Secured Area", $vendorAuthConfig);
 $basic->auth();
+
+define("USERNAME", $basic->getUser());
