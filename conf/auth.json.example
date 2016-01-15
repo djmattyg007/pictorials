@@ -1,4 +1,4 @@
-[
+{
     "users": [
         {
             "username": "testusernamehere",
@@ -9,4 +9,4 @@
             "password": "2ndtestpasswordhere"
         }
     ]
-]
+}
