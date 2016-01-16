@@ -1,14 +1,18 @@
 <?php
 
-function loadPicFile($filename, array $vars = array())
+/**
+ * @param string $includePicFilename
+ * @param array $extractVars
+ */
+function loadPicFile($includePicFilename, array $extractVars = array())
 {
-    if (!in_array(pathinfo($filename, PATHINFO_EXTENSION), ["php", "phtml"])) {
-        return file_get_contents(BASE_PATH . $filename);
+    if (!in_array(pathinfo($includePicFilename, PATHINFO_EXTENSION), ["php", "phtml"])) {
+        return file_get_contents(BASE_PATH . $includePicFilename);
     }
-    if (!empty($vars)) {
-        extract($vars);
+    if (!empty($extractVars)) {
+        extract($extractVars);
     }
-    return require(BASE_PATH . $filename);
+    return require(BASE_PATH . $includePicFilename);
 }
 loadPicFile("main/app.php");
 loadPicFile("main/func.php");
@@ -22,17 +26,11 @@ if (empty($_GET["mode"])) {
 }
 
 switch ($_GET["mode"]) {
-    case "filebrowser":
-        loadPicFile("modes/filebrowser.php");
-        break;
-    case "loadimage":
-        loadPicFile("modes/loadimage.php");
-        break;
-    case "sysload":
-        loadPicFile("modes/sysload.php");
-        break;
     case "download":
-        loadPicFile("modes/download.php");
+    case "filebrowser":
+    case "loadimage":
+    case "sysload":
+        loadPicFile("modes/{$_GET["mode"]}.php");
         break;
     default:
         sendError(404);
