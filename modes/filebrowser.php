@@ -47,6 +47,8 @@ $fileFinder->files()
     ->ignoreUnreadableDirs()
     ->name("*.jpg")
     ->name("*.JPG")
+    ->name("*.png")
+    ->name("*.PNG")
     ->depth(0)
     ->sortByName();
 if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
