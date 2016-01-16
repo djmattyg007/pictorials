@@ -17,6 +17,7 @@ function loadPicFile($includePicFilename, array $extractVars = array())
 loadPicFile("main/app.php");
 loadPicFile("main/func.php");
 loadPicFile("vendor/autoload.php");
+loadPicFile("classes/accesscontrol.php");
 
 loadPicFile("main/auth.php");
 

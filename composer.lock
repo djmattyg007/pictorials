@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc3c7de6da9bc8faca8674bc4552c36d",
-    "content-hash": "707604cbaa65cde923935cb5328ce376",
+    "hash": "882c2003cd85099daf1fb75107a3b68b",
+    "content-hash": "55f5fea137aaf5c28ae3030b6164a573",
     "packages": [
         {
             "name": "devster/uauth",
@@ -149,6 +149,81 @@
                 "image"
             ],
             "time": "2015-12-22 13:06:21"
+        },
+        {
+            "name": "mattyg/array_column_maintain_keys",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djmattyg007/array_column_maintain_keys.git",
+                "reference": "de87d3e916e67903babfef2323ec6f13aedb7e2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djmattyg007/array_column_maintain_keys/zipball/de87d3e916e67903babfef2323ec6f13aedb7e2b",
+                "reference": "de87d3e916e67903babfef2323ec6f13aedb7e2b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "array_column_maintain_keys.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Unlicense"
+            ],
+            "description": "A wrapper for array_column that maintains the keys of the original array.",
+            "homepage": "https://github.com/djmattyg007/array_column_maintain_keys",
+            "keywords": [
+                "array",
+                "array_column"
+            ],
+            "time": "2016-01-16 02:20:32"
+        },
+        {
+            "name": "mattyg/fb-privacy-auth",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djmattyg007/fb-privacy-auth.git",
+                "reference": "eaf800c48bf0effad388343b20f521faf35b283b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djmattyg007/fb-privacy-auth/zipball/eaf800c48bf0effad388343b20f521faf35b283b",
+                "reference": "eaf800c48bf0effad388343b20f521faf35b283b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.6.0|~7.0.0"
+            },
+            "require-dev": {
+                "mattyg/array_column_maintain_keys": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MattyG\\FBPrivacyAuth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Unlicense"
+            ],
+            "description": "Implement authorisation checks based on the model Facebook uses for privacy controls for content (simple users and groups system).",
+            "homepage": "https://github.com/djmattyg007/fb-privacy-auth",
+            "keywords": [
+                "Users",
+                "acl",
+                "auth",
+                "authorisation",
+                "authorization",
+                "groups",
+                "privacy"
+            ],
+            "time": "2016-01-16 03:22:22"
         },
         {
             "name": "symfony/finder",

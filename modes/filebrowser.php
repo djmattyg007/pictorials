@@ -1,6 +1,6 @@
 <?php
 
-$paths = json_decode(loadPicFile("conf/paths.json"), true);
+$paths = Access::getAllowedPaths();
 
 if (empty($_POST)) {
     loadPicFile("templates/filebrowser.phtml", array("paths" => $paths));
