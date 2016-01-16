@@ -10,7 +10,12 @@ Paths.prototype = {
     initEvents: function() {
         var self = this;
         this.button.on("click", function(event) {
-            jQuery(self).trigger("paths:path_chosen", {pathID: self.getSelectedPathID()});
+            var curPathID = self.getSelectedPathID();
+            if (curPathID == null) {
+                alert("No path selected.");
+                return;
+            }
+            jQuery(self).trigger("paths:path_chosen", {pathID: curPathID});
         });
         this.select.on("change", function(event) {
             jQuery(self).trigger("paths:path_changed");
