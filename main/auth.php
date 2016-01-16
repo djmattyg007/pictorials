@@ -8,3 +8,5 @@ $basic = new \Uauth\Basic("Secured Area", $vendorAuthConfig);
 $basic->auth();
 
 define("USERNAME", $basic->getUser());
+
+header("Content-Security-Policy: style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com");
