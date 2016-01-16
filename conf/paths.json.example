@@ -1,14 +1,44 @@
 [
     {
         "name": "My Photos",
-        "path": "/home/myuser/photos/"
+        "path": "/home/myuser/photos/",
+        "auth": {
+            "allow": {
+                "users": [],
+                "groups": ["group1"]
+            },
+            "deny": {
+                "users": [],
+                "groups": []
+            }
+        }
     },
     {
         "name": "Photos in backup",
-        "path": "/data/backup/photos/"
+        "path": "/data/backup/photos/",
+        "auth": {
+            "allow": {
+                "users": [],
+                "groups": ["group1"]
+            },
+            "deny": {
+                "users": ["3rdtestusernamehere"],
+                "groups": []
+            }
+        }
     },
     {
         "name": "Test Path",
-        "path": "/srv/test/pictures/"
+        "path": "/srv/test/pictures/",
+        "auth": {
+            "allow": {
+                "users": [],
+                "groups": ["group2"]
+            },
+            "deny": {
+                "users": [],
+                "groups": ["group1"]
+            }
+        }
     }
 ]

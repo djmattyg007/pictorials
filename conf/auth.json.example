@@ -7,6 +7,20 @@
         {
             "username": "2ndtestusernamehere",
             "password": "2ndtestpasswordhere"
+        },
+        {
+            "username": "3rdtestusernamehere",
+            "password": "3rdtestusernamehere"
         }
-    ]
+    ],
+    "groups": {
+        "group1": [
+            "testusernamehere",
+            "3rdtestusernamehere"
+        ],
+        "group2": [
+            "testusernamehere",
+            "2ndtestusernamehere"
+        ]
+    }
 }
