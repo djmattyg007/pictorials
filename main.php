@@ -3,10 +3,11 @@
 /**
  * @param string $includePicFilename
  * @param array $extractVars
+ * @param bool $getContentsOverride
  */
-function loadPicFile($includePicFilename, array $extractVars = array())
+function loadPicFile($includePicFilename, array $extractVars = array(), $getContentsOverride = false)
 {
-    if (!in_array(pathinfo($includePicFilename, PATHINFO_EXTENSION), ["php", "phtml"])) {
+    if ($getContentsOverride === true || !in_array(pathinfo($includePicFilename, PATHINFO_EXTENSION), ["php", "phtml"])) {
         return file_get_contents(BASE_PATH . $includePicFilename);
     }
     if (!empty($extractVars)) {

@@ -10,6 +10,15 @@ function scriptUrl($mode = "")
 }
 
 /**
+ * @param string $mode
+ * @return string
+ */
+function templateUrl($mode = "")
+{
+    return SCRIPT_BASE_URL . "?templates=1" . ($mode === "" ? "" : "&mode=$mode");
+}
+
+/**
  * @param string $type
  * @param string $file
  * @return string
@@ -38,4 +47,19 @@ function humanFilesize($bytes, $decimals = 2)
     $sz = 'BKMGTP';
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+}
+
+/**
+ * @param string $filename
+ * @param array $vars
+ */
+function loadPicTemplate($filename, array $vars = array())
+{
+    if (isset($_GET["templates"]) && $_GET["templates"] == 1) {
+        $template = loadPicFile($filename, $vars, true);
+        loadPicFile("helpers/jstemplates.php", array("template" => $template));
+    } else {
+        loadPicFile($filename, $vars);
+    }
+    exit();
 }

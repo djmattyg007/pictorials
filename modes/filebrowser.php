@@ -3,7 +3,7 @@
 $paths = Access::getAllowedPaths();
 
 if (empty($_POST)) {
-    loadPicFile("templates/filebrowser.phtml", array("paths" => $paths));
+    loadPicTemplate("templates/filebrowser.phtml", array("paths" => $paths));
     exit();
 }
 if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {

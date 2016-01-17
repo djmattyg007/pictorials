@@ -9,4 +9,4 @@ $basic->auth();
 
 define("USERNAME", $basic->getUser());
 
-header("Content-Security-Policy: style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com");
+header("Content-Security-Policy: script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com");

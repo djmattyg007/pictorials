@@ -4,8 +4,11 @@
 
 function Templater()
 {
-    // TODO: Support pre-compiled templates for CSP compatibility
-    this.templates = {};
+    if (typeof window.templates === "undefined") {
+        this.templates = {};
+    } else {
+        this.templates = window.templates;
+    }
 }
 
 Templater.prototype = {
