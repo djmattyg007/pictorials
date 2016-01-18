@@ -100,7 +100,7 @@ BrowserFiles.prototype = {
 
     init: function() {
         this.container.find("tr").shiftcheckbox({
-            checkboxSelector: 'input.file-chk',
+            checkboxSelector: "input.file-chk",
             ignoreClick: "a",
             onChange: this._rowClick
         });
@@ -126,11 +126,11 @@ BrowserFiles.prototype = {
     },
 
     _rowClick: function(checked) {
-        var $this = jQuery(this).closest("tr");
+        var $row = jQuery(this).closest("tr");
         if (checked === true) {
-            $this.addClass("success");
+            $row.addClass(this.activeRowClass);
         } else {
-            $this.removeClass("success");
+            $row.removeClass(this.activeRowClass);
         }
     },
 
