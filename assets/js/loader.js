@@ -57,7 +57,7 @@ Loader.prototype = {
             if (includeProgressBar === true) {
                 self.progressBar.reset().show();
             }
-        }, 80);
+        }, 110);
     },
 
     updateProgress: function(percentage) {

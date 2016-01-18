@@ -92,10 +92,22 @@ BrowserFiles.prototype = {
         keyListener.register(67, this._clearSelectedFilesEvent.bind(this));
     },
 
-    render: function(files) {
-        // TODO: re-work this so it doesn't lag the browser for very large file listings
-        var html = this.templater.render("browser-file-row", files);
-        this.container.html(html);
+    render: function(files, finish) {
+        var page = 0, html;
+        var groupSize = 200;
+        var pages = files.length / groupSize;
+        var self = this;
+        var iterFunc = function() {
+            html = self.templater.render("browser-file-row", files.slice(page * groupSize, page * groupSize + groupSize));
+            self.container.append(html);
+            page++;
+            if (page < pages) {
+                setTimeout(iterFunc, 50);
+            } else {
+                finish();
+            }
+        };
+        setTimeout(iterFunc, 40);
     },
 
     init: function() {
@@ -221,19 +233,20 @@ Browser.prototype = {
             self.deinit();
             self.curpath.render(self.paths.getLabel(pathID), relpath);
             self.directories.render(data.directories);
-            self.files.render(data.files);
-            self.init();
-            if (self._containerVisible === false) {
-                self.container.show();
-                self._containerVisible = true;
-            }
+            self.files.render(data.files, function() {
+                self.init();
+                if (self._containerVisible === false) {
+                    self.container.show();
+                    self._containerVisible = true;
+                }
+                self.loader.hide();
+            });
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while loading '" + errorValue + "':\n" + textStatus;
             if (textStatus == "error") {
                 msg += "\n" + errorThrown;
             }
             alert(msg);
-        }).always(function() {
             self.loader.hide();
         });
     },
