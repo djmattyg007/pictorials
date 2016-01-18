@@ -4,7 +4,7 @@
         "gregwar/image": "dev-master#3dc2675",
         "gregwar/cache": "dev-master#3497a2d as 1.0.x-dev",
         "mattyg/array_column_maintain_keys": "1.0.1",
-        "mattyg/fb-privacy-auth": "1.0.0",
+        "mattyg/fb-privacy-auth": "1.0.1",
         "symfony/finder": "3.0.1"
     }
 }
