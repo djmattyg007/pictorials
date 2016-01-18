@@ -1,12 +1,14 @@
 /* ShiftCheckbox jQuery plugin
  *
- * Copyright (C) 2011-2012 James Nylen
+ * Copyright (C) 2011-2012 James Nylen, 2016 Matthew Gamble
  *
  * Released under MIT license
  * A copy of this license may be found at the following URL:
  * https://github.com/nylen/shiftcheckbox/blob/gh-pages/LICENSE.txt
  * For details see:
  * https://github.com/nylen/shiftcheckbox
+ * Modifications made by Matthew Gamble to remove boilerplate and
+ * increase flexibility.
  *
  * Requires jQuery v1.7 or higher.
  */
@@ -14,23 +16,19 @@
 (function($) {
   var ns = '.shiftcheckbox';
 
+  $.fn.scb_changeChecked = function(opts, checked) {
+    this.prop('checked', checked);
+    opts.onChange(this, checked);
+    return this;
+  };
+
   $.fn.shiftcheckbox = function(opts) {
     opts = $.extend({
       checkboxSelector : null,
       selectAll        : null,
-      onChange         : null,
+      onChange         : jQuery.noop,
       ignoreClick      : null
     }, opts);
-
-    if (typeof opts.onChange != 'function') {
-      opts.onChange = function(checked) { };
-    }
-
-    $.fn.scb_changeChecked = function(opts, checked) {
-      this.prop('checked', checked);
-      opts.onChange.call(this, checked);
-      return this;
-    }
 
     var $containers,
         $checkboxes,

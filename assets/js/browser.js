@@ -84,7 +84,7 @@ BrowserFiles.prototype = {
             self.fileDownloader.downloadFile(self.paths.getSelectedPathID(), file);
         });
         this.container.on("change", "input.file-chk", function(event) {
-            self._rowClick.call(this, this.checked);
+            self._rowClick.call(self, this, this.checked);
         });
     },
 
@@ -102,7 +102,7 @@ BrowserFiles.prototype = {
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
             ignoreClick: "a",
-            onChange: this._rowClick
+            onChange: this._rowClick.bind(this)
         });
         this.container.find("img.file-thumb").unveil(this._rowThumbLoad, 100, 1000);
     },
@@ -125,8 +125,8 @@ BrowserFiles.prototype = {
         }).get();
     },
 
-    _rowClick: function(checked) {
-        var $row = jQuery(this).closest("tr");
+    _rowClick: function(checkbox, checked) {
+        var $row = jQuery(checkbox).closest("tr");
         if (checked === true) {
             $row.addClass(this.activeRowClass);
         } else {

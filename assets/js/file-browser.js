@@ -14,7 +14,7 @@ var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-bro
 var browser = new Browser($browserContainer, ajaxUrls.filebrowser, paths, loader, browserCurpath, browserDirs, browserFiles);
 
 var documentKeyListener = new KeyListener(document);
-files.registerWithKeyListener(documentKeyListener);
+browserFiles.registerWithKeyListener(documentKeyListener);
 browser.registerWithKeyListener(documentKeyListener);
 fileViewer.registerWithKeyListener(documentKeyListener);
 

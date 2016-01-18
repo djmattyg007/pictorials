@@ -40,12 +40,12 @@ function Loader(container)
 
 Loader.prototype = {
     hide: function() {
-        this.container.hide();
+        this.container.modal("hide");
         this.progressBar.hide();
     },
 
     show: function(includeProgressBar) {
-        this.container.show();
+        this.container.modal("show");
         if (includeProgressBar === true) {
             this.progressBar.reset().show();
         }

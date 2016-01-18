@@ -8,10 +8,16 @@
 }
 
 #loader {
-    position: fixed; top: 0; right: 0;
+    width: 180px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
 }
 #loader .loader-img {
     margin-bottom: 5px;
+    width: 100%;
 }
 
 .slick-dots .slick-active button {

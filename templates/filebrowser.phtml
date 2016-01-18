@@ -14,7 +14,6 @@
 <h2>File Browser</h2>
 
 <div class="row">
-
 <div id="paths" class="col-xs-12 col-md-6">
 <div class="form-group">
     <label for="paths-select">Paths</label>
@@ -27,17 +26,15 @@
 </div>
 <button type="button" class="btn btn-primary btn-show">Show</button>
 </div>
-
-<div class="col-xs-12 col-md-6">
-    <div id="loader" style="display:none;">
-        <img src="<?php echo assetUrl("img", "loading.gif"); ?>" alt="Loading" class="loader-img" data-loader-indicator>
-        <div class="progress" data-loader-progress style="display:none;">
-            <div data-progress-bar class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">&nbsp;</div>
-        </div>
-    </div>
-</div>
 </div>
 <br>
+
+<div id="loader" style="display:none;">
+    <img src="<?php echo assetUrl("img", "loading.gif"); ?>" alt="Loading" class="loader-img" data-loader-indicator>
+    <div class="progress" data-loader-progress style="display:none;">
+        <div data-progress-bar class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">&nbsp;</div>
+    </div>
+</div>
 
 <div id="browser-container" class="table-responsive" style="display:none;">
 <h4 id="browser-curpath" data-browser-curpath></h4>

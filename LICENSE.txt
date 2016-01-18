@@ -34,7 +34,6 @@ modifications made to them:
 assets/css/bootstrap.min.css
 assets/js/vendor/bootstrap.min.js
 assets/js/vendor/jquery-ajax-native.js
-assets/js/vendor/jquery.shiftcheckbox.js
 
 Links to and/or copies of the appropriate licenses for each file can
 be found at the top of each file.
@@ -44,9 +43,10 @@ The following files fall under the MIT license, and have had
 modifications made to them for the purpose of use within this codebase:
 
 assets/js/jquery.unveil.js
+assets/js/vendor/jquery.shiftcheckbox.js
 
 These modifications are licensed under the MIT license. Unless there is
 interest from the developer(s)/maintainer(s) of the original software,
 it is unlikely these modifications will be submitted upstream, as they
-change the behaviour of the plugin beyond the intentions of the original
-developer.
+change the behaviour of the plugin, sometimes beyond the intentions of
+the original developer.
