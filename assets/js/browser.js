@@ -1,17 +1,158 @@
-function Browser(container, fileBrowserUrl, paths, loader, templater, fileDownloader, galleryFlFactory)
+function BrowserCurPath(container)
+{
+    this.container = container;
+
+    this.initEvents();
+}
+
+BrowserCurPath.prototype = {
+    initEvents: function() {
+        var self = this;
+        this.container.on("click", "a.dir", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            jQuery(self).trigger("browser_curpath:change_dir", {relpath: event.target.dataset.relpath});
+        });
+    },
+
+    render: function(pathLabel, relpath) {
+        var html = pathLabel;
+        if (relpath) {
+            html = '<a href="#" class="dir" data-relpath="">' + html + '</a>';
+            var relpathParts = relpath.split("/");
+            var newrelpath = [];
+            var lastIndex = relpathParts.length - 1;
+            relpathParts.forEach(function(value, index) {
+                newrelpath.push(value);
+                html += " &gt; ";
+                if (index === lastIndex) {
+                    html += value;
+                } else {
+                    html += '<a href="#" class="dir" data-relpath="' + newrelpath.join("/") + '">' + value + '</a>';
+                }
+            });
+        }
+        this.container.html(html);
+    }
+};
+
+function BrowserDirectories(container, templater)
+{
+    this.container = container;
+    this.templater = templater;
+
+    this.initEvents();
+}
+
+BrowserDirectories.prototype = {
+    initEvents: function() {
+        var self = this;
+        this.container.on("click", "a.dir", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            jQuery(self).trigger("browser_directories:change_dir", {relpath: event.target.dataset.relpath});
+        });
+    },
+
+    render: function(dirs) {
+        var html = this.templater.render("browser-directory-row", dirs);
+        this.container.html(html);
+    },
+
+    deinit: function() {
+        this.container.empty();
+    }
+};
+
+function BrowserFiles(container, activeRowClass, templater, paths, fileDownloader)
+{
+    this.container = container;
+    this.activeRowClass = activeRowClass;
+    this.templater = templater;
+    this.paths = paths;
+    this.fileDownloader = fileDownloader;
+
+    this.initEvents();
+}
+
+BrowserFiles.prototype = {
+    initEvents: function() {
+        var self = this;
+        this.container.on("click", "a.file-download", function(event) {
+            event.preventDefault();
+            var file = jQuery(event.target).closest("[data-relpath]").data("relpath");
+            self.fileDownloader.downloadFile(self.paths.getSelectedPathID(), file);
+        });
+        this.container.on("change", "input.file-chk", function(event) {
+            self._rowClick.call(this, this.checked);
+        });
+    },
+
+    registerWithKeyListener: function(keyListener) {
+        keyListener.register(67, this._clearSelectedFilesEvent.bind(this));
+    },
+
+    render: function(files) {
+        // TODO: re-work this so it doesn't lag the browser for very large file listings
+        var html = this.templater.render("browser-file-row", files);
+        this.container.html(html);
+    },
+
+    init: function() {
+        this.container.find("tr").shiftcheckbox({
+            checkboxSelector: 'input.file-chk',
+            ignoreClick: "a",
+            onChange: this._rowClick
+        });
+        this.container.find("img.file-thumb").unveil(this._rowThumbLoad, 100, 1000);
+    },
+
+    deinit: function() {
+        if (this.container.html().trim() !== "") {
+            this.container.find("tr").off(".shiftcheckbox");
+            jQuery(window).off("unveil");
+        }
+        this.container.empty();
+    },
+
+    getSelected: function() {
+        var selection = this.container.find("tr").has("input.file-chk:checked");
+        if (selection.length === 0) {
+            return null;
+        }
+        return selection.map(function() {
+            return this.dataset.relpath;
+        }).get();
+    },
+
+    _rowClick: function(checked) {
+        var $this = jQuery(this).closest("tr");
+        if (checked === true) {
+            $this.addClass("success");
+        } else {
+            $this.removeClass("success");
+        }
+    },
+
+    _rowThumbLoad: function(img) {
+        img.setAttribute("src", img.dataset.src);
+    },
+
+    _clearSelectedFilesEvent: function(event) {
+        this.container.find(".file-chk:checked").click();
+    }
+};
+
+function Browser(container, fileBrowserUrl, paths, loader, curpath, dirs, files)
 {
     this.container = container;
     this.fileBrowserUrl = fileBrowserUrl;
     this.paths = paths;
     this.loader = loader;
-    this.templater = templater;
-    this.fileDownloader = fileDownloader;
-    this.galleryFlFactory = galleryFlFactory;
 
-    // TODO: Split up browser into three objects: curpath, directories, files
-    this.curpath = container.find("[data-browser-curpath]");
-    this.directories = container.find("table tbody[data-browser-directories]");
-    this.files = container.find("table tbody[data-browser-files]");
+    this.curpath = curpath;
+    this.directories = dirs;
+    this.files = files;
     this.loadBtn = container.find("[data-browser-load-btn]");
 
     this._dispatchLoadEventLock = false;
@@ -21,12 +162,8 @@ function Browser(container, fileBrowserUrl, paths, loader, templater, fileDownlo
 Browser.prototype = {
     initEvents: function() {
         var self = this;
-        this.curpath.on("click", "a.dir", this._changeDirEvent.bind(this));
-        this.directories.on("click", "a.dir", this._changeDirEvent.bind(this));
-        this.files.on("click", "a.file-download", this._downloadFileEvent.bind(this));
-        this.files.on("change", "input.file-chk", function(event) {
-            self._rowClick.call(this, this.checked);
-        });
+        jQuery(this.curpath).on("browser_curpath:change_dir", this._changeDirEvent.bind(this));
+        jQuery(this.directories).on("browser_directories:change_dir", this._changeDirEvent.bind(this));
         this.loadBtn.on("click", this._dispatchLoadEvent.bind(this));
 
         jQuery(this.paths).on("paths:path_changed", function(event) {
@@ -39,20 +176,11 @@ Browser.prototype = {
     },
 
     registerWithKeyListener: function(keyListener) {
-        keyListener.register(67, this._clearSelectedFilesEvent.bind(this));
         keyListener.register(76, this._dispatchLoadEvent.bind(this));
     },
 
-    _changeDirEvent: function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.changeDir(this.paths.getSelectedPathID(), event.target.dataset.relpath);
-    },
-
-    _downloadFileEvent: function(event) {
-        event.preventDefault();
-        var file = jQuery(event.target).closest("[data-relpath]").data("relpath");
-        this.fileDownloader.downloadFile(this.paths.getSelectedPathID(), file);
+    _changeDirEvent: function(event, eventData) {
+        this.changeDir(this.paths.getSelectedPathID(), eventData.relpath);
     },
 
     _dispatchLoadEvent: function(event) {
@@ -60,7 +188,7 @@ Browser.prototype = {
             return;
         }
         this._dispatchLoadEventLock = true;
-        var files = this.getSelectedFiles();
+        var files = this.files.getSelected();
         if (files === null) {
             alert("No files selected");
             this._dispatchLoadEventLock = false;
@@ -69,10 +197,6 @@ Browser.prototype = {
         var pathID = this.paths.getSelectedPathID();
         jQuery(this).trigger("browser:load_files", {pathID: pathID, files: files});
         this._dispatchLoadEventLock = false;
-    },
-
-    _clearSelectedFilesEvent: function(event) {
-        this.files.find(".file-chk:checked").click();
     },
 
     changeDir: function(pathID, relpath) {
@@ -93,9 +217,9 @@ Browser.prototype = {
             dataType: "json"
         }).done(function(data) {
             self.deinit();
-            self.renderCurPath(pathID, relpath);
-            self.renderDirectories(data.directories);
-            self.renderFiles(data.files);
+            self.curpath.render(self.paths.getLabel(pathID), relpath);
+            self.directories.render(data.directories);
+            self.files.render(data.files);
             self.init();
             self.container.show();
         }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -110,75 +234,11 @@ Browser.prototype = {
     },
 
     deinit: function() {
-        if (this.files.html().trim() !== "") {
-            this.files.find("tr").off(".shiftcheckbox");
-            jQuery(window).off("unveil");
-        }
-        this.directories.empty();
-        this.files.empty();
+        this.directories.deinit();
+        this.files.deinit();
     },
 
     init: function() {
-        this.files.find("tr").shiftcheckbox({
-            checkboxSelector: 'input.file-chk',
-            ignoreClick: "a",
-            onChange: this._rowClick
-        });
-        this.files.find("img.file-thumb").unveil(this._rowThumbLoad, 100, 1000);
-    },
-
-    _rowClick: function(checked) {
-        var $this = jQuery(this).closest("tr");
-        if (checked === true) {
-            $this.addClass("success");
-        } else {
-            $this.removeClass("success");
-        }
-    },
-
-    _rowThumbLoad: function(img) {
-        img.setAttribute("src", img.dataset.src);
-    },
-
-    renderDirectories: function(dirs) {
-        var html = this.templater.render("browser-directory-row", dirs);
-        this.directories.html(html);
-    },
-
-    renderFiles: function(files) {
-        // TODO: re-work this so it doesn't lag the browser for very large file listings
-        var html = this.templater.render("browser-file-row", files);
-        this.files.html(html);
-    },
-
-    getSelectedFiles: function() {
-        var selection = this.files.find("tr.file-row").has("input.file-chk:checked");
-        if (selection.length === 0) {
-            return null;
-        }
-        return selection.map(function() {
-            return this.dataset.relpath;
-        }).get();
-    },
-
-    renderCurPath: function(pathID, relpath) {
-        var pathLabel = this.paths.getLabel(pathID);
-        var html = pathLabel;
-        if (relpath) {
-            html = '<a href="#" class="dir" data-relpath="">' + html + '</a>';
-            var relpathParts = relpath.split("/");
-            var newrelpath = [];
-            var lastIndex = relpathParts.length - 1;
-            relpathParts.forEach(function(value, index) {
-                newrelpath.push(value);
-                html += " &gt; ";
-                if (index === lastIndex) {
-                    html += value;
-                } else {
-                    html += '<a href="#" class="dir" data-relpath="' + newrelpath.join("/") + '">' + value + '</a>';
-                }
-            });
-        }
-        this.curpath.html(html);
+        this.files.init();
     }
 };
