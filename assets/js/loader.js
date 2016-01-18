@@ -43,9 +43,10 @@ Loader.prototype = {
         if (this._showTimeout) {
             clearTimeout(this._showTimeout);
             this._showTimeout = null;
+        } else {
+            this.container.modal("hide");
+            this.progressBar.hide();
         }
-        this.container.modal("hide");
-        this.progressBar.hide();
     },
 
     show: function(includeProgressBar) {
