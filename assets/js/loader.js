@@ -34,21 +34,29 @@ ProgressBar.prototype = {
 function Loader(container)
 {
     this.container = container;
-    this.indicator = container.find("[data-loader-indicator]");
     this.progressBar = new ProgressBar(container.find("[data-loader-progress]"));
+    this._showTimeout = null;
 }
 
 Loader.prototype = {
     hide: function() {
+        if (this._showTimeout) {
+            clearTimeout(this._showTimeout);
+            this._showTimeout = null;
+        }
         this.container.modal("hide");
         this.progressBar.hide();
     },
 
     show: function(includeProgressBar) {
-        this.container.modal("show");
-        if (includeProgressBar === true) {
-            this.progressBar.reset().show();
-        }
+        var self = this;
+        this._showTimeout = setTimeout(function() {
+            self._showTimeout = null;
+            self.container.modal("show");
+            if (includeProgressBar === true) {
+                self.progressBar.reset().show();
+            }
+        }, 80);
     },
 
     updateProgress: function(percentage) {
