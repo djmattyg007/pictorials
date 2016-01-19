@@ -25,78 +25,32 @@
   $.fn.shiftcheckbox = function(opts) {
     opts = $.extend({
       checkboxSelector : null,
-      selectAll        : null,
       onChange         : jQuery.noop,
       ignoreClick      : null
     }, opts);
 
-    var $containers,
-        $checkboxes,
-        $containersSelectAll,
-        $checkboxesSelectAll,
-        $otherSelectAll,
+    var $checkboxes,
         $containersAll,
         $checkboxesAll;
 
-    if (opts.selectAll) {
-      // We need to set up a "select all" control
-      $containersSelectAll = $(opts.selectAll);
-      if ($containersSelectAll && !$containersSelectAll.length) {
-        $containersSelectAll = false;
-      }
-    }
-
-    if ($containersSelectAll) {
-      $checkboxesSelectAll = $containersSelectAll
-        .filter(':checkbox')
-        .add($containersSelectAll.find(':checkbox'));
-
-      $containersSelectAll = $containersSelectAll.not(':checkbox');
-      $otherSelectAll = $containersSelectAll.filter(function() {
-        return !$(this).find($checkboxesSelectAll).length;
-      });
-      $containersSelectAll = $containersSelectAll.filter(function() {
-        return !!$(this).find($checkboxesSelectAll).length;
-      }).each(function() {
-        $(this).data('childCheckbox', $(this).find($checkboxesSelectAll)[0]);
-      });
-    }
-
     if (opts.checkboxSelector) {
-
       // checkboxSelector means that the elements we need to attach handlers to
       // ($containers) are not actually checkboxes but contain them instead
 
       $containersAll = this.filter(function() {
-        return !!$(this).find(opts.checkboxSelector).filter(':checkbox').length;
+        return !!$(this).find(opts.checkboxSelector).length;
       }).each(function() {
-        $(this).data('childCheckbox', $(this).find(opts.checkboxSelector).filter(':checkbox')[0]);
-      }).add($containersSelectAll);
+        $(this).data('childCheckbox', $(this).find(opts.checkboxSelector)[0]);
+      });
 
       $checkboxesAll = $containersAll.map(function() {
         return $(this).data('childCheckbox');
       });
-
     } else {
-
       $checkboxesAll = this.filter(':checkbox');
-
     }
 
-    if ($checkboxesSelectAll && !$checkboxesSelectAll.length) {
-      $checkboxesSelectAll = false;
-    } else {
-      $checkboxesAll = $checkboxesAll.add($checkboxesSelectAll);
-    }
-
-    if ($otherSelectAll && !$otherSelectAll.length) {
-      $otherSelectAll = false;
-    }
-
-    if ($containersAll) {
-      $containers = $containersAll.not($containersSelectAll);
-    }
-    $checkboxes = $checkboxesAll.not($checkboxesSelectAll);
+    $checkboxes = $checkboxesAll;
 
     if (!$checkboxes.length) {
       return;
@@ -108,12 +62,6 @@
       var checked = !!$(this).prop('checked');
 
       var curIndex = $checkboxes.index(this);
-      if (curIndex < 0) {
-        if ($checkboxesSelectAll.filter(this).length) {
-          $checkboxesAll.scb_changeChecked(opts, checked);
-        }
-        return;
-      }
 
       if (e.shiftKey && lastIndex != -1) {
         var di = (curIndex > lastIndex ? 1 : -1);
@@ -121,37 +69,8 @@
           $checkboxes.eq(i).scb_changeChecked(opts, checked);
         }
       }
-
-      if ($checkboxesSelectAll) {
-        if (checked && !$checkboxes.not(':checked').length) {
-          $checkboxesSelectAll.scb_changeChecked(opts, true);
-        } else if (!checked) {
-          $checkboxesSelectAll.scb_changeChecked(opts, false);
-        }
-      }
-
       lastIndex = curIndex;
     };
-
-    if ($checkboxesSelectAll) {
-      $checkboxesSelectAll
-        .prop('checked', !$checkboxes.not(':checked').length)
-        .filter(function() {
-          return !$containersAll.find(this).length;
-        }).on('click' + ns, checkboxClicked);
-    }
-
-    if ($otherSelectAll) {
-      $otherSelectAll.on('click' + ns, function() {
-        var checked;
-        if ($checkboxesSelectAll) {
-          checked = !!$checkboxesSelectAll.eq(0).prop('checked');
-        } else {
-          checked = !!$checkboxes.eq(0).prop('checked');
-        }
-        $checkboxesAll.scb_changeChecked(opts, !checked);
-      });
-    }
 
     if (opts.checkboxSelector) {
       $containersAll.on('click' + ns, function(e) {

@@ -21,9 +21,9 @@
  */
 
 (function($) {
+    var $w = $(window);
     $.fn.unveil = function(callback, threshold, timeout) {
-        var $w = $(window),
-            th = threshold || 0,
+        var th = threshold || 0,
             to = timeout || 100,
             images = this,
             loaded,

@@ -155,6 +155,7 @@ function Browser(container, fileBrowserUrl, paths, loader, curpath, dirs, files)
     this.files = files;
     this.loadBtn = container.find("[data-browser-load-btn]");
 
+    this._containerVisible = false;
     this._dispatchLoadEventLock = false;
     this.initEvents();
 }
@@ -168,6 +169,7 @@ Browser.prototype = {
 
         jQuery(this.paths).on("paths:path_changed", function(event) {
             self.container.hide();
+            self._containerVisible = false;
             self.deinit();
         });
         jQuery(this.paths).on("paths:path_chosen", function(event, eventData) {
@@ -221,7 +223,10 @@ Browser.prototype = {
             self.directories.render(data.directories);
             self.files.render(data.files);
             self.init();
-            self.container.show();
+            if (self._containerVisible === false) {
+                self.container.show();
+                self._containerVisible = true;
+            }
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while loading '" + errorValue + "':\n" + textStatus;
             if (textStatus == "error") {
