@@ -23,3 +23,7 @@
 .slick-dots .slick-active button {
     background-color: #A6D1DF;
 }
+
+#files-display:not(.slick-initialized) .carousel-file img {
+    display: none;
+}
