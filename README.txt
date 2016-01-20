@@ -7,6 +7,10 @@ web server rewrites. It is secured by HTTP basic authentication, and protects
 against hotlinking of images by allowing you to store your files outside of
 the web root.
 
+This project aims to work only in the latest versions of Firefox, Pale Moon and
+Chrome. It may work in IE10-11, and probably works in Edge, but I don't
+particularly care about it or Safari.
+
 While this project is fully functional, it is not yet feature complete. Things
 are subject to change.
 
