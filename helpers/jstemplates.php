@@ -1,5 +1,7 @@
 <?php
 
+/** @var $template string */
+
 define("TEMPLATE_EXTRACT_REGEX", '|<script type="text\/x-html-template" id="([a-z-]+)-template">([\S\s]*?)<\/script>|im');
 define("PHP_EXTRACT_REGEX", '|<\?php (.*) \?>|i');
 define("TEMPLATE_PARAMS_REGEX", '|([#\$%])\{(.*?)\}|');

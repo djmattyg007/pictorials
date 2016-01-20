@@ -14,6 +14,9 @@ if (!isset($paths[$pathID])) {
     sendError(404);
 }
 $pathConfig = $paths[$pathID];
+if (!empty($_POST["relpath"])) {
+    $relpath = loadPicFile("helpers/filenamereject.php", array("filename" => $_POST["relpath"]));
+}
 
 use Symfony\Component\Finder\Finder;
 
@@ -25,12 +28,9 @@ $directoryFinder->directories()
 if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
     $directoryFinder->followLinks();
 }
-if (!empty($_POST["relpath"])) {
-    if (strpos($_POST["relpath"], "..") !== false) {
-        sendError(400);
-    }
-    $directoryFinder->path($_POST["relpath"])
-        ->depth(substr_count($_POST["relpath"], "/") + 1);
+if (!empty($relpath)) {
+    $directoryFinder->path($relpath)
+        ->depth(substr_count($relpath, "/") + 1);
 }
 $directoryIterator = $directoryFinder->in($pathConfig["path"]);
 
@@ -54,12 +54,9 @@ $fileFinder->files()
 if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
     $fileFinder->followLinks();
 }
-if (!empty($_POST["relpath"])) {
-    if (strpos($_POST["relpath"], "..") !== false) {
-        sendError(400);
-    }
-    $fileFinder->path($_POST["relpath"])
-        ->depth(substr_count($_POST["relpath"], "/") + 1);
+if (!empty($relpath)) {
+    $fileFinder->path($relpath)
+        ->depth(substr_count($relpath, "/") + 1);
 }
 $fileIterator = $fileFinder->in($pathConfig["path"]);
 
