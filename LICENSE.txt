@@ -31,7 +31,9 @@ public domain software license:
 The following files fall under the MIT license, and have not had any
 modifications made to them:
 
+assets/css/bootstrap.css
 assets/css/bootstrap.min.css
+assets/js/vendor/bootstrap.js
 assets/js/vendor/bootstrap.min.js
 assets/js/vendor/jquery-ajax-native.js
 
