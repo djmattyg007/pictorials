@@ -86,6 +86,13 @@ BrowserFiles.prototype = {
         this.container.on("change", "input.file-chk", function(event) {
             self._rowClick.call(self, this, this.checked);
         });
+
+        jQuery(document).popover({
+            html: true,
+            selector: "img.file-thumb[data-toggle='popover']",
+            trigger: "hover",
+            content: this._renderPopover
+        });
     },
 
     registerWithKeyListener: function(keyListener) {
@@ -110,13 +117,17 @@ BrowserFiles.prototype = {
         setTimeout(iterFunc, 40);
     },
 
+    _renderPopover() {
+        return '<img src="' + this.src + '" alt="">';
+    },
+
     init: function() {
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
             ignoreClick: "a",
             onChange: this._rowClick.bind(this)
         });
-        this.container.find("img.file-thumb").unveil(this._rowThumbLoad, 100, 1000);
+        this.container.find("img.file-thumb").unveil(this._rowThumbLoad, 100, 900);
     },
 
     deinit: function() {

@@ -100,7 +100,7 @@
 <script type="text/x-html-template" id="browser-file-row-template">
 <tr class="file-row" data-relpath="${relpath}">
     <td><input type="checkbox" class="checkbox file-chk"></td>
-    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-src="https://placehold.it/20/%{randthumb}.png" alt="" class="file-thumb"></td>
+    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-src="https://placehold.it/100/%{randthumb}.png" alt="${filename}" class="file-thumb" data-toggle="popover" data-placement="right"></td>
     <td>#{filename}</td>
     <td>#{size}</td>
     <td>#{mtime}</td>
