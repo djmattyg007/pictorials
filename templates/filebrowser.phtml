@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo APP_NAME; ?> - File Browser</title>
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "bootstrap.min.css"); ?>" media="all">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" media="all">
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "styles.css"); ?>" media="all">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
@@ -29,13 +30,6 @@
 </div>
 <br>
 
-<div id="loader" style="display:none;">
-    <img src="<?php echo assetUrl("img", "loading.gif"); ?>" alt="Loading" class="loader-img" data-loader-indicator>
-    <div class="progress" data-loader-progress style="display:none;">
-        <div data-progress-bar class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">&nbsp;</div>
-    </div>
-</div>
-
 <div id="browser-container" class="table-responsive" style="display:none;">
 <h4 id="browser-curpath" data-browser-curpath></h4>
 <button type="button" data-browser-load-btn class="btn btn-secondary btn-show">Load</button>
@@ -58,6 +52,13 @@
 
 </div>
 
+</div>
+
+<div id="loader" style="display:none;">
+    <img src="<?php echo assetUrl("img", "loading.gif"); ?>" alt="Loading" class="loader-img" data-loader-indicator>
+    <div class="progress" data-loader-progress style="display:none;">
+        <div data-progress-bar class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">&nbsp;</div>
+    </div>
 </div>
 
 <div class="modal fade" id="files-modal" tabindex="-1" role="dialog" aria-labelledby="files-modal-heading">
@@ -91,15 +92,15 @@
 <script type="text/x-html-template" id="browser-directory-row-template">
 <tr class="dir-row">
     <td colspan="2">&nbsp;</td>
-    <td><a href="#" class="dir" data-relpath="#{path}">#{name}</a></td>
+    <td><a href="#" class="dir" data-relpath="${path}">#{name}</a></td>
     <td colspan="3">&nbsp;</td>
 </tr>
 </script>
 
 <script type="text/x-html-template" id="browser-file-row-template">
-<tr class="file-row" data-relpath="#{relpath}">
+<tr class="file-row" data-relpath="${relpath}">
     <td><input type="checkbox" class="checkbox file-chk"></td>
-    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-src="https://placehold.it/20/#{randthumb}.png" alt="" class="file-thumb"></td>
+    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-src="https://placehold.it/20/%{randthumb}.png" alt="" class="file-thumb"></td>
     <td>#{filename}</td>
     <td>#{size}</td>
     <td>#{mtime}</td>
@@ -109,7 +110,7 @@
 
 <script type="text/x-html-template" id="carousel-file-template">
 <div class="carousel-file">
-    <img src="#{src}" alt="#{relpath}" title="#{filename}" data-relpath="#{relpath}" class="img-responsive img-center">
+    <img src="%{src}" alt="${relpath}" title="${filename}" data-relpath="${relpath}" class="img-responsive img-center">
 </div>
 </script>
 </div>
