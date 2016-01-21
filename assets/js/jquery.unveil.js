@@ -26,7 +26,6 @@
         var th = threshold || 0,
             to = timeout || 100,
             images = this,
-            loaded,
             timer;
 
         this.one("unveil", function() {
@@ -35,10 +34,6 @@
 
         var isInView = function() {
             var $e = $(this);
-            if ($e.is(":hidden")) {
-                return false;
-            }
-
             var winTop = $w.scrollTop(),
                 winBot = winTop + $w.height(),
                 elTop = $e.offset().top,
@@ -51,9 +46,8 @@
             timer = setTimeout(function() {
                 clearTimeout(timer);
                 var inview = images.filter(isInView);
-                loaded = inview.trigger("unveil");
-                // TODO: check to see whether or not this assignment can be done with inview rather than loaded, and therefore before the event dispatch
-                images = images.not(loaded);
+                images = images.not(inview);
+                inview.trigger("unveil");
             }, to);
         };
 
@@ -62,4 +56,4 @@
 
         return this;
     };
-})(window.jQuery);
+})(jQuery);
