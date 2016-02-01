@@ -19,6 +19,7 @@ loadPicFile("main/app.php");
 loadPicFile("main/func.php");
 loadPicFile("vendor/autoload.php");
 loadPicFile("classes/accesscontrol.php");
+loadPicFile("classes/hoamimewrapper.php");
 
 loadPicFile("main/auth.php");
 

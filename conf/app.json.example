@@ -4,5 +4,9 @@
         "CACHE_DIR": "/path/to/caching/dir",
         "ASSET_BASE_URL": "/pictorials/",
         "SCRIPT_BASE_URL": "/pictorials.php"
-    }
+    },
+    "image_types": [
+        "jpg",
+        "png"
+    ]
 }

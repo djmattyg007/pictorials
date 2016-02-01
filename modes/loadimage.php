@@ -1,7 +1,8 @@
 <?php
 
 $fullFilename = loadPicFile("helpers/checkfilepath.php");
-$filetype = strtolower(pathinfo($fullFilename, PATHINFO_EXTENSION));
+
+list($normalisedExtension, $actualExtension, $mimeType) = loadPicFile("helpers/checkimagetype.php", array("filename" => $fullFilename));
 
 use Gregwar\Image\Image;
 use Gregwar\Cache\Cache;
@@ -12,10 +13,10 @@ $cache->setCacheDirectory(CACHE_DIR . "/images");
 $image = Image::open($fullFilename);
 $image->setCacheSystem($cache);
 $image->cropResize(400, 400);
-if ($filetype === "jpg") {
+if ($normalisedExtension === "jpeg") {
     $image->fixOrientation();
 }
 
-$imageData = $image->cacheData($filetype);
-header("Content-type: image/jpeg");
+$imageData = $image->cacheData($normalisedExtension);
+header("Content-type: $mimeType");
 echo $imageData;

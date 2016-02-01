@@ -45,12 +45,15 @@ foreach ($directoryIterator as $directory) {
 $fileFinder = new Finder();
 $fileFinder->files()
     ->ignoreUnreadableDirs()
-    ->name("*.jpg")
-    ->name("*.JPG")
-    ->name("*.png")
-    ->name("*.PNG")
-    ->depth(0)
-    ->sortByName();
+    ->depth(0);
+$allowedImageTypes = loadPicFile("helpers/imagetypes.php");
+foreach ($allowedImageTypes as $imageType) {
+    $fileFinder->name("*.{$imageType}");
+}
+foreach (array_map("strtoupper", $allowedImageTypes) as $imageType) {
+    $fileFinder->name("*.{$imageType}");
+}
+$fileFinder->sortByName();
 if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
     $fileFinder->followLinks();
 }
