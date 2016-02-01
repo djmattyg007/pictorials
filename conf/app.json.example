@@ -5,6 +5,20 @@
         "ASSET_BASE_URL": "/pictorials/",
         "SCRIPT_BASE_URL": "/pictorials.php"
     },
+    "image_sizes": {
+        "small": {
+            "width": 250,
+            "height": 250
+        },
+        "medium": {
+            "width": 400,
+            "height": 400
+        },
+        "large": {
+            "width": 750,
+            "height": 750
+        }
+    },
     "image_types": [
         "jpg",
         "png"

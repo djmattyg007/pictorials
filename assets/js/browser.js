@@ -124,7 +124,7 @@ BrowserFiles.prototype = {
     },
 
     init: function() {
-        this.thumbnailLoader.start(this.paths.getSelectedPathID(), this._imgLoad.bind(this));
+        this.thumbnailLoader.start(this.paths.getSelectedPathID(), this._imgLoad.bind(this), {size: "small"});
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
             ignoreClick: "a",

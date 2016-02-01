@@ -28,18 +28,24 @@ function CancellableFileLoader(downloadUrl, concurrencyLimit, sysloadUrl)
     this.files = [];
     this.pathID = null;
     this.loadCallback = null;
+    this.extraRequestData = null;
     this.running = false;
     this.timer = null;
     this.sysloadTimer = null;
 }
 
 CancellableFileLoader.prototype = {
-    start: function(pathID, loadCallback) {
+    start: function(pathID, loadCallback, extraRequestData) {
         if (this.running === true) {
             return;
         }
         this.pathID = pathID;
         this.loadCallback = loadCallback;
+        if (extraRequestData) {
+            this.extraRequestData = extraRequestData;
+        } else {
+            this.extraRequestData = {};
+        }
         this.running = true;
         if (this.sysloadUrl) {
             this._checkSysload();
@@ -56,6 +62,7 @@ CancellableFileLoader.prototype = {
         this.running = false;
         this.pathID = null;
         this.loadCallback = null;
+        this.extraRequestData = null;
     },
 
     _eventLoop: function() {
@@ -70,7 +77,7 @@ CancellableFileLoader.prototype = {
         var self = this;
         jQuery.ajax({
             method: "POST",
-            data: {path: this.pathID, "filename": filename},
+            data: jQuery.extend({path: this.pathID, "filename": filename}, this.extraRequestData),
             dataType: "native",
             url: this.downloadUrl,
             xhrFields: {
