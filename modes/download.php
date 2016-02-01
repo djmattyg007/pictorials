@@ -1,6 +1,7 @@
 <?php
 
 $fullFilename = loadPicFile("helpers/checkfilepath.php");
+loadPicFile("helpers/checkimagetype.php", array("filename" => $fullFilename));
 
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
