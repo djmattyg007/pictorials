@@ -79,6 +79,6 @@ FileViewer.prototype = {
     addImageToCarousel: function(fl, relpath, src) {
         var html = this.templater.render("carousel-file", {"src": src, "relpath": relpath, "filename": relpath.split(/[\\/]/).pop()});
         this.carousel.append(html);
-        this.loader.updateProgress(fl.processed_count / fl.file_count);
+        this.loader.updateProgress(fl.processedCount / fl.fileCount);
     }
 };
