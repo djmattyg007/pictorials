@@ -30,6 +30,7 @@ function CancellableFileLoader(downloadUrl, concurrencyLimit, sysloadUrl)
     this.loadCallback = null;
     this.running = false;
     this.timer = null;
+    this.sysloadTimer = null;
 }
 
 CancellableFileLoader.prototype = {
@@ -51,6 +52,7 @@ CancellableFileLoader.prototype = {
             return;
         }
         clearTimeout(this.timer);
+        clearTimeout(this.sysloadTimer);
         this.running = false;
         this.pathID = null;
         this.loadCallback = null;
@@ -121,7 +123,7 @@ CancellableFileLoader.prototype = {
             }
         }).always(function() {
             if (self.running === true) {
-                setTimeout(self._checkSysload.bind(self), 15 * 1000);
+                self.sysloadTimer = setTimeout(self._checkSysload.bind(self), 15 * 1000);
             }
         });
     }
