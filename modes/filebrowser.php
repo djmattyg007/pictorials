@@ -67,7 +67,6 @@ foreach ($fileIterator as $file) {
         "relpath" => $file->getRelativePathname(),
         "size" => humanFilesize($file->getSize()),
         "mtime" => date("Y-m-d H:i:s", $file->getMTime()),
-        "randthumb" => substr(str_shuffle("ABCDEF0123456789"), 0, 6),
     );
 }
 

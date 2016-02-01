@@ -3,6 +3,7 @@ var templater = new Templater();
 var loader = new Loader(jQuery("#loader"));
 var galleryFlFactory = new FileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(ajaxUrls.downloadFile, ajaxUrls.sysload);
+var thumbnailFlFactory = new CancellableFileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var fileDownloader = new Downloader(downloadFlFactory, loader);
 var paths = new Paths(jQuery("#paths"));
 var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, fileDownloader, 3, galleryFlFactory);
@@ -10,7 +11,7 @@ var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, fileD
 var $browserContainer = jQuery("#browser-container");
 var browserCurpath = new BrowserCurPath($browserContainer.find("[data-browser-curpath]"));
 var browserDirs = new BrowserDirectories($browserContainer.find("table tbody[data-browser-directories]"), templater);
-var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-browser-files]"), "success", templater, paths, fileDownloader);
+var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-browser-files]"), "success", templater, paths, thumbnailFlFactory, fileDownloader);
 var browser = new Browser($browserContainer, ajaxUrls.filebrowser, paths, loader, browserCurpath, browserDirs, browserFiles);
 
 var documentKeyListener = new KeyListener(document);

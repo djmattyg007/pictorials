@@ -26,11 +26,8 @@
         var th = threshold || 0,
             to = timeout || 100,
             images = this,
+            running = false,
             timer;
-
-        this.one("unveil", function() {
-            callback(this);
-        });
 
         var isInView = function() {
             var $e = $(this);
@@ -43,15 +40,25 @@
 
         var unveil = function() {
             clearTimeout(timer);
+            running = false;
             timer = setTimeout(function() {
+                running = true;
                 clearTimeout(timer);
                 var inview = images.filter(isInView);
-                images = images.not(inview);
-                inview.trigger("unveil");
+                var loaded = [];
+                var callbackReturn;
+                inview.each(function(index, element) {
+                    callbackReturn = callback(element);
+                    if (callbackReturn === false || running === false) {
+                        return false;
+                    }
+                    loaded.push(element);
+                });
+                images = images.not(loaded);
             }, to);
         };
 
-        $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+        $w.on("scroll.unveil resize.unveil", unveil);
         unveil();
 
         return this;

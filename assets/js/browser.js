@@ -64,12 +64,13 @@ BrowserDirectories.prototype = {
     }
 };
 
-function BrowserFiles(container, activeRowClass, templater, paths, fileDownloader)
+function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFactory, fileDownloader)
 {
     this.container = container;
     this.activeRowClass = activeRowClass;
     this.templater = templater;
     this.paths = paths;
+    this.thumbnailLoader = thumbnailFlFactory.create(4);
     this.fileDownloader = fileDownloader;
 
     this.initEvents();
@@ -96,6 +97,7 @@ BrowserFiles.prototype = {
     },
 
     registerWithKeyListener: function(keyListener) {
+        // 67 = 'l'
         keyListener.register(67, this._clearSelectedFilesEvent.bind(this));
     },
 
@@ -122,15 +124,18 @@ BrowserFiles.prototype = {
     },
 
     init: function() {
+        this.thumbnailLoader.start(this.paths.getSelectedPathID(), this._imgLoad.bind(this));
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
             ignoreClick: "a",
             onChange: this._rowClick.bind(this)
         });
-        this.container.find("img.file-thumb").unveil(this._rowThumbLoad, 100, 900);
+        this.container.find("img.file-thumb").unveil(this._imgInView.bind(this), 100, 900);
     },
 
     deinit: function() {
+        this.thumbnailLoader.stop();
+        this.thumbnailLoader.removeAllFiles();
         if (this.container.html().trim() !== "") {
             this.container.find("tr").off(".shiftcheckbox");
             jQuery(window).off("unveil");
@@ -157,8 +162,12 @@ BrowserFiles.prototype = {
         }
     },
 
-    _rowThumbLoad: function(img) {
-        img.setAttribute("src", img.dataset.src);
+    _imgInView: function(img) {
+        this.thumbnailLoader.addFile(img.dataset.relpath);
+    },
+
+    _imgLoad: function(filename, imgsrc) {
+        this.container.find("img.file-thumb[data-relpath='" + filename + "']").attr("src", imgsrc);
     },
 
     _clearSelectedFilesEvent: function(event) {

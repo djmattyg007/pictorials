@@ -34,7 +34,9 @@ FileViewer.prototype = {
     },
 
     registerWithKeyListener: function(keyListener) {
+        // 37 = Left arrow
         keyListener.register(37, this._prevSlideTriggerEvent.bind(this));
+        // 39 = Right arrow
         keyListener.register(39, this._nextSlideTriggerEvent.bind(this));
     },
 
