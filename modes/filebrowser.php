@@ -25,14 +25,14 @@ $directoryFinder->directories()
     ->ignoreUnreadableDirs()
     ->depth(0)
     ->sortByName();
-if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
+if (in_array("symlinks", $pathConfig["permissions"])) {
     $directoryFinder->followLinks();
 }
 if (!empty($relpath)) {
     $directoryFinder->path($relpath)
         ->depth(substr_count($relpath, "/") + 1);
 }
-if (isset($pathConfig["denyNSFW"]) && $pathConfig["denyNSFW"] === true) {
+if (!in_array("nsfw", $pathConfig["permissions"])) {
     $directoryFinder->notPath("/.*\/NSFW\/.*/")
         ->notPath("/NSFW\/.*/")
         ->notPath("/.*\/NSFW/");
@@ -59,14 +59,14 @@ foreach (array_map("strtoupper", $allowedImageTypes) as $imageType) {
     $fileFinder->name("*.{$imageType}");
 }
 $fileFinder->sortByName();
-if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
+if (in_array("symlinks", $pathConfig["permissions"])) {
     $fileFinder->followLinks();
 }
 if (!empty($relpath)) {
     $fileFinder->path($relpath)
         ->depth(substr_count($relpath, "/") + 1);
 }
-if (isset($pathConfig["denyNSFW"]) && $pathConfig["denyNSFW"] === true) {
+if (!in_array("nsfw", $pathConfig["permissions"])) {
     $fileFinder->notPath("/.*\/NSFW\/.*/")
         ->notPath("/NSFW\/.*/")
         ->notPath("/.*\/NSFW/");

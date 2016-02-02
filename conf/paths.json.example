@@ -11,7 +11,8 @@
                 "users": [],
                 "groups": []
             }
-        }
+        },
+        "permissions": ["nsfw"]
     },
     {
         "name": "Photos in backup",
@@ -25,7 +26,8 @@
                 "users": ["3rdtestusernamehere"],
                 "groups": []
             }
-        }
+        },
+        "permissions": ["nsfw", "symlinks"]
     },
     {
         "name": "Test Path",
@@ -39,6 +41,7 @@
                 "users": [],
                 "groups": ["group1"]
             }
-        }
+        },
+        "permissions": []
     }
 ]
