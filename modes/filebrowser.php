@@ -32,6 +32,11 @@ if (!empty($relpath)) {
     $directoryFinder->path($relpath)
         ->depth(substr_count($relpath, "/") + 1);
 }
+if (isset($pathConfig["denyNSFW"]) && $pathConfig["denyNSFW"] === true) {
+    $directoryFinder->notPath("/.*\/NSFW\/.*/")
+        ->notPath("/NSFW\/.*/")
+        ->notPath("/.*\/NSFW/");
+}
 $directoryIterator = $directoryFinder->in($pathConfig["path"]);
 
 $directoryArray = array();
@@ -60,6 +65,11 @@ if (isset($pathConfig["followLinks"]) && $pathConfig["followLinks"] === true) {
 if (!empty($relpath)) {
     $fileFinder->path($relpath)
         ->depth(substr_count($relpath, "/") + 1);
+}
+if (isset($pathConfig["denyNSFW"]) && $pathConfig["denyNSFW"] === true) {
+    $fileFinder->notPath("/.*\/NSFW\/.*/")
+        ->notPath("/NSFW\/.*/")
+        ->notPath("/.*\/NSFW/");
 }
 $fileIterator = $fileFinder->in($pathConfig["path"]);
 
