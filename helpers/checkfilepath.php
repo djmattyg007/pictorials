@@ -13,8 +13,14 @@ if (!isset($paths[$pathID])) {
     sendError(404);
 }
 $fullFilename = $paths[$pathID]["path"] . $filename;
-if (!file_exists($fullFilename)) {
+if (!is_file($fullFilename)) {
     sendError(404);
+}
+if (!in_array("nsfw", $paths[$pathID]["permissions"])) {
+    $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $fullFilename);
+    if ($nsfwRegexPathTest === 1 || $nsfwRegexPathTest === false) {
+        sendError(404);
+    }
 }
 
 return $fullFilename;
