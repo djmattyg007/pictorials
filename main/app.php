@@ -1,5 +1,7 @@
 <?php
 
+define("VERSION", "1.0.0");
+
 $appConfig = json_decode(loadPicFile("conf/app.json"), true);
 
 $constants = $appConfig["constants"];

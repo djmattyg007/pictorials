@@ -1,3 +1,19 @@
+body {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex: 1 0 auto;
+}
+
+#footer {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .img-center {
     margin-left: auto;
     margin-right: auto;
