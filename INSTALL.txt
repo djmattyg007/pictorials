@@ -62,8 +62,4 @@ That's it! You should now have a fully functioning image gallery. Point your
 web browser to the PHP file you created in Step 8, login with one of the accounts
 you created in Step 5, and browse one of the paths you configured in Step 6.
 
-Feedback of any nature can be directed at the following channels:
-- Github: https://github.com/djmattyg007/pictorials
-- Email: `echo pictorials-demo.matthewgamble.net | sed 's/\./@/'`
-
 Remember that you can view a live demo at http://pictorials-demo.matthewgamble.net
