@@ -122,7 +122,7 @@ BrowserFiles.prototype = {
         setTimeout(iterFunc, 40);
     },
 
-    _renderPopover() {
+    _renderPopover: function() {
         return '<img src="' + this.src + '" alt="">';
     },
 
