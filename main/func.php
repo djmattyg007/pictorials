@@ -15,7 +15,7 @@ function scriptUrl($mode = "")
  */
 function templateUrl($mode = "")
 {
-    return SCRIPT_BASE_URL . "?templates=1" . ($mode === "" ? "" : "&mode=$mode");
+    return SCRIPT_BASE_URL . "?version=v" . VERSION . "&templates=1" . ($mode === "" ? "" : "&mode=$mode");
 }
 
 /**
@@ -25,7 +25,7 @@ function templateUrl($mode = "")
  */
 function assetUrl($type, $file)
 {
-    return ASSET_BASE_URL . "$type/$file";
+    return ASSET_BASE_URL . "$type/$file?version=v" . VERSION;
 }
 
 /**
