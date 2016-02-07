@@ -11,6 +11,14 @@ This project is targeting the latest versions of Firefox, Pale Moon and Chrome.
 It may work in IE10-11, and probably works in Edge, but I don't particularly
 care about it or Safari.
 
+There are several features that are planned, but for which there is no code
+right now. Chief among these is a traditional gallery view. This project
+started mainly as a file viewer (not a gallery), hence the current appearance.
+Contributions are welcome - feel free to submit an issue or pull request.
+
+You can view a live demo of this software at the following URL:
+http://pictorials-demo.matthewgamble.net
+
 Feedback of any nature can be directed at the following channels:
 - Github: https://github.com/djmattyg007/pictorials
 - Email: `echo pictorials-demo.matthewgamble.net | sed 's/\./@/'`
