@@ -7,6 +7,7 @@
         "hoa/mime": "3.16.01.15",
         "mattyg/array_column_maintain_keys": "1.0.1",
         "mattyg/fb-privacy-auth": "1.0.1",
-        "symfony/finder": "3.0.1"
+        "monolog/monolog": "1.17.2",
+        "symfony/finder": "3.0.2"
     }
 }
