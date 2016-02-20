@@ -31,10 +31,15 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10000;
+    background-color: white;
+    padding-right: 0 !important;
 }
 #loader .loader-img {
     margin-bottom: 5px;
     width: 100%;
+}
+#loader .progress {
+    margin-bottom: 0;
 }
 
 .slick-dots .slick-active button {
@@ -59,4 +64,31 @@ body {
 
 #keyboard-shortcut-list {
     display: none;
+}
+
+.fa-pulse {
+    -webkit-animation: fa-spin 1s infinite steps(8);
+            animation: fa-spin 1s infinite steps(8);
+}
+
+@-webkit-keyframes fa-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+    }
+}
+
+@keyframes fa-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+    }
 }
