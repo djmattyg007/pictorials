@@ -11,3 +11,5 @@ header('Cache-Control: must-revalidate');
 header('Pragma: no-cache');
 header('Content-Length: ' . filesize($fullFilename));
 readfile($fullFilename);
+
+Logger::info("main", "Image downloaded", array("filename" => $fullFilename));

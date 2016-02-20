@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "31fee02af02c911179a04805fecfc092",
-    "content-hash": "906a691b6f9478ede21067c1d91a5036",
+    "hash": "452c3a8e618598f02742df80e7f2cc5f",
+    "content-hash": "5a0f989bc84857b8e05fc1965dcdc27f",
     "packages": [
         {
             "name": "devster/uauth",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/devster/uauth.git",
-                "reference": "126057a6eb7bfa374ff25f04c35f127a9c857005"
+                "reference": "f8a9ea2da7ce40a04b4619a7eabd36b32ca0454a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devster/uauth/zipball/126057a6eb7bfa374ff25f04c35f127a9c857005",
-                "reference": "126057a6eb7bfa374ff25f04c35f127a9c857005",
+                "url": "https://api.github.com/repos/devster/uauth/zipball/f8a9ea2da7ce40a04b4619a7eabd36b32ca0454a",
+                "reference": "f8a9ea2da7ce40a04b4619a7eabd36b32ca0454a",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 "library",
                 "micro"
             ],
-            "time": "2014-10-12 00:43:57"
+            "time": "2016-02-13 14:32:47"
         },
         {
             "name": "gregwar/cache",
@@ -747,6 +747,65 @@
             "time": "2016-01-18 09:02:59"
         },
         {
+            "name": "mattyg/monolog-cascade",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djmattyg007/monolog-cascade.git",
+                "reference": "d8a9fa52e220eee826affb1c2de9815ec2713b46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djmattyg007/monolog-cascade/zipball/d8a9fa52e220eee826affb1c2de9815ec2713b46",
+                "reference": "d8a9fa52e220eee826affb1c2de9815ec2713b46",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "~1.17",
+                "php": ">=5.6.0",
+                "symfony/options-resolver": "~2.8"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.6",
+                "phpunit/phpcov": "~3.0",
+                "phpunit/phpunit": "~5.2",
+                "satooshi/php-coveralls": "~1.0",
+                "squizlabs/php_codesniffer": "~2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MattyG\\MonologCascade\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raphaël Antonmattei",
+                    "email": "rantonmattei@theorchard.com",
+                    "homepage": "https://github.com/rantonmattei"
+                },
+                {
+                    "name": "Matthew Gamble"
+                }
+            ],
+            "description": "Monolog extension to configure multiple loggers in the blink of an eye and access them from anywhere",
+            "homepage": "https://github.com/djmattyg007/monolog-cascade",
+            "keywords": [
+                "cascade",
+                "log",
+                "logger",
+                "monolog",
+                "monolog extension",
+                "monolog plugin",
+                "monolog utils"
+            ],
+            "time": "2016-02-16 08:38:03"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.17.2",
             "source": {
@@ -909,6 +968,60 @@
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
             "time": "2016-01-27 05:14:46"
+        },
+        {
+            "name": "symfony/options-resolver",
+            "version": "v2.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/options-resolver.git",
+                "reference": "b98ca04f85240531b9ea8a0f00a21f2ecfbdfa51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/b98ca04f85240531b9ea8a0f00a21f2ecfbdfa51",
+                "reference": "b98ca04f85240531b9ea8a0f00a21f2ecfbdfa51",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\OptionsResolver\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony OptionsResolver Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "config",
+                "configuration",
+                "options"
+            ],
+            "time": "2016-01-03 15:33:41"
         }
     ],
     "packages-dev": [],

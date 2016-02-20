@@ -37,6 +37,15 @@ Installation Guide
     - Pictorials will hide all folders named "NSFW". If you wish to disable this
       behaviour, add "nsfw" to the permissions array on a path by path basis.
 
+7. Again in the conf directory, make a copy of logging.conf.example, naming it
+   logging.json. This is where you configure all of the loggers used by Pictorials.
+   For documentation on how to do this, consult this link:
+   https://github.com/djmattyg007/monolog-cascade/blob/1.0.0/README.md
+   The most important thing is that two loggers are configured: "main" and "error".
+   Pictorials will try and use these, so they must exist, but everything else is
+   optional. If you wish to disable all logging, you can use logging.json.disabled-example
+   instead, which will automatically configure the two loggers with NullHandlers.
+
 8. Somewhere inside the webroot, create a PHP file (it can be named whatever you want)
    with the following contents:
    <?php

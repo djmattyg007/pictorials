@@ -1,0 +1,39 @@
+{
+    "formatters": {
+        "jsonLines": {
+            "class": "Monolog\\Formatter\\JsonFormatter",
+            "batchMode": 2,
+            "appendNewline": true
+        }
+    },
+    "handlers": {
+        "mainFile": {
+            "class": "Monolog\\Handler\\StreamHandler",
+            "stream": "{{BASE_PATH}}/logging/main.log",
+            "level": "NOTICE"
+        },
+        "errorFile": {
+            "class": "Monolog\\Handler\\StreamHandler",
+            "stream": "{{BASE_PATH}}/logging/error.log",
+            "level": "INFO"
+        }
+    },
+    "processors": {
+        "web": {
+            "class": "Monolog\\Processor\\WebProcessor"
+        },
+        "pictorials": {
+            "class": "PictorialsLogProcessor"
+        }
+    },
+    "loggers": {
+        "main": {
+            "handlers": ["mainFile"],
+            "processors": ["web", "pictorials"]
+        },
+        "error": {
+            "handlers": ["errorFile"],
+            "processors": ["web", "pictorials"]
+        }
+    }
+}

@@ -11,6 +11,7 @@ if (!in_array($originalExtension, $allowedImageTypes)) {
 $mimeType = $type->getMime();
 $actualMimeType = HoaMimeWrapper::picGetMimeTypeFromFilename($filename);
 if ($actualMimeType !== $mimeType) {
+    Logger::warning("error", "Invalid image found.", array("filename" => $filename, "expectedMimeType" => $mimeType, "actualMimeType" => $actualMimeType));
     sendError(500);
 }
 switch ($mimeType)

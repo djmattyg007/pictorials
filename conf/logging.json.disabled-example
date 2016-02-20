@@ -1,0 +1,15 @@
+{
+    "handlers": {
+        "null": {
+            "class": "Monolog\\Handler\\NullHandler"
+        }
+    },
+    "loggers": {
+        "main": {
+            "handlers": ["null"]
+        },
+        "error": {
+            "handlers": ["null"]
+        }
+    }
+}
