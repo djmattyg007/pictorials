@@ -3,6 +3,7 @@ function FileViewer(modal, loader, templater, fileDownloader, concurrencyLimit, 
     this.modal = modal;
     this.carousel = modal.find("[data-modal-carousel]");
     this.downloadBtn = modal.find("[data-modal-download-btn]");
+    this.rotateBtns = modal.find("[data-modal-rotate-btn]");
     this.loader = loader;
     this.templater = templater;
     this.fileDownloader = fileDownloader;
@@ -30,6 +31,9 @@ FileViewer.prototype = {
             self.carousel.slick("unslick");
             self._viewerActive = false;
             self._currentPathID = null;
+        });
+        this.rotateBtns.on("click", function() {
+            self.rotateCurrentCarouselImage(this.dataset["rotateDirection"]);
         });
     },
 
@@ -74,6 +78,21 @@ FileViewer.prototype = {
     getCurrentCarouselSlide: function() {
         var curSlide = this.carousel.slick("slickCurrentSlide");
         return this.carousel.find("[data-slick-index='" + curSlide + "']");
+    },
+
+    rotateCurrentCarouselImage: function(direction) {
+        var curImage = this.getCurrentCarouselSlide().find("img");
+        var rotation = curImage.data("current-rotation");
+        var tempRotation = (rotation ? rotation : 0);
+        // Javascript doesn't have an actual modulo operator
+        if (direction === "left") {
+            tempRotation = tempRotation - 90;
+        } else {
+            tempRotation = tempRotation + 90;
+        }
+        rotation = ((tempRotation % 360) + (tempRotation < 0 ? 360 : 0));
+        curImage.data("current-rotation", rotation);
+        curImage.css("transform", "rotate(" + rotation + "deg)");
     },
 
     addImageToCarousel: function(fl, relpath, src) {

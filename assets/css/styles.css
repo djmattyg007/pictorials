@@ -42,12 +42,36 @@ body {
     margin-bottom: 0;
 }
 
-.slick-dots .slick-active button {
-    background-color: #A6D1DF;
+#files-modal .toolset {
+    margin-bottom: 3px;
+}
+
+#files-modal .rotate-btn-img {
+    width: 22px;
+}
+
+#files-display.slick-initialized .slick-slide {
+    margin-top: 45px;
+}
+
+#files-display.slick-initialized button.slick-arrow {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+#files-display.slick-initialized button.slick-arrow.slick-prev {
+    left: 0;
+}
+#files-display.slick-initialized button.slick-arrow.slick-next {
+    right: 0;
 }
 
 #files-display:not(.slick-initialized) .carousel-file img {
     display: none;
+}
+
+#files-display .slick-dots .slick-active button {
+    background-color: #A6D1DF;
 }
 
 #keyboard-shortcut-notify {

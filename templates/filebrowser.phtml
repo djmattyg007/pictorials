@@ -75,7 +75,19 @@
             <h4 class="modal-title" id="files-modal-heading">Files</h4>
         </div>
         <div class="modal-body">
-            <button type="button" id="btn-modal-download" data-modal-download-btn>Download</button>
+            <div class="row toolset">
+                <div class="col-xs-6">
+                    <button type="button" id="btn-modal-download" data-modal-download-btn>Download</button>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="button" id="btn-rotate-left" data-modal-rotate-btn data-rotate-direction="left">
+                        <img src="<?php echo assetUrl("img", "rotate-left.svg"); ?>" alt="Rotate Left" class="rotate-btn-img">
+                    </button>
+                    <button type="button" id="btn-rotate-right" data-modal-rotate-btn data-rotate-direction="right">
+                        <img src="<?php echo assetUrl("img", "rotate-right.svg"); ?>" alt="Rotate Right" class="rotate-btn-img">
+                    </button>
+                </div>
+            </div>
             <div id="files-display" data-modal-carousel></div>
         </div>
         <div class="modal-footer">
