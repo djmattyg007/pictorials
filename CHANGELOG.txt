@@ -1,6 +1,6 @@
 CHANGELOG
 
-v0.1.0 - 2015-02-08
+v0.1.0 - 2016-02-08
 -------------------
 
 Initial release. Allows viewing of photos in the style of a file viewer.
