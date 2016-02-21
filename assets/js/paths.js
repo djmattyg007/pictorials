@@ -1,7 +1,6 @@
 function Paths(container)
 {
     this.select = container.find("select");
-    this.button = container.find("button[type='button']");
 
     this.initEvents();
 }
@@ -9,16 +8,13 @@ function Paths(container)
 Paths.prototype = {
     initEvents: function() {
         var self = this;
-        this.button.on("click", function(event) {
+        this.select.on("change", function(event) {
+            jQuery(self).trigger("paths:path_changed");
             var curPathID = self.getSelectedPathID();
             if (curPathID == null) {
-                alert("No path selected.");
                 return;
             }
             jQuery(self).trigger("paths:path_chosen", {pathID: curPathID});
-        });
-        this.select.on("change", function(event) {
-            jQuery(self).trigger("paths:path_changed");
         });
     },
 
