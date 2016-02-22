@@ -24,6 +24,11 @@ body {
     height: 25px;
 }
 
+.dir-row .folder-icon {
+    width: 25px;
+    height: 25px;
+}
+
 #loader {
     width: 180px;
     position: fixed;

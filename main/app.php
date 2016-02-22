@@ -1,6 +1,6 @@
 <?php
 
-define("VERSION", "0.2.0");
+define("VERSION", "0.2.1");
 
 $appConfig = json_decode(loadPicFile("conf/app.json"), true);
 
