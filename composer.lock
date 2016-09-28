@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "452c3a8e618598f02742df80e7f2cc5f",
-    "content-hash": "5a0f989bc84857b8e05fc1965dcdc27f",
+    "hash": "4fe9fd564945ab17fbed58138c97f303",
+    "content-hash": "4646fbecb7d1eead531c1708c5994136",
     "packages": [
         {
             "name": "devster/uauth",
@@ -66,7 +66,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/Cache/zipball/3497a2d58298e8c26643f83c2063a3f58078c486",
+                "url": "https://api.github.com/repos/Gregwar/Cache/zipball/3497a2d",
                 "reference": "3497a2d",
                 "shasum": ""
             },
@@ -105,12 +105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/Image.git",
-                "reference": "3dc2675"
+                "reference": "72568cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/Image/zipball/3dc2675fd85eecef5338121296b0c822b92d1649",
-                "reference": "3dc2675",
+                "url": "https://api.github.com/repos/Gregwar/Image/zipball/72568cf",
+                "reference": "72568cf",
                 "shasum": ""
             },
             "require": {
@@ -148,20 +148,20 @@
                 "gd",
                 "image"
             ],
-            "time": "2015-12-22 13:06:21"
+            "time": "2016-07-12 17:02:18"
         },
         {
             "name": "hoa/consistency",
-            "version": "1.16.01.14",
+            "version": "1.16.03.03",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Consistency.git",
-                "reference": "7656b971a8248a8d314ed0c5bb0668936438f62a"
+                "reference": "aa7e30f99aa2ae476f83800d3ad350506eec153b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Consistency/zipball/7656b971a8248a8d314ed0c5bb0668936438f62a",
-                "reference": "7656b971a8248a8d314ed0c5bb0668936438f62a",
+                "url": "https://api.github.com/repos/hoaproject/Consistency/zipball/aa7e30f99aa2ae476f83800d3ad350506eec153b",
+                "reference": "aa7e30f99aa2ae476f83800d3ad350506eec153b",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "hoa/stream": "~0.0",
+                "hoa/stream": "~1.0",
                 "hoa/test": "~2.0"
             },
             "type": "library",
@@ -211,20 +211,20 @@
                 "keyword",
                 "library"
             ],
-            "time": "2016-01-14 10:26:48"
+            "time": "2016-03-03 09:37:24"
         },
         {
             "name": "hoa/event",
-            "version": "1.16.01.11",
+            "version": "1.16.03.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Event.git",
-                "reference": "4470e090207336c01ea0cc6f9f1fa8832e4d9866"
+                "reference": "b1577069d63d6efc559406f3bc31813ac33e76b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Event/zipball/4470e090207336c01ea0cc6f9f1fa8832e4d9866",
-                "reference": "4470e090207336c01ea0cc6f9f1fa8832e4d9866",
+                "url": "https://api.github.com/repos/hoaproject/Event/zipball/b1577069d63d6efc559406f3bc31813ac33e76b8",
+                "reference": "b1577069d63d6efc559406f3bc31813ac33e76b8",
                 "shasum": ""
             },
             "require": {
@@ -267,7 +267,7 @@
                 "listener",
                 "observer"
             ],
-            "time": "2016-01-11 08:34:41"
+            "time": "2016-03-15 14:49:59"
         },
         {
             "name": "hoa/exception",
@@ -387,16 +387,16 @@
         },
         {
             "name": "hoa/iterator",
-            "version": "2.16.01.11",
+            "version": "2.16.03.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Iterator.git",
-                "reference": "eed36f2ec8233f494fd4450d570453b9a84736da"
+                "reference": "60bdefab8db17717871a11101dedec60572f95b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Iterator/zipball/eed36f2ec8233f494fd4450d570453b9a84736da",
-                "reference": "eed36f2ec8233f494fd4450d570453b9a84736da",
+                "url": "https://api.github.com/repos/hoaproject/Iterator/zipball/60bdefab8db17717871a11101dedec60572f95b8",
+                "reference": "60bdefab8db17717871a11101dedec60572f95b8",
                 "shasum": ""
             },
             "require": {
@@ -437,7 +437,7 @@
                 "iterator",
                 "library"
             ],
-            "time": "2016-01-11 09:13:46"
+            "time": "2016-03-15 14:51:54"
         },
         {
             "name": "hoa/mime",
@@ -500,16 +500,16 @@
         },
         {
             "name": "hoa/protocol",
-            "version": "1.16.01.11",
+            "version": "1.16.07.07",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Protocol.git",
-                "reference": "97a33357e9f0827b75e19a78429d037fab18c1ce"
+                "reference": "28fc998fac9c7364338ec98177fef353e76e4efb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Protocol/zipball/97a33357e9f0827b75e19a78429d037fab18c1ce",
-                "reference": "97a33357e9f0827b75e19a78429d037fab18c1ce",
+                "url": "https://api.github.com/repos/hoaproject/Protocol/zipball/28fc998fac9c7364338ec98177fef353e76e4efb",
+                "reference": "28fc998fac9c7364338ec98177fef353e76e4efb",
                 "shasum": ""
             },
             "require": {
@@ -556,20 +556,20 @@
                 "stream",
                 "wrapper"
             ],
-            "time": "2016-01-11 08:41:20"
+            "time": "2016-07-07 21:03:43"
         },
         {
             "name": "hoa/stream",
-            "version": "1.16.01.14",
+            "version": "1.16.09.06",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Stream.git",
-                "reference": "c00b35078ef8c0881b7d2ed533de19fe0aaf9896"
+                "reference": "f8dec80b6ff3b7898a5604d304ecb73f53d04901"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Stream/zipball/c00b35078ef8c0881b7d2ed533de19fe0aaf9896",
-                "reference": "c00b35078ef8c0881b7d2ed533de19fe0aaf9896",
+                "url": "https://api.github.com/repos/hoaproject/Stream/zipball/f8dec80b6ff3b7898a5604d304ecb73f53d04901",
+                "reference": "f8dec80b6ff3b7898a5604d304ecb73f53d04901",
                 "shasum": ""
             },
             "require": {
@@ -617,20 +617,20 @@
                 "stream",
                 "wrapper"
             ],
-            "time": "2016-01-14 20:11:37"
+            "time": "2016-09-06 11:14:23"
         },
         {
             "name": "hoa/zformat",
-            "version": "1.16.01.14",
+            "version": "1.16.03.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Zformat.git",
-                "reference": "685bba314c5cacb97afdd5e638b64c42399a580c"
+                "reference": "d261637aa6f4485d697ebcb898a379f7a34b4e34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Zformat/zipball/685bba314c5cacb97afdd5e638b64c42399a580c",
-                "reference": "685bba314c5cacb97afdd5e638b64c42399a580c",
+                "url": "https://api.github.com/repos/hoaproject/Zformat/zipball/d261637aa6f4485d697ebcb898a379f7a34b4e34",
+                "reference": "d261637aa6f4485d697ebcb898a379f7a34b4e34",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,7 @@
                 "parameter",
                 "zformat"
             ],
-            "time": "2016-01-14 20:19:54"
+            "time": "2016-03-15 14:55:30"
         },
         {
             "name": "mattyg/array_column_maintain_keys",
@@ -807,16 +807,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.17.2",
+            "version": "1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bee7f0dc9c3e0b69a6039697533dca1e845c8c24"
+                "reference": "f42fbdfd53e306bda545845e4dbfd3e72edb4952"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bee7f0dc9c3e0b69a6039697533dca1e845c8c24",
-                "reference": "bee7f0dc9c3e0b69a6039697533dca1e845c8c24",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f42fbdfd53e306bda545845e4dbfd3e72edb4952",
+                "reference": "f42fbdfd53e306bda545845e4dbfd3e72edb4952",
                 "shasum": ""
             },
             "require": {
@@ -831,13 +831,13 @@
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
                 "jakub-onderka/php-parallel-lint": "0.9",
+                "php-amqplib/php-amqplib": "~2.4",
                 "php-console/php-console": "^3.1.3",
                 "phpunit/phpunit": "~4.5",
                 "phpunit/phpunit-mock-objects": "2.3.0",
-                "raven/raven": "^0.13",
                 "ruflin/elastica": ">=0.90 <3.0",
-                "swiftmailer/swiftmailer": "~5.3",
-                "videlalvaro/php-amqplib": "~2.4"
+                "sentry/sentry": "^0.13",
+                "swiftmailer/swiftmailer": "~5.3"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -845,16 +845,17 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
                 "php-console/php-console": "Allow sending log messages to Google Chrome",
-                "raven/raven": "Allow sending log messages to a Sentry server",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+                "sentry/sentry": "Allow sending log messages to a Sentry server"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.16.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -880,7 +881,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-10-14 12:51:02"
+            "time": "2016-07-29 03:23:52"
         },
         {
             "name": "psr/log",
@@ -922,16 +923,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.0.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "623bda0abd9aa29e529c8e9c08b3b84171914723"
+                "reference": "8201978de88a9fa0923e18601bb17f1df9c721e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/623bda0abd9aa29e529c8e9c08b3b84171914723",
-                "reference": "623bda0abd9aa29e529c8e9c08b3b84171914723",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/8201978de88a9fa0923e18601bb17f1df9c721e7",
+                "reference": "8201978de88a9fa0923e18601bb17f1df9c721e7",
                 "shasum": ""
             },
             "require": {
@@ -940,7 +941,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -967,20 +968,20 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-27 05:14:46"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v2.8.2",
+            "version": "v2.8.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "b98ca04f85240531b9ea8a0f00a21f2ecfbdfa51"
+                "reference": "b6f982782a0624d37b5416c2c96fb99ce5ab74d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/b98ca04f85240531b9ea8a0f00a21f2ecfbdfa51",
-                "reference": "b98ca04f85240531b9ea8a0f00a21f2ecfbdfa51",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/b6f982782a0624d37b5416c2c96fb99ce5ab74d5",
+                "reference": "b6f982782a0624d37b5416c2c96fb99ce5ab74d5",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1022,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2016-01-03 15:33:41"
+            "time": "2016-06-29 05:29:29"
         }
     ],
     "packages-dev": [],
