@@ -2,7 +2,6 @@
 
 $fullFilename = loadPicFile("helpers/checkfilepath.php");
 
-//list($normalisedExtension, $actualExtension, $mimeType) = loadPicFile("helpers/checkimagetype.php", array("filename" => $fullFilename));
 list($normalisedExtension, $mimeType) = loadPicFile("helpers/checkimagetype.php", array("filename" => $fullFilename));
 
 $imageSizes = json_decode(loadPicFile("conf/app.json"), true)["image_sizes"];
@@ -21,9 +20,7 @@ $cache->setCacheDirectory(CACHE_DIR . "/images");
 $image = Image::open($fullFilename);
 $image->setCacheSystem($cache);
 $image->cropResize($imageSize["width"], $imageSize["height"]);
-//if ($normalisedExtension === "jpeg") {
-    $image->fixOrientation();
-//}
+$image->fixOrientation();
 
 $imageData = $image->cacheData($normalisedExtension);
 header("Content-type: $mimeType");

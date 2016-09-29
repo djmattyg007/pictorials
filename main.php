@@ -20,7 +20,6 @@ loadPicFile("main/func.php");
 loadPicFile("vendor/autoload.php");
 loadPicFile("main/logging.php");
 loadPicFile("classes/accesscontrol.php");
-//loadPicFile("classes/hoamimewrapper.php");
 loadPicFile("classes/mrmime.php");
 
 loadPicFile("main/auth.php");
