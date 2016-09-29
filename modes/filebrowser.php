@@ -3,7 +3,11 @@
 $paths = Access::getAllowedPaths();
 
 if (empty($_POST)) {
-    loadPicTemplate("templates/filebrowser.phtml", array("paths" => $paths));
+    $appConf = loadPicFile("conf/app.json");
+    loadPicTemplate("templates/filebrowser.phtml", array(
+        "paths" => $paths,
+        "imageSizes" => json_decode($appConf, true)["image_sizes"],
+    ));
     exit();
 }
 if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
