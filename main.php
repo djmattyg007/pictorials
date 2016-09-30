@@ -7,8 +7,12 @@
  */
 function loadPicFile($includePicFilename, array $extractVars = array(), $getContentsOverride = false)
 {
-    if ($getContentsOverride === true || !in_array(pathinfo($includePicFilename, PATHINFO_EXTENSION), ["php", "phtml"])) {
+    $fileExtension = pathinfo($includePicFilename, PATHINFO_EXTENSION);
+    if ($getContentsOverride === true || !in_array($fileExtension, ["json", "php", "phtml"])) {
         return file_get_contents(BASE_PATH . $includePicFilename);
+    }
+    if ($fileExtension === "json") {
+        return json_decode(file_get_contents(BASE_PATH . $includePicFilename), true);
     }
     if (!empty($extractVars)) {
         extract($extractVars);
@@ -20,6 +24,8 @@ loadPicFile("main/func.php");
 loadPicFile("vendor/autoload.php");
 loadPicFile("main/logging.php");
 loadPicFile("classes/accesscontrol.php");
+loadPicFile("classes/exif.php");
+loadPicFile("classes/image.php");
 loadPicFile("classes/mrmime.php");
 
 loadPicFile("main/auth.php");

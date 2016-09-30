@@ -1,25 +1,19 @@
 <?php
 
-$paths = Access::getAllowedPaths();
-
 if (empty($_POST)) {
-    $appConf = loadPicFile("conf/app.json");
     loadPicTemplate("templates/filebrowser.phtml", array(
-        "paths" => $paths,
-        "imageSizes" => json_decode($appConf, true)["image_sizes"],
+        "paths" => Access::getAllowedPaths(),
+        "imageSizes" => loadPicFile("conf/app.json")["image_sizes"],
     ));
     exit();
 }
-if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
-    sendError(400);
-}
-$pathID = (int) $_POST["path"];
-if (!isset($paths[$pathID])) {
-    sendError(404);
-}
-$pathConfig = $paths[$pathID];
+
+$pathConfig = Access::getCurrentPathConfig();
 if (!empty($_POST["relpath"])) {
     $relpath = loadPicFile("helpers/filenamereject.php", array("filename" => $_POST["relpath"]));
+    if (!is_dir($pathConfig["path"] . "/" . $relpath)) {
+        sendError(404);
+    }
 }
 
 use Symfony\Component\Finder\Finder;

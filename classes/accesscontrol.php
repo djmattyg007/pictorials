@@ -12,7 +12,23 @@ class Access
     /**
      * @var array
      */
-    private static $paths = null;
+    private static $allPaths = null;
+
+    /**
+     * @var array
+     */
+    private static $currentPathConfig = null;
+
+    /**
+     * @return array
+     */
+    private static function allPaths()
+    {
+        if (self::$allPaths === null) {
+            self::$allPaths = loadPicFile("conf/paths.json");
+        }
+        return self::$allPaths;
+    }
 
     /**
      * @return AuthChecker
@@ -20,9 +36,8 @@ class Access
     private static function getChecker()
     {
         if (self::$checker === null) {
-            $groups = json_decode(loadPicFile("conf/auth.json"), true)["groups"];
-            self::$paths = json_decode(loadPicFile("conf/paths.json"), true);
-            $resources = array_column_maintain_keys(self::$paths, "auth");
+            $groups = loadPicFile("conf/auth.json")["groups"];
+            $resources = array_column_maintain_keys(self::allPaths(), "auth");
             self::$checker = new AuthChecker($groups, $resources);
         }
         return self::$checker;
@@ -51,6 +66,26 @@ class Access
             $username = USERNAME;
         }
         $allowedPathIDs = self::getChecker()->getAllowedResourceIds($username);
-        return array_intersect_key(self::$paths, array_flip($allowedPathIDs));
+        return array_intersect_key(self::allPaths(), array_flip($allowedPathIDs));
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCurrentPathConfig()
+    {
+        if (self::$currentPathConfig !== null) {
+            return self::$currentPathConfig;
+        }
+        if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
+            sendError(400);
+        }
+        $paths = self::getAllowedPaths();
+        $pathID = (int) $_POST["path"];
+        if (!isset($paths[$pathID])) {
+            sendError(404);
+        }
+        self::$currentPathConfig = $paths[$pathID];
+        return self::$currentPathConfig;
     }
 }

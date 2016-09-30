@@ -2,7 +2,7 @@
 
 define("VERSION", "0.3.0");
 
-$appConfig = json_decode(loadPicFile("conf/app.json"), true);
+$appConfig = loadPicFile("conf/app.json");
 
 $constants = $appConfig["constants"];
 foreach ($constants as $name => $value) {

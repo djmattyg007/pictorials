@@ -1,6 +1,6 @@
 <?php
 
-$authConfig = json_decode(loadPicFile("conf/auth.json"), true);
+$authConfig = loadPicFile("conf/auth.json");
 $userConfig = $authConfig["users"];
 
 $vendorAuthConfig = array_combine(array_column($userConfig, "username"), array_column($userConfig, "password"));
