@@ -2,6 +2,8 @@ function FileViewer(modal, loader, templater, fileDownloader, concurrencyLimit, 
 {
     this.modal = modal;
     this.carousel = modal.find("[data-modal-carousel]");
+    this.carouselDots = modal.find("[data-modal-carousel-dots]");
+    this.details = modal.find("[data-modal-image-details]");
     this.downloadBtn = modal.find("[data-modal-download-btn]");
     this.rotateBtns = modal.find("[data-modal-rotate-btn]");
     this.loader = loader;
@@ -24,7 +26,7 @@ FileViewer.prototype = {
             self.fileDownloader.downloadFile(self._currentPathID, file);
         });
         this.modal.on("shown.bs.modal", function() {
-            self.carousel.slick({dots: true, dotsClass: "slick-dots list-inline"});
+            self.carousel.slick({appendDots: self.carouselDots, dots: true, dotsClass: "slick-dots list-inline"});
             self._viewerActive = true;
         });
         this.modal.on("hide.bs.modal", function() {
@@ -34,6 +36,10 @@ FileViewer.prototype = {
         });
         this.rotateBtns.on("click", function() {
             self.rotateCurrentCarouselImage(this.dataset["rotateDirection"]);
+        });
+        this.carousel.on("init reInit afterChange", function() {
+            // Without the short delay, there is a weird issue when slick is first initialised that breaks it completely.
+            setTimeout(self._showCurrentImageDetails.bind(self), 50);
         });
     },
 
@@ -95,9 +101,29 @@ FileViewer.prototype = {
         curImage.css("transform", "rotate(" + rotation + "deg)");
     },
 
-    addImageToCarousel: function(fl, relpath, src) {
-        var html = this.templater.render("carousel-file", {"src": src, "relpath": relpath, "filename": relpath.split(/[\\/]/).pop()});
+    addImageToCarousel: function(fl, relpath, src, metadata) {
+        var templateData = {"src": src, "relpath": relpath, "filename": relpath.split(/[\\/]/).pop(), "date_taken": "", "metadata": ""};
+        if (metadata) {
+            if (typeof metadata["date_taken"] !== "undefined" && metadata["date_taken"]) {
+                templateData["date_taken"] = metadata["date_taken"];
+                delete metadata["date_taken"];
+            }
+            if (metadata.length) {
+                templateData["metadata"] = JSON.stringify(metadata);
+            }
+        }
+        var html = this.templater.render("carousel-file", templateData);
         this.carousel.append(html);
         this.loader.updateProgress(fl.processedCount / fl.fileCount);
+    },
+
+    _showCurrentImageDetails: function() {
+        var curImage = this.getCurrentCarouselSlide().find("img");
+        var dateTaken = curImage.data("date-taken");
+        if (dateTaken) {
+            this.details.html("<b>Date Taken:</b> " + dateTaken);
+        } else {
+            this.details.html("<b>Date Taken:</b> unknown");
+        }
     }
 };

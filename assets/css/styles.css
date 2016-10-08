@@ -55,6 +55,14 @@ body {
     width: 22px;
 }
 
+#files-display {
+    margin-bottom: 10px;
+}
+
+#files-display .slick-slide {
+    outline: 0;
+}
+
 #files-display.slick-initialized .slick-slide {
     margin-top: 45px;
 }
@@ -75,7 +83,11 @@ body {
     display: none;
 }
 
-#files-display .slick-dots .slick-active button {
+#files-display-details {
+    margin-bottom: 15px;
+}
+
+#files-display-selector .slick-dots .slick-active button {
     background-color: #A6D1DF;
 }
 

@@ -88,6 +88,8 @@
                 </div>
             </div>
             <div id="files-display" data-modal-carousel></div>
+            <div id="files-display-details" data-modal-image-details></div>
+            <div id="files-display-selector" data-modal-carousel-dots></div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -144,7 +146,7 @@ Keyboard<br>shortcuts
 
 <script type="text/x-html-template" id="carousel-file-template">
 <div class="carousel-file">
-    <img src="%{src}" alt="${relpath}" title="${filename}" data-relpath="${relpath}" class="img-responsive img-center">
+    <img src="%{src}" alt="${relpath}" title="${filename}" data-relpath="${relpath}" data-date-taken="${date_taken}" data-metadata="${metadata}" class="img-responsive img-center">
 </div>
 </script>
 </div>

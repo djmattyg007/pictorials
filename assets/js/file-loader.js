@@ -66,8 +66,10 @@ FileLoader.prototype = {
             xhrFields: {
                 responseType: "blob"
             }
-        }).done(function(data) {
-            loadCallback(value, window.URL.createObjectURL(data));
+        }).done(function(data, textStatus, jqXHR) {
+            var metadataString = jqXHR.getResponseHeader("X-Pictorials-Pic-Metadata");
+            var metadata = (metadataString ? JSON.parse(metadataString) : null);
+            loadCallback(value, window.URL.createObjectURL(data), metadata);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while loading '" + value + "':\n" + textStatus;
             if (textStatus == "error") {
