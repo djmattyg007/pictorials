@@ -89,6 +89,7 @@ FileLoader.prototype = {
             if (isNaN(parseInt(data))) {
                 // Assume an error occurred, and automatically scale back the concurrency.
                 self.concurrency_limit = self.orig_concurrency_limit - 1;
+                return;
             }
             if (data == "2") {
                 self.concurrency_limit = self.orig_concurrency_limit;
