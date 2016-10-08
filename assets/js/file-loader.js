@@ -22,7 +22,7 @@ function FileLoader(pathID, files, downloadUrl, concurrency_limit, sysloadUrl)
     this.files = files;
     this.downloadUrl = downloadUrl;
 
-    this.open_count = 0;
+    this.openCount = 0;
     this.orig_concurrency_limit = (!isNaN(parseInt(concurrency_limit)) && concurrency_limit > 2 ? concurrency_limit : 2);
     this.concurrency_limit = this.orig_concurrency_limit;
     this.sysloadUrl = sysloadUrl;
@@ -45,7 +45,7 @@ FileLoader.prototype = {
         // Also should be able to use Array.prototype.forEach
         jQuery.each(this.files, function(index, value) {
             var waitFunc = function() {
-                if (self.open_count >= self.concurrency_limit) {
+                if (self.openCount >= self.concurrency_limit) {
                     setTimeout(waitFunc, 200);
                 } else {
                     self._load(loadCallback, errorCallback, value);
@@ -57,7 +57,7 @@ FileLoader.prototype = {
 
     _load: function(loadCallback, errorCallback, value) {
         var self = this;
-        self.open_count++;
+        self.openCount++;
         jQuery.ajax({
             method: "POST",
             data: {path: this.pathID, "filename": value},
@@ -75,7 +75,7 @@ FileLoader.prototype = {
             }
             errorCallback(msg);
         }).always(function() {
-            self.open_count--;
+            self.openCount--;
             self.processedCount++;
             if (self.processedCount === self.fileCount) {
                 jQuery(self).trigger("file_loader:finish_load");
