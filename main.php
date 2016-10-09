@@ -27,6 +27,7 @@ loadPicFile("classes/accesscontrol.php");
 loadPicFile("classes/exif.php");
 loadPicFile("classes/image.php");
 loadPicFile("classes/mrmime.php");
+loadPicFile("classes/jstemplatebuilder.php");
 
 loadPicFile("main/auth.php");
 

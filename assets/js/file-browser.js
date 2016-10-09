@@ -1,5 +1,5 @@
 var ajaxUrls = JSON.parse(jQuery("#ajax-urls").html());
-var templater = new Templater();
+var templater = new Templater(window.templates);
 var loader = new Loader(jQuery("#loader"));
 var galleryFlFactory = new FileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(ajaxUrls.downloadFile, ajaxUrls.sysload);
