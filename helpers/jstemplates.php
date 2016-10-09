@@ -28,7 +28,7 @@ window.templates = {
 <?php foreach ($jsTemplates as $identifier => $funcCode): ?>
     "<?php echo $identifier; ?>": function(helper, obj) {
         var result = "";
-        <?php echo $funcCode; ?>
+<?php echo $funcCode; ?>
         return result;
     },
 <?php endforeach; ?>

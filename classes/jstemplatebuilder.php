@@ -8,6 +8,11 @@ class JsTemplateBuilder
     const REGEX = '/([#\$%@])\{(.*?)\}/';
 
     /**
+     * @var int
+     */
+    private static $indentation = 0;
+
+    /**
      * Accepts a JSON-encoded string with the start and end quotation marks chopped off.
      *
      * @param string $template
@@ -15,16 +20,17 @@ class JsTemplateBuilder
      */
     public static function build($template)
     {
+        self::$indentation = 1;
         $textParts = preg_split(self::REGEX, $template);
         preg_match_all(self::REGEX, $template, $templateParts, PREG_SET_ORDER);
         $partCount = count($templateParts);
 
         $result = "";
         for ($x = 0; $x < $partCount; $x++) {
-            $result .= self::buildTextPart($textParts[$x]);
-            $result .= self::buildTemplatePart($templateParts[$x][1], $templateParts[$x][2]);
+            $result .= str_repeat(" ", self::$indentation * 4 + 4) . self::buildTextPart($textParts[$x]);
+            $result .= str_repeat(" ", self::$indentation * 4 + 4) . self::buildTemplatePart($templateParts[$x][1], $templateParts[$x][2]);
         }
-        $result .= self::buildTextPart($textParts[$x]);
+        $result .= str_repeat("    ", self::$indentation * 4 + 4) . self::buildTextPart($textParts[$x]);
 
         return $result;
     }
@@ -57,8 +63,10 @@ class JsTemplateBuilder
         } elseif ($control === '@') {
             $logic = explode(" ", $inside, 2);
             if ($logic[0] === 'if') {
-                return 'if (obj["' . $logic[1] . '"]) {' . "\n";
+                self::$indentation++;
+                return 'if (typeof obj["' . $logic[1] . '"] !== "undefined" && obj["' . $logic[1] . '"]) {' . "\n";
             } elseif ($logic[0] === 'endif') {
+                self::$indentation--;
                 return '}' . "\n";
             }
         }
