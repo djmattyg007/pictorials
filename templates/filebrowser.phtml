@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div id="files-display" data-modal-carousel></div>
-            <div id="files-display-details" data-modal-image-details></div>
+            <div id="files-display-details" class="clearfix" data-modal-image-details></div>
             <div id="files-display-selector" data-modal-carousel-dots></div>
         </div>
         <div class="modal-footer">
@@ -152,7 +152,27 @@ Keyboard<br>shortcuts
 </script>
 
 <script type="text/x-html-template" id="carousel-file-details-template">
-<b>Date Taken:</b> @{if date_taken}#{date_taken}@{else}unknown@{endif}
+<div class="date-taken"><b>Date Taken:</b> @{if date_taken}#{date_taken}@{else}unknown@{endif}</div>
+@{if metadata}
+<div class="metadata-display">
+<button type="button" role="button" tabindex="-1" data-metadata-container-trigger data-html="true" data-placement="left" data-trigger="manual">Metadata</button>
+<div class="metadata-container" data-metadata-container>%{metadata}</div>
+</div>
+@{endif}
+</script>
+
+<script type="text/x-html-template" id="file-metadata-list-template">
+<ul class="list-unstyled">
+@{if exposure}
+    <li><b>Exposure time:</b> #{exposure} sec.</li>
+@{endif}
+@{if iso}
+    <li><b>ISO speed:</b> ISO-#{iso}</li>
+@{endif}
+@{if focal_length}
+    <li><b>Focal length:</b> #{focal_length} mm</li>
+@{endif}
+</ul>
 </script>
 </div>
 

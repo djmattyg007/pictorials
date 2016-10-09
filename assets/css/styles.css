@@ -87,6 +87,18 @@ body {
     margin-bottom: 15px;
 }
 
+#files-display-details .date-taken {
+    float: left;
+}
+
+#files-display-details .metadata-display {
+    float: right;
+}
+
+#files-display-details .metadata-display .metadata-container {
+    display: none;
+}
+
 #files-display-selector .slick-dots > li {
     margin-bottom: 2px;
 }

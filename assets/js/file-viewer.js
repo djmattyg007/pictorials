@@ -21,7 +21,7 @@ function FileViewer(modal, loader, templater, fileDownloader, concurrencyLimit, 
 FileViewer.prototype = {
     initEvents: function() {
         var self = this;
-        this.downloadBtn.on("click", function(event) {
+        this.downloadBtn.on("click", function() {
             var file = self.getCurrentCarouselSlide().children().data("relpath");
             self.fileDownloader.downloadFile(self._currentPathID, file);
         });
@@ -40,6 +40,21 @@ FileViewer.prototype = {
         this.carousel.on("init reInit afterChange", function() {
             // Without the short delay, there is a weird issue when slick is first initialised that breaks it completely.
             setTimeout(self._showCurrentImageDetails.bind(self), 50);
+        });
+        this.carousel.on("beforeChange", function() {
+            self.details.find("[data-metadata-container-trigger]").popover("destroy");
+        });
+        this.details.on("click", "[data-metadata-container-trigger]", function() {
+            var $this = jQuery(this);
+            if (!$this.data("content")) {
+                $this.data("content", self._getCurrentMetadataList.bind(self));
+            }
+            $this.popover("toggle");
+        });
+        this.details.on("hidden.bs.popover", "[data-metadata-container-trigger]", function() {
+            // I can't find any reliable way to determine the current state of the popover through
+            // the programmatic API, so instead we'll just destroy the popover object every time.
+            jQuery(this).popover("destroy");
         });
     },
 
@@ -108,7 +123,7 @@ FileViewer.prototype = {
                 templateData["date_taken"] = metadata["date_taken"];
                 delete metadata["date_taken"];
             }
-            if (metadata.length) {
+            if (metadata && jQuery.isEmptyObject(metadata) === false) {
                 templateData["metadata"] = JSON.stringify(metadata);
             }
         }
@@ -120,6 +135,15 @@ FileViewer.prototype = {
     _showCurrentImageDetails: function() {
         var curImage = this.getCurrentCarouselSlide().find("img");
         var dateTaken = curImage.data("date-taken");
-        this.details.html(this.templater.render("carousel-file-details", {date_taken: dateTaken}));
+        var metadata = curImage.data("metadata");
+        var metadataListHTML = "";
+        if (metadata) {
+            metadataListHTML = this.templater.render("file-metadata-list", metadata);
+        }
+        this.details.html(this.templater.render("carousel-file-details", { "date_taken": dateTaken, "metadata": metadataListHTML }));
+    },
+
+    _getCurrentMetadataList: function() {
+        return jQuery("[data-metadata-container]").html();
     }
 };

@@ -27,7 +27,6 @@ if (in_array("metadata", $pathConfig["permissions"])) {
             "date_taken" => $exif->getCreationDate() ? $exif->getCreationDate()->format("Y-m-d") : null,
             "exposure" => $exif->getExposure(),
             "iso" => $exif->getIso(),
-            "focus_distane" => $exif->getFocusDistance(),
             "focal_length" => $exif->getFocalLength(),
         ))));
     }

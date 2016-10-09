@@ -8,9 +8,16 @@ var TemplateHelper = {
     },
 
     escapeHtml: function(val, forAttr) {
-        return val.replace(forAttr ? /[&<>'"]/g : /[&<>]/g, function(c) {
-            return TemplateHelper.escapeHtmlMap[c];
-        });
+        var valType = jQuery.type(val);
+        if (valType === "number") {
+            return val;
+        } else if (valType === "string") {
+            return val.replace(forAttr ? /[&<>'"]/g : /[&<>]/g, function(c) {
+                return TemplateHelper.escapeHtmlMap[c];
+            });
+        } else {
+            throw new Error("Unsupported data type passed to template");
+        }
     }
 };
 
