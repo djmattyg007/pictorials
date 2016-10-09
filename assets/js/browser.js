@@ -100,7 +100,7 @@ BrowserFiles.prototype = {
     },
 
     registerWithKeyListener: function(keyListener) {
-        // 67 = 'l'
+        // 67 = 'c'
         keyListener.register(67, this._clearSelectedFilesEvent.bind(this));
     },
 
@@ -217,6 +217,7 @@ Browser.prototype = {
     },
 
     registerWithKeyListener: function(keyListener) {
+        // 76 = 'l'
         keyListener.register(76, this._dispatchLoadEvent.bind(this));
     },
 
