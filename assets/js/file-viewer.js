@@ -120,10 +120,6 @@ FileViewer.prototype = {
     _showCurrentImageDetails: function() {
         var curImage = this.getCurrentCarouselSlide().find("img");
         var dateTaken = curImage.data("date-taken");
-        if (dateTaken) {
-            this.details.html("<b>Date Taken:</b> " + dateTaken);
-        } else {
-            this.details.html("<b>Date Taken:</b> unknown");
-        }
+        this.details.html(this.templater.render("carousel-file-details", {date_taken: dateTaken}));
     }
 };

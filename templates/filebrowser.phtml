@@ -147,8 +147,12 @@ Keyboard<br>shortcuts
 
 <script type="text/x-html-template" id="carousel-file-template">
 <div class="carousel-file">
-    <img src="%{src}" alt="${relpath}" title="${filename}" data-relpath="${relpath}" data-date-taken="${date_taken}" data-metadata="${metadata}" class="img-responsive img-center">
+    <img src="%{src}" alt="${relpath}" title="${filename}" data-relpath="${relpath}" @{if date_taken}data-date-taken="${date_taken}"@{endif} @{if metadata}data-metadata="${metadata}"@{endif} @{if gps}data-gps="${gps}"@{endif} class="img-responsive img-center">
 </div>
+</script>
+
+<script type="text/x-html-template" id="carousel-file-details-template">
+<b>Date Taken:</b> @{if date_taken}#{date_taken}@{else}unknown@{endif}
 </script>
 </div>
 

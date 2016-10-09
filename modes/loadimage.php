@@ -22,10 +22,15 @@ $imageData = $image->cacheData($normalisedExtension);
 header("Content-type: $mimeType");
 
 if (in_array("metadata", $pathConfig["permissions"])) {
-    $exif = Exif::read($fullFilename);
-    header("X-Pictorials-Pic-Metadata: " . json_encode(array(
-        "date_taken" => $exif->getCreationDate() ? $exif->getCreationDate()->format("Y-m-d") : null,
-    )));
+    if ($exif = Exif::read($fullFilename)) {
+        header("X-Pictorials-Pic-Metadata: " . json_encode(array_filter(array(
+            "date_taken" => $exif->getCreationDate() ? $exif->getCreationDate()->format("Y-m-d") : null,
+            "exposure" => $exif->getExposure(),
+            "iso" => $exif->getIso(),
+            "focus_distane" => $exif->getFocusDistance(),
+            "focal_length" => $exif->getFocalLength(),
+        ))));
+    }
 }
 
 echo $imageData;
