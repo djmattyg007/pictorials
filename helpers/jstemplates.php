@@ -20,9 +20,9 @@ $phpCallback = function($matches) {
 $jsCallback = function($matches) {
     if ($matches[1] === "#") {
         return '"+helper.escapeHtml(obj["' . $matches[2] . '"], false)+"';
-    } else if ($matches[1] === "$") {
+    } elseif ($matches[1] === "$") {
         return '"+helper.escapeHtml(obj["' . $matches[2] . '"], true)+"';
-    } else if ($matches[1] === "%") {
+    } elseif ($matches[1] === "%") {
         return '"+obj["' . $matches[2] . '"]+"';
     }
 };
