@@ -87,7 +87,11 @@ body {
     margin-bottom: 15px;
 }
 
-#files-display-selector .slick-dots .slick-active button {
+#files-display-selector .slick-dots > li {
+    margin-bottom: 2px;
+}
+
+#files-display-selector .slick-dots > li.slick-active button {
     background-color: #A6D1DF;
 }
 
