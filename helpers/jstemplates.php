@@ -22,7 +22,7 @@ $jsCallback = function($matches) {
         return '"+helper.escapeHtml(obj["' . $matches[2] . '"], false)+"';
     } else if ($matches[1] === "$") {
         return '"+helper.escapeHtml(obj["' . $matches[2] . '"], true)+"';
-    } else {
+    } else if ($matches[1] === "%") {
         return '"+obj["' . $matches[2] . '"]+"';
     }
 };

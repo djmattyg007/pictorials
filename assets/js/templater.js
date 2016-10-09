@@ -35,7 +35,7 @@ Templater.prototype = {
                 return '"+helper.escapeHtml(obj["' + p2 + '"], false)+"';
             } else if (p1 === "$") {
                 return '"+helper.escapeHtml(obj["' + p2 + '"], true)+"';
-            } else {
+            } else if (p1 === "%") {
                 return '"+obj["' + p2 + '"]+"';
             }
         });
