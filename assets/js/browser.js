@@ -178,7 +178,11 @@ BrowserFiles.prototype = {
     },
 
     _clearSelectedFilesEvent: function(event) {
-        this.container.find(".file-chk:checked").click();
+        var self = this;
+        this.container.find(".file-chk:checked").each(function() {
+            this.checked = false;
+            self._rowClick.call(self, this, false);
+        });
     }
 };
 
