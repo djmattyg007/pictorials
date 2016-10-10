@@ -91,7 +91,8 @@ body {
     float: left;
 }
 
-#files-display-details .metadata-display {
+#files-display-details .metadata-display,
+#files-display-details .gps-display {
     float: right;
 }
 
@@ -105,6 +106,10 @@ body {
 
 #files-display-selector .slick-dots > li.slick-active button {
     background-color: #A6D1DF;
+}
+
+#map-container {
+    height: 420px;
 }
 
 #keyboard-shortcut-notify {
@@ -121,6 +126,23 @@ body {
 
 #keyboard-shortcut-list {
     display: none;
+}
+
+.modal.in {
+    -webkit-perspective: 2000px;
+            perspective: 2000px;
+}
+
+.modal.in.aside .modal-dialog {
+    -webkit-transform: scale(0.7) rotateY(43deg) translateX(-300px);
+            transform: scale(0.7) rotateY(43deg) translateX(-300px);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+}
+
+.modal.in.aside.aside-1 .modal-dialog {
+    -webkit-transform: scale(0.7) rotateY(43deg) translateX(-270px);
+            transform: scale(0.7) rotateY(43deg) translateX(-270px);
 }
 
 .fa-pulse {

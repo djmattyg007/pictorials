@@ -1,12 +1,23 @@
 var ajaxUrls = JSON.parse(jQuery("#ajax-urls").html());
+var mapboxConfigEl = jQuery("#mapbox-config");
+var mapboxConfig = null;
+if (mapboxConfigEl.length) {
+    mapboxConfig = JSON.parse(mapboxConfigEl.html());
+}
+
 var templater = new Templater(window.templates);
+var modalManager = new ModalManager();
 var loader = new Loader(jQuery("#loader"));
 var galleryFlFactory = new FileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(ajaxUrls.downloadFile, ajaxUrls.sysload);
 var thumbnailFlFactory = new CancellableFileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var fileDownloader = new Downloader(downloadFlFactory, loader);
+var fileMap = null;
+if (mapboxConfig) {
+    fileMap = new FileMap(jQuery("#map-modal"), modalManager, mapboxConfig["mapId"], mapboxConfig["accessToken"]);
+}
 var paths = new Paths(jQuery("#paths"));
-var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, fileDownloader, 3, galleryFlFactory);
+var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileDownloader, fileMap, 3, galleryFlFactory);
 
 var $browserContainer = jQuery("#browser-container");
 var browserCurpath = new BrowserCurPath($browserContainer.find("[data-browser-curpath]"));

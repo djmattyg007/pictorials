@@ -21,14 +21,22 @@ $imageData = $image->cacheData($normalisedExtension);
 
 header("Content-type: $mimeType");
 
-if (in_array("metadata", $pathConfig["permissions"])) {
-    if ($exif = Exif::read($fullFilename)) {
-        header("X-Pictorials-Pic-Metadata: " . json_encode(array_filter(array(
-            "date_taken" => $exif->getCreationDate() ? $exif->getCreationDate()->format("Y-m-d") : null,
-            "exposure" => $exif->getExposure(),
-            "iso" => $exif->getIso(),
-            "focal_length" => $exif->getFocalLength(),
-        ))));
+$exif = Exif::read($fullFilename);
+if (in_array("metadata", $pathConfig["permissions"]) && $exif) {
+    header("X-Pictorials-Pic-Metadata: " . json_encode(array_filter(array(
+        "date_taken" => $exif->getCreationDate() ? $exif->getCreationDate()->format("Y-m-d") : null,
+        "exposure" => $exif->getExposure(),
+        "iso" => $exif->getIso(),
+        "focal_length" => $exif->getFocalLength(),
+    ))));
+}
+if (in_array("gps", $pathConfig["permissions"]) && $exif) {
+    if ($gpsCoords = $exif->getGPS()) {
+        list($gpsLat, $gpsLon) = explode(",", $gpsCoords);
+        header("X-Pictorials-Pic-GPS: " . json_encode(array(
+            "lat" => (float) $gpsLat,
+            "lon" => (float) $gpsLon,
+        )));
     }
 }
 

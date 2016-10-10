@@ -1,10 +1,15 @@
 <?php
 
 if (empty($_POST)) {
-    loadPicTemplate("templates/filebrowser.phtml", array(
+    $appConf = loadPicFile("conf/app.json");
+    $templateVars = array(
         "paths" => Access::getAllowedPaths(),
-        "imageSizes" => loadPicFile("conf/app.json")["image_sizes"],
-    ));
+        "imageSizes" => $appConf["image_sizes"],
+    );
+    if (isset($appConf["mapbox"])) {
+        $templateVars["mapboxConf"] = $appConf["mapbox"];
+    }
+    loadPicTemplate("templates/filebrowser.phtml", $templateVars);
     exit();
 }
 

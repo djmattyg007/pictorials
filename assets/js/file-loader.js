@@ -69,7 +69,9 @@ FileLoader.prototype = {
         }).done(function(data, textStatus, jqXHR) {
             var metadataString = jqXHR.getResponseHeader("X-Pictorials-Pic-Metadata");
             var metadata = (metadataString ? JSON.parse(metadataString) : null);
-            loadCallback(value, window.URL.createObjectURL(data), metadata);
+            var gpsString = jqXHR.getResponseHeader("X-Pictorials-Pic-GPS");
+            var gps = (gpsString ? JSON.parse(gpsString) : null);
+            loadCallback(value, window.URL.createObjectURL(data), metadata, gps);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while loading '" + value + "':\n" + textStatus;
             if (textStatus == "error") {

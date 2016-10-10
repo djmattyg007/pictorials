@@ -19,6 +19,10 @@
             "height": 750
         }
     },
+    "mapbox": {
+        "accessToken": "my-access-token",
+        "mapId": "mapbox.streets-satellite"
+    },
     "image_types": [
         "jpg",
         "png"

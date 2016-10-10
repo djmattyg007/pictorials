@@ -1,4 +1,4 @@
-function FileViewer(modal, loader, templater, fileDownloader, concurrencyLimit, flFactory)
+function FileViewer(modal, loader, templater, modalManager, fileDownloader, fileMap, concurrencyLimit, flFactory)
 {
     this.modal = modal;
     this.carousel = modal.find("[data-modal-carousel]");
@@ -8,7 +8,9 @@ function FileViewer(modal, loader, templater, fileDownloader, concurrencyLimit, 
     this.rotateBtns = modal.find("[data-modal-rotate-btn]");
     this.loader = loader;
     this.templater = templater;
+    this.modalManager = modalManager;
     this.fileDownloader = fileDownloader;
+    this.fileMap = fileMap;
     this.concurrencyLimit = concurrencyLimit;
     this.flFactory = flFactory;
 
@@ -27,6 +29,7 @@ FileViewer.prototype = {
         });
         this.modal.on("shown.bs.modal", function() {
             self.carousel.slick({appendDots: self.carouselDots, dots: true, dotsClass: "slick-dots list-inline"});
+            self.modal.modal("handleUpdate");
             self._viewerActive = true;
         });
         this.modal.on("hide.bs.modal", function() {
@@ -50,6 +53,11 @@ FileViewer.prototype = {
                 $this.data("content", self._getCurrentMetadataList.bind(self));
             }
             $this.popover("toggle");
+        });
+        this.details.on("click", "[data-map-display-trigger]", function() {
+            var curImage = self.getCurrentCarouselSlide().find("img");
+            var coords = curImage.data("gps");
+            self.fileMap.activateMap([coords.lat, coords.lon]);
         });
         this.details.on("hidden.bs.popover", "[data-metadata-container-trigger]", function() {
             // I can't find any reliable way to determine the current state of the popover through
@@ -90,7 +98,7 @@ FileViewer.prototype = {
         });
         jQuery(fl).on("file_loader:finish_load", function() {
             self.loader.hide();
-            self.modal.modal("show");
+            self.modalManager.addModal(self.modal);
         });
         this.carousel.empty();
         fl.load(this.addImageToCarousel.bind(this, fl));
@@ -116,8 +124,8 @@ FileViewer.prototype = {
         curImage.css("transform", "rotate(" + rotation + "deg)");
     },
 
-    addImageToCarousel: function(fl, relpath, src, metadata) {
-        var templateData = {"src": src, "relpath": relpath, "filename": relpath.split(/[\\/]/).pop(), "date_taken": "", "metadata": ""};
+    addImageToCarousel: function(fl, relpath, src, metadata, gps) {
+        var templateData = {"src": src, "relpath": relpath, "filename": relpath.split(/[\\/]/).pop(), "date_taken": "", "metadata": "", "gps": ""};
         if (metadata) {
             if (typeof metadata["date_taken"] !== "undefined" && metadata["date_taken"]) {
                 templateData["date_taken"] = metadata["date_taken"];
@@ -126,6 +134,9 @@ FileViewer.prototype = {
             if (metadata && jQuery.isEmptyObject(metadata) === false) {
                 templateData["metadata"] = JSON.stringify(metadata);
             }
+        }
+        if (gps && this.fileMap) {
+            templateData["gps"] = JSON.stringify(gps);
         }
         var html = this.templater.render("carousel-file", templateData);
         this.carousel.append(html);
@@ -140,7 +151,11 @@ FileViewer.prototype = {
         if (metadata) {
             metadataListHTML = this.templater.render("file-metadata-list", metadata);
         }
-        this.details.html(this.templater.render("carousel-file-details", { "date_taken": dateTaken, "metadata": metadataListHTML }));
+        var gps = null;
+        if (this.fileMap) {
+            gps = curImage.data("gps");
+        }
+        this.details.html(this.templater.render("carousel-file-details", { "date_taken": dateTaken, "metadata": metadataListHTML, "gps": (gps ? true : false) }));
     },
 
     _getCurrentMetadataList: function() {
