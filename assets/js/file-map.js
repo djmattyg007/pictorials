@@ -1,12 +1,12 @@
-function FileMap(modal, modalManager, mapboxMapId, mapboxAccessToken)
+function FileMap(modal, modalManager)
 {
     this.modal = modal;
     this.mapContainer = jQuery("[data-map-container]");
     this.modalManager = modalManager;
-    this.mapboxMapId = mapboxMapId;
-    this.mapboxAccessToken = mapboxAccessToken;
 
     this.map = null;
+    this.mapboxMapId = null;
+    this.mapboxAccessToken = null;
 
     this.initEvents();
 }
@@ -19,7 +19,27 @@ FileMap.prototype = {
         });
     },
 
+    setMapboxConfig: function(config) {
+        if (typeof config["mapId"] !== "undefined") {
+            this.mapboxMapId = config["mapId"];
+        }
+        if (typeof config["accessToken"] !== "undefined") {
+            this.mapboxAccessToken = config["accessToken"];
+        }
+    },
+
+    isAvailable: function() {
+        if (this.mapboxMapId && this.mapboxAccessToken) {
+            return true;
+        }
+        return false;
+    },
+
     activateMap: function(coords) {
+        if (this.isAvailable() === false) {
+            alert("Map not currently available");
+            return;
+        }
         var self = this;
         this.modalManager.addModal(this.modal, function() {
             self._initMap(coords);

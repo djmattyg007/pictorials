@@ -135,7 +135,7 @@ FileViewer.prototype = {
                 templateData["metadata"] = JSON.stringify(metadata);
             }
         }
-        if (gps && this.fileMap) {
+        if (gps && this.fileMap.isAvailable()) {
             templateData["gps"] = JSON.stringify(gps);
         }
         var html = this.templater.render("carousel-file", templateData);
@@ -152,7 +152,7 @@ FileViewer.prototype = {
             metadataListHTML = this.templater.render("file-metadata-list", metadata);
         }
         var gps = null;
-        if (this.fileMap) {
+        if (this.fileMap.isAvailable()) {
             gps = curImage.data("gps");
         }
         this.details.html(this.templater.render("carousel-file-details", { "date_taken": dateTaken, "metadata": metadataListHTML, "gps": (gps ? true : false) }));

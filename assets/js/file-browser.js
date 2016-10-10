@@ -12,9 +12,9 @@ var galleryFlFactory = new FileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload
 var downloadFlFactory = new FileLoaderFactory(ajaxUrls.downloadFile, ajaxUrls.sysload);
 var thumbnailFlFactory = new CancellableFileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var fileDownloader = new Downloader(downloadFlFactory, loader);
-var fileMap = null;
+var fileMap = new FileMap(jQuery("#map-modal"), modalManager);
 if (mapboxConfig) {
-    fileMap = new FileMap(jQuery("#map-modal"), modalManager, mapboxConfig["mapId"], mapboxConfig["accessToken"]);
+    fileMap.setMapboxConfig(mapboxConfig);
 }
 var paths = new Paths(jQuery("#paths"));
 var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileDownloader, fileMap, 3, galleryFlFactory);
