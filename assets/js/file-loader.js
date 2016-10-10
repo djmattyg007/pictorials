@@ -77,6 +77,7 @@ FileLoader.prototype = {
             if (textStatus == "error") {
                 msg += "\n" + errorThrown;
             }
+            msg += "\n" + "Please report this to the owner."
             errorCallback(msg);
         }).always(function() {
             self.openCount--;
