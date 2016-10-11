@@ -228,7 +228,7 @@ Browser.prototype = {
         this.changeDir(this.paths.getSelectedPathID(), eventData.relpath);
     },
 
-    _dispatchLoadEvent: function(event) {
+    _dispatchLoadEvent: function() {
         if (this._dispatchLoadEventLock === true) {
             return;
         }
