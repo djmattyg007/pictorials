@@ -42,15 +42,15 @@ BrowserFiles.prototype = {
     },
 
     render: function(files, finish) {
-        var page = 0, html;
+        var curPage = 0, html;
         var groupSize = 200;
-        var pages = files.length / groupSize;
+        var totalPages = files.length / groupSize;
         var self = this;
         var iterFunc = function() {
-            html = self.templater.render("browser-file-row", files.slice(page * groupSize, page * groupSize + groupSize));
+            html = self.templater.render("browser-file-row", files.slice(curPage * groupSize, curPage * groupSize + groupSize));
             self.container.append(html);
-            page++;
-            if (page < pages) {
+            curPage++;
+            if (curPage < totalPages) {
                 setTimeout(iterFunc, 50);
             } else {
                 finish();
