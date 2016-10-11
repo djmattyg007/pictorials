@@ -30,9 +30,6 @@ browserFiles.registerWithKeyListener(documentKeyListener);
 browser.registerWithKeyListener(documentKeyListener);
 fileViewer.registerWithKeyListener(documentKeyListener);
 
-// TODO: Find a better way of handling this while keeping the components decoupled
-jQuery(browser).on("browser:load_files", fileViewer.loadFiles.bind(fileViewer));
-
 jQuery("#keyboard-shortcut-notify").popover({
     html: true,
     trigger: "hover",

@@ -23,6 +23,9 @@ function FileViewer(modal, loader, templater, modalManager, fileDownloader, file
 FileViewer.prototype = {
     initEvents: function() {
         var self = this;
+        jQuery(document).on("pictorials:display_files", function(event, eventData) {
+            self.loadFiles(eventData.pathID, eventData.files);
+        });
         this.downloadBtn.on("click", function() {
             var file = self.getCurrentCarouselSlide().children().data("relpath");
             self.fileDownloader.downloadFile(self._currentPathID, file);
@@ -89,9 +92,9 @@ FileViewer.prototype = {
         return this._viewerActive;
     },
 
-    loadFiles: function(event, eventData) {
-        this._currentPathID = eventData.pathID;
-        var fl = this.flFactory.create(eventData.pathID, eventData.files, this.concurrencyLimit);
+    loadFiles: function(pathID, files) {
+        this._currentPathID = pathID;
+        var fl = this.flFactory.create(pathID, files, this.concurrencyLimit);
         var self = this;
         jQuery(fl).on("pictorials:file_load_start", function() {
             self.loader.show(true);

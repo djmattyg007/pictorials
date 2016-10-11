@@ -52,7 +52,7 @@ Browser.prototype = {
             return;
         }
         var pathID = this.paths.getSelectedPathID();
-        jQuery(this).trigger("browser:load_files", {pathID: pathID, files: files});
+        jQuery(document).trigger("pictorials:display_files", { "pathID": pathID, "files": files });
         this._dispatchLoadEventLock = false;
     },
 
