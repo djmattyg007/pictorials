@@ -1,3 +1,5 @@
+// Inspired by https://codepen.io/maouida/pen/NPGaaN
+
 function ModalManager()
 {
     this.modalStack = [];
