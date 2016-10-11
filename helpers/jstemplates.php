@@ -19,7 +19,7 @@ $phpCallback = function($matches) {
 $jsTemplates = array();
 foreach ($matches as $match) {
     $rendered = preg_replace_callback(PHP_EXTRACT_REGEX, $phpCallback, $match[2]);
-    $jsTemplates[$match[1]] = JsTemplateBuilder::build(substr(json_encode($rendered), 1, -1));
+    $jsTemplates[$match[1]] = JsTemplateBuilder::prepareAndBuild($rendered);
 }
 
 header("Content-type: application/javascript");
