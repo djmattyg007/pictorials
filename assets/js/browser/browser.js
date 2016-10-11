@@ -29,6 +29,10 @@ Browser.prototype = {
         jQuery(document).on("pictorials:path_chosen", function(event, eventData) {
             self.changeDir(eventData.pathID);
         });
+
+        jQuery(document).on("pictorials:browser_load_selected_files", function() {
+            self._dispatchLoadEvent();
+        });
     },
 
     registerWithKeyListener: function(keyListener) {

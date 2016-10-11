@@ -31,6 +31,10 @@ BrowserFiles.prototype = {
             trigger: "hover",
             content: this._renderPopover
         });
+
+        jQuery(document).on("pictorials:clear_selected_files", function() {
+            self.clearSelectedFiles();
+        });
     },
 
     registerWithKeyListener: function(keyListener) {

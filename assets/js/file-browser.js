@@ -8,6 +8,7 @@ if (mapboxConfigEl.length) {
 var templater = new Templater(window.templates);
 var modalManager = new ModalManager();
 var loader = new Loader(jQuery("#loader"));
+var toolbox = new Toolbox(jQuery("#available-actions"));
 var galleryFlFactory = new FileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(ajaxUrls.downloadFile, ajaxUrls.sysload);
 var thumbnailFlFactory = new CancellableFileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);

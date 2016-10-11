@@ -116,7 +116,14 @@
 </div>
 </div>
 
-<div id="keyboard-shortcut-notify" class="hidden-xs" data-toggle="popover" data-placement="left">
+<div id="available-actions" class="sidebar-toolbox">
+<ul class="list-unstyled">
+<li><button type="button" data-event="browser_load_selected_files" class="btn btn-info" title="Load selected files">Load</button></li>
+<li><button type="button" data-event="browser_clear_selected_files" class="btn btn-info" title="Clear selected files">Clear</button></li>
+</ul>
+</div>
+
+<div id="keyboard-shortcut-notify" class="sidebar-toolbox hidden-xs" data-toggle="popover" data-placement="left">
 Keyboard<br>shortcuts
 </div>
 <div id="keyboard-shortcut-list">
@@ -221,6 +228,7 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "templater.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "toolbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "cancellable-file-loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "downloader.js"); ?>"></script>
