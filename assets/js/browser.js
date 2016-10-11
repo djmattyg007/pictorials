@@ -20,17 +20,13 @@ BrowserCurPath.prototype = {
         if (relpath) {
             html = '<a href="#" class="dir" data-relpath="">' + html + '</a>';
             var relpathParts = relpath.split("/");
+            var lastRelpathPart = relpathParts.pop();
             var newrelpath = [];
-            var lastIndex = relpathParts.length - 1;
             relpathParts.forEach(function(value, index) {
                 newrelpath.push(value);
-                html += " &gt; ";
-                if (index === lastIndex) {
-                    html += value;
-                } else {
-                    html += '<a href="#" class="dir" data-relpath="' + newrelpath.join("/") + '">' + value + '</a>';
-                }
+                html += ' &gt; <a href="#" class="dir" data-relpath="' + newrelpath.join("/") + '">' + value + '</a>';
             });
+            html += " &gt; " + lastRelpathPart;
         }
         this.container.html(html);
     }
@@ -100,8 +96,11 @@ BrowserFiles.prototype = {
     },
 
     registerWithKeyListener: function(keyListener) {
+        var self = this;
         // 67 = 'c'
-        keyListener.register(67, this._clearSelectedFilesEvent.bind(this));
+        keyListener.register(67, function() {
+            self.clearSelectedFiles();
+        });
     },
 
     render: function(files, finish) {
@@ -177,7 +176,7 @@ BrowserFiles.prototype = {
         this.container.find("img.file-thumb[data-relpath='" + filename + "']").attr("src", imgsrc);
     },
 
-    _clearSelectedFilesEvent: function(event) {
+    clearSelectedFiles: function() {
         var self = this;
         this.container.find(".file-chk:checked").each(function() {
             this.checked = false;
