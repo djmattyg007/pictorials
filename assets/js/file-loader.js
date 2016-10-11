@@ -36,7 +36,7 @@ FileLoader.prototype = {
         if (!errorCallback) {
             errorCallback = alert;
         }
-        jQuery(this).trigger("file_loader:start_load");
+        jQuery(this).trigger("pictorials:file_load_start");
         var self = this;
         if (this.sysloadUrl) {
             this._checkSysload();
@@ -83,7 +83,7 @@ FileLoader.prototype = {
             self.openCount--;
             self.processedCount++;
             if (self.processedCount === self.fileCount) {
-                jQuery(self).trigger("file_loader:finish_load");
+                jQuery(self).trigger("pictorials:file_load_finish");
             }
         });
     },

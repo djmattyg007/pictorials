@@ -18,16 +18,15 @@ function Browser(container, fileBrowserUrl, paths, loader, curpath, dirs, files)
 Browser.prototype = {
     initEvents: function() {
         var self = this;
-        jQuery(this.curpath).on("browser_curpath:change_dir", this._changeDirEvent.bind(this));
-        jQuery(this.directories).on("browser_directories:change_dir", this._changeDirEvent.bind(this));
+        jQuery(document).on("pictorials:change_dir", this._changeDirEvent.bind(this));
         this.loadBtn.on("click", this._dispatchLoadEvent.bind(this));
 
-        jQuery(this.paths).on("paths:path_changed", function(event) {
+        jQuery(document).on("pictorials:path_changed", function(event) {
             self.container.hide();
             self._containerVisible = false;
             self.deinit();
         });
-        jQuery(this.paths).on("paths:path_chosen", function(event, eventData) {
+        jQuery(document).on("pictorials:path_chosen", function(event, eventData) {
             self.changeDir(eventData.pathID);
         });
     },

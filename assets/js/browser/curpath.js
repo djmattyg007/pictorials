@@ -11,7 +11,7 @@ BrowserCurPath.prototype = {
         this.container.on("click", "a.dir", function(event) {
             event.preventDefault();
             event.stopPropagation();
-            jQuery(self).trigger("browser_curpath:change_dir", {relpath: event.target.dataset.relpath});
+            jQuery(document).trigger("pictorials:change_dir", {relpath: event.target.dataset.relpath});
         });
     },
 

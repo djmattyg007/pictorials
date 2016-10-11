@@ -12,10 +12,10 @@ Downloader.prototype = {
     download: function(pathID, files) {
         var fl = this.flFactory.create(pathID, files);
         var self = this;
-        jQuery(fl).on("file_loader:start_load", function() {
+        jQuery(fl).on("pictorials:file_load_start", function() {
             self.loader.show();
         });
-        jQuery(fl).on("file_loader:finish_load", function() {
+        jQuery(fl).on("pictorials:file_load_finish", function() {
             self.loader.hide();
         });
         fl.load(this._downloadCallback);

@@ -9,12 +9,12 @@ Paths.prototype = {
     initEvents: function() {
         var self = this;
         this.select.on("change", function(event) {
-            jQuery(self).trigger("paths:path_changed");
+            jQuery(document).trigger("pictorials:path_changed");
             var curPathID = self.getSelectedPathID();
             if (curPathID == null) {
                 return;
             }
-            jQuery(self).trigger("paths:path_chosen", {pathID: curPathID});
+            jQuery(document).trigger("pictorials:path_chosen", {pathID: curPathID});
         });
     },
 

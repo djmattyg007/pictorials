@@ -93,10 +93,10 @@ FileViewer.prototype = {
         this._currentPathID = eventData.pathID;
         var fl = this.flFactory.create(eventData.pathID, eventData.files, this.concurrencyLimit);
         var self = this;
-        jQuery(fl).on("file_loader:start_load", function() {
+        jQuery(fl).on("pictorials:file_load_start", function() {
             self.loader.show(true);
         });
-        jQuery(fl).on("file_loader:finish_load", function() {
+        jQuery(fl).on("pictorials:file_load_finish", function() {
             self.loader.hide();
             self.modalManager.addModal(self.modal);
         });
