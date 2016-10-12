@@ -38,10 +38,10 @@ class JsTemplateBuilder
 
         $result = "";
         for ($x = 0; $x < $partCount; $x++) {
-            $result .= str_repeat(" ", $this->indentation * 4 + 4) . $this->buildTextPart($textParts[$x]) . "\n";
-            $result .= str_repeat(" ", $this->indentation * 4 + 4) . $this->buildTemplatePart($templateParts[$x][1], $templateParts[$x][2]) . "\n";
+            $result .= $this->buildTextPart($textParts[$x]);
+            $result .= $this->buildTemplatePart($templateParts[$x][1], $templateParts[$x][2]);
         }
-        $result .= str_repeat(" ", $this->indentation * 4 + 4) . $this->buildTextPart($textParts[$x]) . "\n";
+        $result .= $this->buildTextPart($textParts[$x]);
 
         return $result;
     }
@@ -69,12 +69,28 @@ class JsTemplateBuilder
     }
 
     /**
+     * @param string $text
+     * @param int $indentAdjustBefore The number of levels of indentation to change before formatting the text
+     * @param int $indentAdjustAfter The number of levels of indentation to change after formatting the text
+     */
+    private function formatLine($text, $indentAdjustBefore = 0, $indentAdjustAfter = 0)
+    {
+        $this->indentation += $indentAdjustBefore;
+
+        $formattedText = str_repeat(" ", $this->indentation * 4 + 4) . $text . "\n";
+
+        $this->indentation += $indentAdjustAfter;
+
+        return $formattedText;
+    }
+
+    /**
      * @param string $part
      * @return string
      */
     private function buildTextPart($part)
     {
-        return 'result += "' . $part . '";';
+        return $this->formatLine('result += "' . $part . '";');
     }
 
     /**
@@ -86,23 +102,21 @@ class JsTemplateBuilder
     {
         if ($control === '#') {
             // Escape for general HTML
-            return 'result += helper.escapeHtml(obj["' . $inside . '"], false);';
+            return $this->formatLine('result += helper.escapeHtml(obj["' . $inside . '"], false);');
         } elseif ($control === '$') {
             // Escape for HTML attribute
-            return 'result += helper.escapeHtml(obj["' . $inside . '"], true);';
+            return $this->formatLine('result += helper.escapeHtml(obj["' . $inside . '"], true);');
         } elseif ($control === '%') {
             // Do not escape
-            return 'result += obj["' . $inside . '"];';
+            return $this->formatLine('result += obj["' . $inside . '"];');
         } elseif ($control === '@') {
             $logic = explode(" ", $inside, 2);
             if ($logic[0] === 'if') {
-                $this->indentation++;
-                return 'if (typeof obj["' . $logic[1] . '"] !== "undefined" && obj["' . $logic[1] . '"]) {';
+                return $this->formatLine('if (typeof obj["' . $logic[1] . '"] !== "undefined" && obj["' . $logic[1] . '"]) {', 0, 1);
             } elseif ($logic[0] === 'else') {
-                return '} else {';
+                return $this->formatLine('} else {', -1, 1);
             } elseif ($logic[0] === 'endif') {
-                $this->indentation--;
-                return '}';
+                return $this->formatLine('}', -1, 0);
             }
         }
     }
