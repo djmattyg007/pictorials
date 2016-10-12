@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf797bf30a32fcb250ceaefb1cd4a58e",
-    "content-hash": "f7eb0a5954b54e55128681e6801a4686",
+    "hash": "d3cb80e775056c054dbbfb8ccb5a5ec5",
+    "content-hash": "827c4012e15275ea8b79730f5728f0c9",
     "packages": [
         {
             "name": "devster/uauth",
@@ -344,12 +344,12 @@
             "version": "v0.6.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Miljar/php-exif.git",
+                "url": "https://github.com/PHPExif/php-exif.git",
                 "reference": "266c5e37ac7850c8a67653697b1d74fdabbf546e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Miljar/php-exif/zipball/266c5e37ac7850c8a67653697b1d74fdabbf546e",
+                "url": "https://api.github.com/repos/PHPExif/php-exif/zipball/266c5e37ac7850c8a67653697b1d74fdabbf546e",
                 "reference": "266c5e37ac7850c8a67653697b1d74fdabbf546e",
                 "shasum": ""
             },
@@ -559,16 +559,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.1.3",
+            "version": "v3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "8201978de88a9fa0923e18601bb17f1df9c721e7"
+                "reference": "205b5ffbb518a98ba2ae60a52656c4a31ab00c6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/8201978de88a9fa0923e18601bb17f1df9c721e7",
-                "reference": "8201978de88a9fa0923e18601bb17f1df9c721e7",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/205b5ffbb518a98ba2ae60a52656c4a31ab00c6f",
+                "reference": "205b5ffbb518a98ba2ae60a52656c4a31ab00c6f",
                 "shasum": ""
             },
             "require": {
@@ -604,7 +604,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:41:56"
+            "time": "2016-09-28 00:11:12"
         },
         {
             "name": "symfony/options-resolver",
@@ -671,7 +671,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "~5.6.0|~7.0.0",
-        "ext-exif": "*"
+        "ext-exif": "*",
+        "ext-gd": "*"
     },
     "platform-dev": []
 }

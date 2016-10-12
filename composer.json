@@ -2,6 +2,7 @@
     "require": {
         "php": "~5.6.0|~7.0.0",
         "ext-exif": "*",
+        "ext-gd": "*",
         "devster/uauth": "1.1.0",
         "dflydev/apache-mime-types": "1.0.1",
         "gregwar/image": "dev-master#72568cf",
@@ -12,7 +13,7 @@
         "monolog/monolog": "1.21.0",
         "pekkis/mime-types": "1.0.0",
         "psr/log": "1.0.0",
-        "symfony/finder": "3.1.3",
+        "symfony/finder": "3.1.5",
         "mattyg/monolog-cascade": "1.0.0"
     }
 }
