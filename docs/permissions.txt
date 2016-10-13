@@ -1,0 +1,29 @@
+Pictorials forces you to opt-in to support for various features on a per-path
+basis. These are generally features that could reveal sensitive information,
+or be a potential security issue. All of these permissions are listed below.
+
+
+gps
+
+Enabling the gps permission for a path will add a "Map" button to the carousel
+modal when viewing a photo, if there is GPS data embedded within the image.
+This functionality is also dependent on supplying your mapbox API key and a
+map ID.
+
+metadata
+
+Enabling the metadata permission for a path will add a "Metadata" button to the
+carousel modal when viewing a photo, if there is relevant metadata embedded
+within the image. Clicking the button will display this metadata. The date the
+photo was taken will also be displayed near the button, if that data is
+available.
+
+nsfw
+
+By default, Pictorials hides and blocks all access to folders named "NSFW".
+Enabling the nsfw permission causes Pictorials to switch off these checks.
+
+symlinks
+
+By default, Pictorials will not follow symlinks. Enabling the symlinks
+permission will cause Pictorials to follow symlinks for the given path.

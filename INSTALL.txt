@@ -12,7 +12,7 @@ Installation Guide
 
 4. Create an empty directory somewhere outside the webroot, and ensure it is
    writeable by the webserver. This folder will hold the application's cache.
-   Inside the Pictorials codebase is fine.
+   Inside the Pictorials codebase directory is fine.
 
 5. In the conf directory, make a copy of auth.json.example, naming it auth.json.
    In here, you'll define all the different accounts that can access your gallery.
@@ -32,10 +32,9 @@ Installation Guide
     - For details on how the privacy controls work, consult this link:
       https://github.com/djmattyg007/fb-privacy-auth/blob/1.0.1/README.txt
     - The path to each folder should be an absolute path, not relative.
-    - By default, Pictorials will not follow symlinks. If you wish to enable this
-      behaviour, add "symlinks" to the permissions array on a path by path basis.
-    - Pictorials will hide all folders named "NSFW". If you wish to disable this
-      behaviour, add "nsfw" to the permissions array on a path by path basis.
+    - Each path can have its own set of permissions that enable various bits of
+      functionality. For an explanation of what each of these are, check out
+      permissions.txt in the documetatnion.
 
 7. Again in the conf directory, make a copy of logging.conf.example, naming it
    logging.json. This is where you configure all of the loggers used by Pictorials.
