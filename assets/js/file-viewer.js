@@ -106,7 +106,11 @@ FileViewer.prototype = {
         });
         jQuery(fl).on("pictorials:file_load_finish", function() {
             self.loader.hide();
-            self.modalManager.addModal(self.modal);
+            if (self.carousel.html().trim() !== "") {
+                self.modalManager.addModal(self.modal);
+            } else {
+                alert("No images to show");
+            }
         });
         this.carousel.empty();
         fl.load(this.addImageToCarousel.bind(this, fl));
