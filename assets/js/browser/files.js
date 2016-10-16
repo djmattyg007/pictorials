@@ -96,6 +96,7 @@ BrowserFiles.prototype = {
             this.lazyLoader = null;
         }
         this.container.empty();
+        jQuery(document).trigger("pictorials:selection_changed", { "selectedCount": 0 });
     },
 
     getSelected: function() {
