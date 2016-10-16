@@ -32,7 +32,7 @@ BrowserFiles.prototype = {
             content: this._renderPopover
         });
 
-        jQuery(document).on("pictorials:clear_selected_files", function() {
+        jQuery(document).on("pictorials:browser_clear_selected_files", function() {
             self.clearSelectedFiles();
         });
     },
