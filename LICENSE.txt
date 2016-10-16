@@ -33,12 +33,22 @@ modifications made to them:
 
 assets/css/bootstrap.css
 assets/css/bootstrap.min.css
+assets/js/vendor/bootbox-dev-4.4.1.js
 assets/js/vendor/bootstrap.js
 assets/js/vendor/bootstrap.min.js
 assets/js/vendor/jquery-ajax-native.js
 
 Links to and/or copies of the appropriate licenses for each file can
 be found at the top of each file.
+
+
+The following file falls under the Apache 2.0 license, and has not had any
+modifications made to them:
+
+assets/js/vendor/unibabel-2.1.3.js
+
+You can find the appropriate license text for this file at the following URL:
+https://github.com/coolaj86/unibabel-js/blob/master/LICENSE
 
 
 The following files fall under the MIT license, and have had
