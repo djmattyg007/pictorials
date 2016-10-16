@@ -56,7 +56,7 @@ Installation Guide
 
 10.Again in the conf directory, make a copy of app.json.example, naming it
    app.json. This is where general application configuration is contained.
-   a) APP_NAME: You can change to anything else if you wish. It's used in the
+   a) APP_NAME: You can change this to anything else if you wish. It's used in the
       headings of the site.
    b) CACHE_DIR: The absolute path to the caching directory you created in Step 4.
    c) ASSET_BASE_URL: The base used when generating URLs to assets. This must
@@ -64,7 +64,8 @@ Installation Guide
       and it must have a trailing slash.
    d) SCRIPT_BASE_URL: The path to the PHP file you created in Step 8.
    You can add "gif" to the list of allowed image types if you wish, but it's
-   excluded by default.
+   excluded by default. Also note that "jpg" and "jpeg" are equivalent - you don't
+   need to list both.
 
 That's it! You should now have a fully functioning image gallery. Point your
 web browser to the PHP file you created in Step 8, login with one of the accounts

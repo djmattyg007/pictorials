@@ -8,8 +8,8 @@ against hotlinking of images by allowing you to store your files outside of
 the web root.
 
 This project is targeting the latest versions of Firefox, Pale Moon and Chrome.
-It may work in IE10-11, and probably works in Edge, but I don't particularly
-care about it or Safari.
+It may work in IE11, and probably works in Edge, but I don't particularly care
+about it or Safari.
 
 There are several features that are planned, but for which there is no code
 right now. Chief among these is a traditional gallery view. This project
