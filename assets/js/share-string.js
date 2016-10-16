@@ -21,7 +21,7 @@ ShareString.prototype = {
             shareString = this.base64.base64ToUtf8(base64ShareString);
         } catch (e) {
             // The caller doesn't care about why the string was invalid
-            throw new Error("Invalid share string supplied.");
+            throw new Error("Invalid share ID supplied.");
         }
         return this.decode(shareString);
     },

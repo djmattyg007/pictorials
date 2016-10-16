@@ -15,7 +15,7 @@ FileLocator.prototype = {
     },
 
     runPrompt: function() {
-        this.userInputHandler.showPrompt("Enter share string", "text", this._handlePromptResponse.bind(this));
+        this.userInputHandler.showPrompt("Enter share ID", "text", this._handlePromptResponse.bind(this));
     },
 
     _handlePromptResponse: function(base64Value) {
