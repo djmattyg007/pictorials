@@ -1,0 +1,51 @@
+function BootboxWrapper(bootbox, modalManager)
+{
+    this.bootbox = bootbox;
+    this.modalManager = modalManager;
+}
+
+BootboxWrapper.prototype = {
+    _showAlert(message, afterShowCallback) {
+        var bAlert = this.bootbox.alert({
+            "message": message,
+            "backdrop": true,
+            "closeButton": false,
+            "show": false
+        });
+        this.modalManager.addModal(bAlert, afterShowCallback);
+    },
+
+    showSuccess: function(message) {
+        this._showAlert('<div class="pictorials-alert alert-success" role="alert">' + message + '</div>');
+    },
+
+    showError: function(message) {
+        this._showAlert('<div class="pictorials-alert alert-danger" role="alert">' + message + '</div>');
+    },
+
+    showMessage: function(message, afterShowCallback) {
+        this._showAlert(message, afterShowCallback);
+    },
+
+    showPrompt: function(title, inputType, userCallback, ignoreCancel) {
+        if (typeof ignoreCancel === "undefined") {
+            ignoreCancel = true;
+        }
+        var self = this;
+        var bPrompt = this.bootbox.prompt({
+            "title": title,
+            "inputType": inputType,
+            "callback": function(value) {
+                if (ignoreCancel === true && value === null) {
+                    return true;
+                }
+                self.modalManager.safeHide(bPrompt, function() {
+                    userCallback(value);
+                });
+                return false;
+            },
+            "show": false
+        });
+        this.modalManager.addModal(bPrompt);
+    }
+};

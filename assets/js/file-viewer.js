@@ -5,6 +5,7 @@ function FileViewer(modal, loader, templater, modalManager, fileDownloader, file
     this.carouselDots = modal.find("[data-modal-carousel-dots]");
     this.details = modal.find("[data-modal-image-details]");
     this.downloadBtn = modal.find("[data-modal-download-btn]");
+    this.shareBtn = modal.find("[data-modal-share-btn]");
     this.rotateBtns = modal.find("[data-modal-rotate-btn]");
     this.loader = loader;
     this.templater = templater;
@@ -27,8 +28,12 @@ FileViewer.prototype = {
             self.loadFiles(eventData.pathID, eventData.files);
         });
         this.downloadBtn.on("click", function() {
-            var file = self.getCurrentCarouselSlide().children().data("relpath");
+            var file = self.getCurrentCarouselSlide().find("img").data("relpath");
             self.fileDownloader.downloadFile(self._currentPathID, file);
+        });
+        this.shareBtn.on("click", function() {
+            var file = self.getCurrentCarouselSlide().find("img").data("relpath");
+            jQuery(document).trigger("pictorials:share_files", { "pathID": self._currentPathID, "files": [file] });
         });
         this.modal.on("shown.bs.modal", function() {
             self.carousel.slick({appendDots: self.carouselDots, dots: true, dotsClass: "slick-dots list-inline"});

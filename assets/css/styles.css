@@ -14,6 +14,19 @@ body {
     margin-bottom: 15px;
 }
 
+#global-toolbar .dropdown {
+    float: right;
+}
+
+#global-toolbar #actions-list:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+#global-toolbar #actions-list:focus:hover {
+    text-decoration: underline;
+}
+
 .img-center {
     margin-left: auto;
     margin-right: auto;
@@ -190,4 +203,17 @@ body {
         -webkit-transform: rotate(359deg);
                 transform: rotate(359deg);
     }
+}
+
+[data-visible-state="closed"] {
+    display: none;
+}
+
+[data-visible-state="open"] {
+    display: block;
+}
+
+.pictorials-alert {
+    padding: 15px;
+    border-radius: 4px;
 }

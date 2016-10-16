@@ -27,6 +27,27 @@
     </select>
 </div>
 </div>
+
+<div id="global-toolbar" class="col-xs-12 col-md-6">
+    <div class="dropdown hidden-xs hidden-sm">
+        <button type="button" id="actions-menu" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+            <span class="caret"></span>
+        </button>
+        <div class="dropdown-menu pull-right" role="menu" aria-labelledby="actions-menu">
+            <button type="button" data-file-locator-activate class="btn btn-link btn-block">Load Shared File</button>
+        </div>
+    </div>
+    <div class="visible-xs visible-sm">
+        <button type="button" id="actions-list" class="btn btn-link" data-toggle="visible-state" data-target="global-toolbar-mobile" aria-expanded="false">
+            Actions
+            <span class="caret"></span>
+        </button>
+        <ul id="global-toolbar-mobile" class="list-inline" data-visible-state="closed" role="menu" aria-labelledby="actions-list">
+            <li><button type="button" data-file-locator-activate class="btn btn-block">Load Shared File</button></li>
+        </ul>
+    </div>
+</div>
 </div>
 <br>
 
@@ -83,6 +104,7 @@
             <div class="row toolset">
                 <div class="col-xs-6">
                     <button type="button" id="btn-modal-download" data-modal-download-btn>Download</button>
+                    <button type="button" id="btn-modal-share" data-modal-share-btn>Share</button>
                 </div>
                 <div class="col-xs-6 text-right">
                     <button type="button" id="btn-rotate-left" data-modal-rotate-btn data-rotate-direction="left">
@@ -140,7 +162,7 @@ Keyboard<br>shortcuts
 </ul>
 </div>
 
-<div style="display: none">
+<div style="display:none;">
 
 <script type="application/json" id="ajax-urls">
 {
@@ -225,14 +247,20 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery-ajax-native.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery.shiftcheckbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.js"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/unibabel-2.1.3.js"); ?>"></script>
 
+<script type="text/javascript" src="<?php echo assetUrl("js", "clipboard.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "visible-state.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "share-string.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "lazyload.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "key-listener.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "templater.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "toolbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "cancellable-file-loader.js"); ?>"></script>
@@ -244,6 +272,9 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "browser/browser.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-map.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-viewer.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-locator.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "share-manager.js"); ?>"></script>
+
 <script type="text/javascript" src="<?php echo templateUrl(""); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-browser.js"); ?>"></script>
 </div>

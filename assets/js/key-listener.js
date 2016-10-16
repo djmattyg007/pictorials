@@ -2,7 +2,8 @@ function KeyListener(subject)
 {
     this.observers = {};
 
-    jQuery(subject).on("keyup", this._keyupListener.bind(this));
+    jQuery(subject).on("keyup.pictorials.key-listener", "form input", function(e) { e.stopPropagation(); });
+    jQuery(subject).on("keyup.pictorials.key-listener", this._keyupListener.bind(this));
 }
 
 KeyListener.prototype = {

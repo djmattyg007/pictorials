@@ -11,8 +11,8 @@ function ModalManager()
 ModalManager.prototype = {
     initEvents: function() {
         var self = this;
-        jQuery(".modal").on("hide.bs.modal", function() {
-            self.onRemoveModal();
+        jQuery(document).on("hide.bs.modal", ".modal", function() {
+            self._onRemoveModal();
         });
     },
 
@@ -34,14 +34,13 @@ ModalManager.prototype = {
             if (callback) {
                 callback();
             }
-            //$newModal.off("shown.bs.modal.picmanager.addcallback");
         });
 
         this.modalStack.push($newModal);
         $newModal.modal("show");
     },
 
-    onRemoveModal: function() {
+    _onRemoveModal: function() {
         var $oldModal = this.modalStack.pop();
         var $currentModal = this.getCurrentModal();
         if ($currentModal) {
@@ -52,5 +51,12 @@ ModalManager.prototype = {
             });
             $currentModal.removeClass("aside");
         }
+    },
+
+    safeHide: function($modal, callback) {
+        $modal.one("hidden.bs.modal.picmanager.saferemovecallback", function() {
+            callback();
+        });
+        $modal.modal("hide");
     }
 };

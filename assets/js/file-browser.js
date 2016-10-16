@@ -5,8 +5,12 @@ if (mapboxConfigEl.length) {
     mapboxConfig = JSON.parse(mapboxConfigEl.html());
 }
 
+var clipboardHandler = new ClipboardHandler();
+var shareString = new ShareString(window.Unibabel);
 var templater = new Templater(window.templates);
 var modalManager = new ModalManager();
+var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);
+var shareManager = new ShareManager(shareString, userInputHandler, clipboardHandler);
 var loader = new Loader(jQuery("#loader"));
 var toolbox = new Toolbox(jQuery("#available-actions"));
 var galleryFlFactory = new FileLoaderFactory(ajaxUrls.download, ajaxUrls.sysload);
@@ -19,6 +23,8 @@ if (mapboxConfig) {
 }
 var paths = new Paths(jQuery("#paths"));
 var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileDownloader, fileMap, 3, galleryFlFactory);
+
+var fileLocator = new FileLocator(shareString, userInputHandler);
 
 var $browserContainer = jQuery("#browser-container");
 var browserCurpath = new BrowserCurPath($browserContainer.find("[data-browser-curpath]"));
