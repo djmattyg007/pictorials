@@ -5,7 +5,7 @@ function BootboxWrapper(bootbox, modalManager)
 }
 
 BootboxWrapper.prototype = {
-    _showAlert(message, afterShowCallback) {
+    _showAlert: function(message, afterShowCallback) {
         var bAlert = this.bootbox.alert({
             "message": message,
             "backdrop": true,
