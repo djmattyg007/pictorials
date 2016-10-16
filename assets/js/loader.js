@@ -36,6 +36,8 @@ function Loader(container)
     this.container = container;
     this.progressBar = new ProgressBar(container.find("[data-loader-progress]"));
     this._showTimeout = null;
+    this._modalAlreadyOpen = null;
+    this._$body = jQuery("body");
 }
 
 Loader.prototype = {
@@ -45,6 +47,10 @@ Loader.prototype = {
             this._showTimeout = null;
         } else {
             this.container.modal("hide");
+            if (this._modalAlreadyOpen === true) {
+                this._$body.addClass("modal-open");
+            }
+            this._modalAlreadyOpen = null;
             this.progressBar.hide();
         }
     },
@@ -53,6 +59,7 @@ Loader.prototype = {
         var self = this;
         this._showTimeout = setTimeout(function() {
             self._showTimeout = null;
+            self._modalAlreadyOpen = self._$body.hasClass("modal-open");
             self.container.modal("show");
             if (includeProgressBar === true) {
                 self.progressBar.reset().show();
