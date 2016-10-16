@@ -70,6 +70,7 @@
         }
       }
       lastIndex = curIndex;
+      $(document).trigger("shiftcheckbox:checkbox_clicked", { "clickedIndex": lastIndex });
     };
 
     if (opts.checkboxSelector) {

@@ -23,6 +23,8 @@ BrowserFiles.prototype = {
         });
         this.container.on("change", "input.file-chk", function(event) {
             self._rowClick.call(self, this, this.checked);
+            var selectedCount = self.container.find("input.file-chk:checked").length;
+            jQuery(document).trigger("pictorials:selection_changed", { "selectedCount": selectedCount });
         });
 
         jQuery(document).popover({
@@ -34,6 +36,11 @@ BrowserFiles.prototype = {
 
         jQuery(document).on("pictorials:browser_clear_selected_files", function() {
             self.clearSelectedFiles();
+        });
+
+        jQuery(document).on("shiftcheckbox:checkbox_clicked", function() {
+            var selectedCount = self.container.find("input.file-chk:checked").length;
+            jQuery(document).trigger("pictorials:selection_changed", { "selectedCount": selectedCount });
         });
     },
 
@@ -120,9 +127,10 @@ BrowserFiles.prototype = {
 
     clearSelectedFiles: function() {
         var self = this;
-        this.container.find(".file-chk:checked").each(function() {
+        this.container.find("input.file-chk:checked").each(function() {
             this.checked = false;
             self._rowClick.call(self, this, false);
         });
+        jQuery(document).trigger("pictorials:selection_changed", { "selectedCount": 0 });
     }
 };
