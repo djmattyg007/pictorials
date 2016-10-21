@@ -57,6 +57,7 @@ function loadPicTemplate($filename, array $vars = array())
 {
     if (isset($_GET["templates"]) && $_GET["templates"] == 1) {
         $template = loadPicFile($filename, $vars, true);
+        loadPicFile("classes/jstemplatebuilder.php");
         loadPicFile("helpers/jstemplates.php", array("template" => $template));
     } else {
         header("Content-type: text/html; charset=UTF-8");

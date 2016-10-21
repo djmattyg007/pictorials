@@ -1,22 +1,22 @@
 <?php
 
-use Gregwar\Cache\Cache;
 use Gregwar\Image\Image;
 
 class PicImage
 {
     /**
-     * @var Cache
+     * @var PicCache
      */
     private static $cache = null;
 
     /**
-     * @return Cache
+     * @return PicCache
      */
     private static function cacheInstance()
     {
         if (self::$cache === null) {
-            self::$cache = new Cache();
+            self::$cache = new PicCache();
+            self::$cache->setDirectoryMode(0775);
             self::$cache->setCacheDirectory(CACHE_DIR . "/images");
         }
         return self::$cache;

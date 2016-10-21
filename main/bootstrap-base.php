@@ -1,5 +1,7 @@
 <?php
 
+define("VERSION", "0.4.0-dev");
+
 /**
  * @param string $includePicFilename
  * @param array $extractVars
@@ -19,30 +21,4 @@ function loadPicFile($includePicFilename, array $extractVars = array(), $getCont
     }
     return require(BASE_PATH . $includePicFilename);
 }
-loadPicFile("main/app.php");
-loadPicFile("main/func.php");
 loadPicFile("vendor/autoload.php");
-loadPicFile("main/logging.php");
-loadPicFile("classes/accesscontrol.php");
-loadPicFile("classes/exif.php");
-loadPicFile("classes/image.php");
-loadPicFile("classes/mrmime.php");
-loadPicFile("classes/jstemplatebuilder.php");
-
-loadPicFile("main/auth.php");
-
-if (empty($_GET["mode"])) {
-    loadPicFile("modes/filebrowser.php");
-    exit();
-}
-
-switch ($_GET["mode"]) {
-    case "download":
-    case "filebrowser":
-    case "loadimage":
-    case "sysload":
-        loadPicFile("modes/{$_GET["mode"]}.php");
-        break;
-    default:
-        sendError(404);
-}

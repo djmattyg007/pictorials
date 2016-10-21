@@ -1,5 +1,7 @@
 <?php
 
+header("Content-type: text/plain");
+
 $cores = ((int) exec("nproc")) * 100;
 $load = (int) str_replace(".", "", strstr(file_get_contents("/proc/loadavg"), " ", true));
 

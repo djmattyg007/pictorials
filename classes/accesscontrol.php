@@ -5,6 +5,11 @@ use MattyG\FBPrivacyAuth\AuthChecker;
 class Access
 {
     /**
+     * @var array
+     */
+    private static $pathAuthConfig = null;
+
+    /**
      * @var AuthChecker
      */
     private static $checker = null;
@@ -12,22 +17,33 @@ class Access
     /**
      * @var array
      */
-    private static $allPaths = null;
+    private static $allowedPaths = null;
 
     /**
      * @var array
      */
-    private static $currentPathConfig = null;
+    private static $currentPath = null;
 
     /**
      * @return array
      */
-    private static function allPaths()
+    private static function buildGroups()
     {
-        if (self::$allPaths === null) {
-            self::$allPaths = loadPicFile("conf/paths.json");
+        $select = PicDB::newSelect();
+        $select->cols(array("group_id", "user_id"))
+            ->from("group_memberships");
+        return PicDB::fetch($select, "group");
+    }
+
+    /**
+     * @return array
+     */
+    private static function pathAuthConfig()
+    {
+        if (self::$pathAuthConfig === null) {
+            self::$pathAuthConfig = loadPicFile("helpers/pathauthconfig.php");
         }
-        return self::$allPaths;
+        return self::$pathAuthConfig;
     }
 
     /**
@@ -36,8 +52,8 @@ class Access
     private static function getChecker()
     {
         if (self::$checker === null) {
-            $groups = loadPicFile("conf/auth.json")["groups"];
-            $resources = array_column_maintain_keys(self::allPaths(), "auth");
+            $groups = self::buildGroups();
+            $resources = self::pathAuthConfig();
             self::$checker = new AuthChecker($groups, $resources);
         }
         return self::$checker;
@@ -57,35 +73,50 @@ class Access
     }
 
     /**
-     * @param null|string $username
+     * @param null|string $userID
      * @return array
      */
-    public static function getAllowedPaths($username = null)
+    public static function getAllowedPaths($userID = null)
     {
-        if ($username === null) {
-            $username = USERNAME;
+        if ($userID === null) {
+            $userID = USER_ID;
         }
-        $allowedPathIDs = self::getChecker()->getAllowedResourceIds($username);
-        return array_intersect_key(self::allPaths(), array_flip($allowedPathIDs));
+        return self::getChecker()->getAllowedResourceIds($userID);
     }
 
     /**
-     * @return array
+     * @return PicPath
      */
-    public static function getCurrentPathConfig()
+    public static function getCurrentPath()
     {
-        if (self::$currentPathConfig !== null) {
-            return self::$currentPathConfig;
+        if (self::$currentPath !== null) {
+            return self::$currentPath;
         }
+
         if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
             sendError(400);
         }
-        $paths = self::getAllowedPaths();
         $pathID = (int) $_POST["path"];
+        $paths = self::getAllowedPaths();
         if (!isset($paths[$pathID])) {
             sendError(404);
         }
-        self::$currentPathConfig = $paths[$pathID];
-        return self::$currentPathConfig;
+
+        $pathSelect = PicDB::newSelect();
+        $pathSelect->cols(array("name", "path"))
+            ->from("paths")
+            ->where("id = :id")
+            ->bindValue("id", $pathID);
+        $pathDetails = PicDB::fetch($pathSelect, "one");
+
+        $permSelect = PicDB::newSelect();
+        $permSelect->cols(array("permission"))
+            ->from("path_permissions")
+            ->where("path_id = :path_id")
+            ->bindValue("path_id", $pathID);
+        $permissions = PicDB::fetch($permSelect, "col");
+
+        self::$currentPath = new PicPath($pathDetails["name"], $pathDetails["path"], $permissions);
+        return self::$currentPath;
     }
 }

@@ -21,8 +21,8 @@
     <label for="paths-select">Albums</label>
     <select id="paths-select" class="form-control">
     <option value=""></option>
-    <?php foreach ($paths as $pathID => $path): ?>
-    <option value="<?php echo $pathID; ?>"><?php echo $path["name"]; ?></option>
+    <?php foreach ($paths as $pathID => $pathName): ?>
+    <option value="<?php echo $pathID; ?>"><?php echo $pathName; ?></option>
     <?php endforeach; ?>
     </select>
 </div>

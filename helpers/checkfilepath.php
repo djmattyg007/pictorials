@@ -4,12 +4,13 @@ if (empty($_POST["filename"])) {
     sendError(400);
 }
 $filename = loadPicFile("helpers/filenamereject.php", array("filename" => $_POST["filename"]));
-$pathConfig = Access::getCurrentPathConfig();
-$fullFilename = $pathConfig["path"] . $filename;
+$path = Access::getCurrentPath();
+$fullFilename = $path->path . $filename;
 if (!is_file($fullFilename)) {
     sendError(404);
 }
-if (!in_array("nsfw", $pathConfig["permissions"])) {
+
+if ($path->hasPermission("nsfw") === false) {
     $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $fullFilename);
     if ($nsfwRegexPathTest === 1 || $nsfwRegexPathTest === false) {
         sendError(404);

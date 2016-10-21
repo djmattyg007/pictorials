@@ -1,7 +1,5 @@
 <?php
 
-define("VERSION", "0.3.0");
-
 $appConfig = loadPicFile("conf/app.json");
 
 $constants = $appConfig["constants"];

@@ -1,10 +1,25 @@
 <?php
 
-$authConfig = loadPicFile("conf/auth.json");
-$userConfig = $authConfig["users"];
-
-$vendorAuthConfig = array_combine(array_column($userConfig, "username"), array_column($userConfig, "password"));
-$basic = new \Uauth\Basic("Secured Area", $vendorAuthConfig);
+$userId = null;
+$basic = new Uauth\Basic("Secured Area", array());
+$basic->verify(function($username, $password) use (&$userId) {
+    $select = PicDB::newSelect();
+    $select->cols(array("id"))
+        ->from("users")
+        ->where("username = :username")
+        ->where("password = :password")
+        ->bindValues(array(
+            "username" => $username,
+            "password" => $password,
+        ));
+    $id = PicDB::fetch($select, "value");
+    if ($id) {
+        $userId = (int) $id;
+        return true;
+    } else {
+        return false;
+    }
+});
 $basic->deny(function($username) {
     if ($username !== null) {
         Logger::notice("main", "Failed login", array("username" => $username));
@@ -13,6 +28,7 @@ $basic->deny(function($username) {
 $basic->auth();
 
 define("USERNAME", $basic->getUser());
+define("USER_ID", $userId);
 Logger::debug("main", "Successful authentication");
 
 header("Content-Security-Policy: script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com");

@@ -3,17 +3,20 @@
         "php": "~5.6.0|~7.0.0",
         "ext-exif": "*",
         "ext-gd": "*",
+        "aura/cli": "2.1.2",
+        "aura/sql": "2.5.1",
+        "aura/sqlquery": "2.7.1",
         "devster/uauth": "1.1.0",
         "dflydev/apache-mime-types": "1.0.1",
         "gregwar/image": "dev-master#72568cf",
         "gregwar/cache": "1.0.12",
         "mattyg/array_column_maintain_keys": "1.0.1",
         "mattyg/fb-privacy-auth": "1.0.1",
+        "mattyg/monolog-cascade": "1.0.0",
         "miljar/php-exif": "0.6.1",
         "monolog/monolog": "1.21.0",
         "pekkis/mime-types": "1.0.0",
-        "psr/log": "1.0.0",
-        "symfony/finder": "3.1.5",
-        "mattyg/monolog-cascade": "1.0.0"
+        "psr/log": "1.0.2",
+        "symfony/finder": "3.1.5"
     }
 }

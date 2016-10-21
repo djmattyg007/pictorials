@@ -2,8 +2,13 @@
 
 if (empty($_POST)) {
     $appConf = loadPicFile("conf/app.json");
+    $pathSelect = PicDB::newSelect();
+    $pathSelect->cols(array("id", "name"))
+        ->from("paths")
+        ->where("id IN (:ids)")
+        ->bindValue("ids", Access::getAllowedPaths());
     $templateVars = array(
-        "paths" => Access::getAllowedPaths(),
+        "paths" => PicDB::fetch($pathSelect, "pairs"),
         "imageSizes" => $appConf["image_sizes"],
     );
     if (isset($appConf["mapbox"])) {
@@ -13,10 +18,10 @@ if (empty($_POST)) {
     exit();
 }
 
-$pathConfig = Access::getCurrentPathConfig();
+$path = Access::getCurrentPath();
 if (!empty($_POST["relpath"])) {
     $relpath = loadPicFile("helpers/filenamereject.php", array("filename" => $_POST["relpath"]));
-    if (!is_dir($pathConfig["path"] . "/" . $relpath)) {
+    if (!is_dir($path->path . "/" . $relpath)) {
         sendError(404);
     }
 }
@@ -28,19 +33,19 @@ $directoryFinder->directories()
     ->ignoreUnreadableDirs()
     ->depth(0)
     ->sortByName();
-if (in_array("symlinks", $pathConfig["permissions"])) {
+if ($path->hasPermission("symlinks")) {
     $directoryFinder->followLinks();
 }
 if (!empty($relpath)) {
     $directoryFinder->path($relpath)
         ->depth(substr_count($relpath, "/") + 1);
 }
-if (!in_array("nsfw", $pathConfig["permissions"])) {
+if ($path->hasPermission("nsfw") === false) {
     $directoryFinder->notPath("/.*\/NSFW\/.*/")
         ->notPath("/NSFW\/.*/")
         ->notPath("/.*\/NSFW/");
 }
-$directoryIterator = $directoryFinder->in($pathConfig["path"]);
+$directoryIterator = $directoryFinder->in($path->path);
 
 $directoryArray = array();
 foreach ($directoryIterator as $directory) {
@@ -62,19 +67,19 @@ foreach (array_map("strtoupper", $allowedImageTypes) as $imageType) {
     $fileFinder->name("*.{$imageType}");
 }
 $fileFinder->sortByName();
-if (in_array("symlinks", $pathConfig["permissions"])) {
+if ($path->hasPermission("symlinks")) {
     $fileFinder->followLinks();
 }
 if (!empty($relpath)) {
     $fileFinder->path($relpath)
         ->depth(substr_count($relpath, "/") + 1);
 }
-if (!in_array("nsfw", $pathConfig["permissions"])) {
+if ($path->hasPermission("nsfw") === false) {
     $fileFinder->notPath("/.*\/NSFW\/.*/")
         ->notPath("/NSFW\/.*/")
         ->notPath("/.*\/NSFW/");
 }
-$fileIterator = $fileFinder->in($pathConfig["path"]);
+$fileIterator = $fileFinder->in($path->path);
 
 $fileArray = array();
 foreach ($fileIterator as $file) {
