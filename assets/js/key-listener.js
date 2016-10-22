@@ -15,6 +15,10 @@ KeyListener.prototype = {
     },
 
     _keyupListener: function(event) {
+        // For the moment, don't support modifiers
+        if (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) {
+            return;
+        }
         if (typeof this.observers[event.which] === "undefined") {
             return;
         }
