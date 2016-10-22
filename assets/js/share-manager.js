@@ -16,22 +16,26 @@ ShareManager.prototype = {
     },
 
     activate: function(pathID, files) {
-        var toShare = this.shareString.encodeBase64(pathID, files);
-        var check = this.clipboardHandler.copy(toShare);
-        if (check) {
-            this._handleShareSuccess();
-        } else {
-            this._handleShareFailure(toShare);
-        }
+        var self = this;
+        this.shareString.encode(pathID, files, function(shareID) {
+            var check = self.clipboardHandler.copy(shareID);
+            if (check) {
+                self._handleShareSuccess();
+            } else {
+                self._handleShareFailure(shareID);
+            }
+        }, function(errorMsg) {
+            self.userInputHandler.showError(errorMsg);
+        });
     },
 
     _handleShareSuccess: function() {
         this.userInputHandler.showSuccess('The share ID was successfully copied to your clipboard.');
     },
 
-    _handleShareFailure: function(toShare) {
+    _handleShareFailure: function(shareID) {
         var inputId = "pic-share-copy-" + Math.random();
-        var message = '<p>Copy the share ID and send it to your friend</p><input type="text" id="' + inputId + '" class="form-control" readonly value="' + toShare + '">';
+        var message = '<p>Copy the share ID and send it to your friend</p><input type="text" id="' + inputId + '" class="form-control" readonly value="' + shareID + '">';
         this.userInputHandler.showMessage(message, function() {
             var input = document.getElementById(inputId);
             input.focus();

@@ -59,11 +59,11 @@ FileLoader.prototype = {
         var self = this;
         self.openCount++;
         jQuery.ajax({
-            method: "POST",
-            data: {path: this.pathID, "filename": value},
-            dataType: "native",
-            url: this.downloadUrl,
-            xhrFields: {
+            "method": "POST",
+            "data": {"path": this.pathID, "filename": value},
+            "dataType": "native",
+            "url": this.downloadUrl,
+            "xhrFields": {
                 responseType: "blob"
             }
         }).done(function(data, textStatus, jqXHR) {
@@ -73,12 +73,12 @@ FileLoader.prototype = {
             var gps = (gpsString ? JSON.parse(gpsString) : null);
             loadCallback(value, window.URL.createObjectURL(data), metadata, gps);
         }).fail(function(jqXHR, textStatus, errorThrown) {
-            var msg = "An error occurred while loading '" + value + "':\n" + textStatus;
+            var msg = "An error occurred while loading '" + value;
             if (textStatus == "error") {
-                msg += "\n" + errorThrown;
+                msg += ":\n" + errorThrown;
             }
-            msg += "\n" + "Please report this to the owner."
-            errorCallback(msg);
+            msg += "\nPlease report this to the owner"
+            errorCallback(msg, value);
         }).always(function() {
             self.openCount--;
             self.processedCount++;

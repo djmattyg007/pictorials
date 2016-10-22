@@ -85,6 +85,22 @@ class Access
     }
 
     /**
+     * @return int
+     */
+    public static function verifyCurrentPathAccess()
+    {
+        if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
+            sendError(400);
+        }
+        $pathID = (int) $_POST["path"];
+        $allowedPaths = self::getAllowedPaths();
+        if (!isset($allowedPaths[$pathID])) {
+            sendError(404);
+        }
+        return $pathID;
+    }
+
+    /**
      * @return PicPath
      */
     public static function getCurrentPath()
@@ -93,14 +109,7 @@ class Access
             return self::$currentPath;
         }
 
-        if (!isset($_POST["path"]) || !is_numeric($_POST["path"])) {
-            sendError(400);
-        }
-        $pathID = (int) $_POST["path"];
-        $paths = self::getAllowedPaths();
-        if (!isset($paths[$pathID])) {
-            sendError(404);
-        }
+        $pathID = self::verifyCurrentPathAccess();
 
         $pathSelect = PicDB::newSelect();
         $pathSelect->cols(array("name", "path"))

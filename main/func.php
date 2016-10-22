@@ -2,11 +2,16 @@
 
 /**
  * @param string $mode
+ * @param array $modeParams
  * @return string
  */
-function scriptUrl($mode = "")
+function scriptUrl($mode = "", array $modeParams = array())
 {
-    return SCRIPT_BASE_URL . ($mode === "" ? "" : "?mode=$mode");
+    $url = SCRIPT_BASE_URL . ($mode === "" ? "" : "?mode=$mode");
+    if ($mode && $modeParams) {
+        $url .= "&" . http_build_query($modeParams);
+    }
+    return $url;
 }
 
 /**

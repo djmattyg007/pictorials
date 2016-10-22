@@ -1,44 +1,43 @@
-function ShareString(base64)
+function ShareString(receiveUrl, submitUrl)
 {
-    this.base64 = base64;
+    this.receiveUrl = receiveUrl;
+    this.submitUrl = submitUrl;
 }
 
-ShareString.PART_SEPARATOR = ":";
-
 ShareString.prototype = {
-    decode: function(shareString) {
-        var parts = shareString.split(ShareString.PART_SEPARATOR);
-        var pathID = parts.shift();
-        return {
-            "pathID": pathID,
-            "files": parts
-        };
+    decode: function(shareID, successCallback, errorCallback) {
+        jQuery.ajax({
+            "method": "POST",
+            "data": {"shareID": shareID},
+            "dataType": "json",
+            "url": this.receiveUrl
+        }).done(function(result) {
+            successCallback(result.path, result.files);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            var msg = "An error occurred while looking up your share ID";
+            if (textStatus == "error") {
+                msg += ":\n" + errorThrown;
+            }
+            msg += "\nPlease report this to the owner";
+            errorCallback(msg);
+        });
     },
 
-    decodeBase64: function(base64ShareString) {
-        var shareString;
-        try {
-            shareString = this.base64.base64ToUtf8(base64ShareString);
-        } catch (e) {
-            // The caller doesn't care about why the string was invalid
-            throw new Error("Invalid share ID supplied.");
-        }
-        return this.decode(shareString);
-    },
-
-    encode: function(pathID, files) {
-        var partsEncoded = files.join(ShareString.PART_SEPARATOR);
-        return pathID + ShareString.PART_SEPARATOR + partsEncoded;
-    },
-
-    encodeBase64: function(pathID, files) {
-        var base64Value;
-        try {
-            base64Value = this.base64.utf8ToBase64(this.encode(pathID, files));
-        } catch (e) {
-            // The caller doesn't care about why we couldn't encode the file info
-            throw new Error("Failed to encode file info.");
-        }
-        return base64Value;
+    encode: function(pathID, files, successCallback, errorCallback) {
+        jQuery.ajax({
+            "method": "POST",
+            "data": {"path": pathID, "files": files},
+            "dataType": "text",
+            "url": this.submitUrl
+        }).done(function(shareID) {
+            successCallback(shareID);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            var msg = "An error occurred while encoding the share ID for your selected files";
+            if (textStatus == "error") {
+                msg += ":\n" + errorThrown;
+            }
+            msg += "\nPlease report this to the owner"
+            errorCallback(msg);
+        });
     }
 };

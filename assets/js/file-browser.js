@@ -6,7 +6,7 @@ if (mapboxConfigEl.length) {
 }
 
 var clipboardHandler = new ClipboardHandler();
-var shareString = new ShareString(window.Unibabel);
+var shareString = new ShareString(ajaxUrls.shareReceive, ajaxUrls.shareSubmit);
 var templater = new Templater(window.templates);
 var modalManager = new ModalManager();
 var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);

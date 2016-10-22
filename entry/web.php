@@ -19,6 +19,7 @@ switch ($_GET["mode"]) {
     case "download":
     case "filebrowser":
     case "loadimage":
+    case "share":
     case "sysload":
         loadPicFile("modes/{$_GET["mode"]}.php");
         break;

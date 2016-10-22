@@ -18,14 +18,13 @@ FileLocator.prototype = {
         this.userInputHandler.showPrompt("Enter share ID", "text", this._handlePromptResponse.bind(this));
     },
 
-    _handlePromptResponse: function(base64Value) {
+    _handlePromptResponse: function(shareID) {
+        var self = this;
         var fileInfo;
-        try {
-            fileInfo = this.shareString.decodeBase64(base64Value.trim());
-        } catch (e) {
-            this.userInputHandler.showError(e.message);
-            return;
-        }
-        jQuery(document).trigger("pictorials:display_files", fileInfo);
+        this.shareString.decode(shareID, function(pathID, files) {
+            jQuery(document).trigger("pictorials:display_files", {"pathID": pathID, "files": files});
+        }, function(errorMsg) {
+            self.userInputHandler.showError(errorMsg);
+        });
     }
 };

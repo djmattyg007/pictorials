@@ -16,11 +16,11 @@ BootboxWrapper.prototype = {
     },
 
     showSuccess: function(message) {
-        this._showAlert('<div class="pictorials-alert alert-success" role="alert">' + message + '</div>');
+        this._showAlert('<div class="pictorials-alert alert-success" role="alert">' + message.replace(/\n/g, '<br>') + '</div>');
     },
 
     showError: function(message) {
-        this._showAlert('<div class="pictorials-alert alert-danger" role="alert">' + message + '</div>');
+        this._showAlert('<div class="pictorials-alert alert-danger" role="alert">' + message.replace(/\n/g, '<br>') + '</div>');
     },
 
     showMessage: function(message, afterShowCallback) {
