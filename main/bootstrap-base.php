@@ -14,7 +14,11 @@ function loadPicFile($includePicFilename, array $extractVars = array(), $getCont
         return file_get_contents(BASE_PATH . $includePicFilename);
     }
     if ($fileExtension === "json") {
-        return json_decode(file_get_contents(BASE_PATH . $includePicFilename), true);
+        static $jsonFiles = array();
+        if (isset($jsonFiles[$includePicFilename]) === false) {
+            $jsonFiles[$includePicFilename] = json_decode(file_get_contents(BASE_PATH . $includePicFilename), true);
+        }
+        return $jsonFiles[$includePicFilename];
     }
     if (!empty($extractVars)) {
         extract($extractVars);

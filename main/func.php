@@ -20,17 +20,29 @@ function scriptUrl($mode = "", array $modeParams = array())
  */
 function templateUrl($mode = "")
 {
-    return SCRIPT_BASE_URL . "?version=v" . VERSION . "&templates=1" . ($mode === "" ? "" : "&mode=$mode");
+    return SCRIPT_BASE_URL . "?version=" . VERSION . "&templates=1" . ($mode === "" ? "" : "&mode=$mode");
 }
 
-/**
- * @param string $type
- * @param string $file
- * @return string
- */
-function assetUrl($type, $file)
-{
-    return ASSET_BASE_URL . "$type/$file?version=v" . VERSION;
+if (loadPicFile("conf/app.json")["assets_through_php"] === true) {
+    /**
+     * @param string $type
+     * @param string $file
+     * @return string
+     */
+    function assetUrl($type, $file)
+    {
+        return ASSET_BASE_URL . "?" . http_build_query(array("type" => $type, "file" => $file, "version" => VERSION));
+    }
+} else {
+    /**
+     * @param string $type
+     * @param string $file
+     * @return string
+     */
+    function assetUrl($type, $file)
+    {
+        return ASSET_BASE_URL . "{$type}/{$file}?version=" . VERSION;
+    }
 }
 
 /**
@@ -49,7 +61,7 @@ function sendError($code)
  */
 function humanFilesize($bytes, $decimals = 2)
 {
-    $sz = 'BKMGTP';
+    $sz = "BKMGTP";
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }

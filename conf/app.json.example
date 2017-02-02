@@ -5,6 +5,7 @@
         "ASSET_BASE_URL": "/pictorials/",
         "SCRIPT_BASE_URL": "/pictorials.php"
     },
+    "assets_through_php": false,
     "image_sizes": {
         "small": {
             "width": 250,

@@ -75,7 +75,7 @@ class PicCLI
     /**
      * @param int|string $key
      * @param mixed $default
-     * @return string
+     * @return mixed
      */
     public static function getGetopt($key, $default = null)
     {

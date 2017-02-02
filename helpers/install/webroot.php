@@ -19,7 +19,7 @@ if ($webroot = PicCLI::getGetopt("--webroot")) {
         exit(PicCLI::EXIT_USAGE);
     }
 } else {
-    $io->outln("Pictorials can automatically create the web entry point and asset symlink for you.");
+    $io->outln("Pictorials can automatically create the web entry point and asset symlink/hook for you.");
     $io->outln("Enter the absolute path to the web root, or leave it empty so you can do this later.");
     $io->out("<<yellow>>Webroot: <<reset>>");
     $webroot = $io->in();

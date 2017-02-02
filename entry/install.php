@@ -12,6 +12,7 @@ PicCLI::initCLI();
 PicCLI::initGetopt(array(
     "dbtype:",
     "appname:",
+    "php-static",
     "cachedir:",
     "asset-baseurl:",
     "script-baseurl:",
@@ -41,13 +42,20 @@ $webroot = loadPicFile("helpers/install/webroot.php");
 $webEntryTemplate = '<?php
 define("BASE_PATH", "%s");
 require(BASE_PATH . "entry/web.php");';
+$staticEntryTemplate = '<?php
+define("BASE_PATH", "%s");
+require(BASE_PATH . "entry/static.php");';
 
 file_put_contents(BASE_PATH . "/conf/app.json", json_encode($appConf, JSON_PRETTY_PRINT));
 file_put_contents(BASE_PATH . "/conf/db.json", json_encode($dbConf, JSON_PRETTY_PRINT));
 if ($webroot) {
     $webroot = rtrim($webroot, "/");
     file_put_contents($webroot . $appConf["constants"]["SCRIPT_BASE_URL"], sprintf($webEntryTemplate, BASE_PATH));
-    symlink(BASE_PATH . "assets", $webroot . rtrim($appConf["constants"]["ASSET_BASE_URL"], "/"));
+    if ($appConf["assets_through_php"]) {
+        file_put_contents($webroot . $appConf["constants"]["ASSET_BASE_URL"], sprintf($staticEntryTemplate, BASE_PATH));
+    } else {
+        symlink(BASE_PATH . "assets", $webroot . rtrim($appConf["constants"]["ASSET_BASE_URL"], "/"));
+    }
 }
 PicDBInstall::create($dbConf["config"]);
 
