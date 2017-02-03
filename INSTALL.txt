@@ -1,14 +1,15 @@
 Installation Guide
 
 1. Upload your photos onto your computer. The webserver must be able to access
-   them.
+   them. They should not be inside the webroot.
 
 2. Download the Pictorials codebase onto your server, somewhere outside the
    webroot. You can do this by cloning the git repository or by downloading the
    tarball provided by Github.
 
 3. Run 'composer install' in the root folder of the Pictorials codebase. You'll
-   need to install composer to do this - there's a link below.
+   need to install composer to do this. You can obtain composer from the website
+   https://getcomposer.org
 
 4. Create an empty directory somewhere outside the webroot, and ensure it is
    writeable by the webserver. This folder will hold the application's cache.

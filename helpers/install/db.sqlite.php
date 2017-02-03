@@ -36,7 +36,7 @@ class PicDBInstall
      */
     public static function create(array $config)
     {
-        $conn = loadPicFile("db/sqlite.php", array("config" => $config));
+        $conn = loadPicFile("helpers/db/sqlite.php", array("config" => $config));
 
         $conn->exec("CREATE TABLE system (
             key TEXT NOT NULL,
