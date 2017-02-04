@@ -20,3 +20,10 @@ Run: php entry/group.php adduser [name [username]]
 Use this to add a User to a Group. The two arguments must be passed in order.
 If you omit any of the arguments, you will be greeted with an interactive
 prompt to enter the remaining details.
+
+Remove User
+Run: php entry/group.php removeuser [name [username]]
+
+Use this to remove a User from a Group. The two arguments must be passed in
+order. If you omit any of the arguments, you will be greeted with an
+interactive prompt to enter the remaining details.
