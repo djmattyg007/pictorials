@@ -1,0 +1,22 @@
+Guide for managing Groups
+All Groups are managed through a CLI interface. This is a guide on the various
+commands available for administrators. All examples assume your current working
+directory is the base Pictorials path.
+
+Create
+Run: php entry/group.php create [name]
+
+If you omit the name, you will be greeted with an interactive prompt to enter
+the name.
+
+View
+Run: php entry/group.php view name
+
+Displays the name of the Group and any Users that are a member of the Group.
+
+Add User
+Run: php entry/group.php adduser [name [username]]
+
+Use this to add a User to a Group. The two arguments must be passed in order.
+If you omit any of the arguments, you will be greeted with an interactive
+prompt to enter the remaining details.

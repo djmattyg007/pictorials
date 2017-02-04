@@ -1,0 +1,15 @@
+Pictorials models each album as a "path" within the software. Each path has
+its own set of permissions and privacy controls. This is a useful abstraction
+because it means you can include the same path twice but employ different
+privacy controls for different users/groups.
+
+Some broad notes about paths:
+- You can have as many paths as you want
+- Almost all images (with a few exceptions) inside a path and all of its
+  subfolders will be browseable from within the web interface.
+- The path to each folder must be an absolute path, not relative.
+- Each path can have its own set of permissions that enable various bits of
+  functionality. For an explanation of what each of these are, consult
+  permissions.txt in the documentation.
+- For details on how the privacy controls work, consult this link:
+  https://github.com/djmattyg007/fb-privacy-auth/blob/1.0.1/README.txt
