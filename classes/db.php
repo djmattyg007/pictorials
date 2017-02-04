@@ -40,6 +40,14 @@ class PicDB
     }
 
     /**
+     * @return Aura\SqlQuery\Common\UpdateInterface
+     */
+    public static function newUpdate()
+    {
+        return self::$queryFactory->newUpdate();
+    }
+
+    /**
      * @return Aura\SqlQuery\Common\DeleteInterface
      */
     public static function newDelete()
