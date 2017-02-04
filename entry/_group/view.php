@@ -11,13 +11,6 @@ if (!($name = PicCLI::getGetopt(1))) {
 loadPicFile("classes/db.php");
 PicDB::initDB();
 
-$mySelect = PicDB::newSelect();
-$mySelect->cols(array("group_id", "user_id"))
-    ->from("group_memberships");
-$myResult = PicDB::fetch($mySelect, "group");
-var_dump($myResult);
-exit();
-
 $groupId = loadPicFile("helpers/id/group.php", array("name" => $name));
 if (!$groupId) {
     $io->errln(sprintf("Group '%s' does not exist.", $name));
