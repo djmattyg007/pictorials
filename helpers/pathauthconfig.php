@@ -5,7 +5,10 @@ if ($authConfigJSON = PicConfCache::get("pathauth.json")) {
     goto finalise;
 }
 
-$authConfigTemplate = ["allow" => ["users" => [], "groups" => []], "deny" => ["users" => [], "groups" => []]];
+$authConfigTemplate = array(
+    "allow" => array("users" => array(), "groups" => array()),
+    "deny" => array("users" => array(), "groups" => array()),
+);
 $pathIDSelect = PicDB::newSelect();
 $pathIDSelect->cols(array("id"))
     ->from("paths");
