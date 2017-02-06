@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0e3d24ae15dea586c4ada5b0e550890c",
-    "content-hash": "e96ed29ce6251dbbcc38d9ff89698269",
+    "content-hash": "3d6c1682a6746e5ac4c4d3e603208711",
     "packages": [
         {
             "name": "aura/cli",
@@ -62,7 +61,7 @@
                 "options",
                 "stdio"
             ],
-            "time": "2016-10-03 19:39:45"
+            "time": "2016-10-03T19:39:45+00:00"
         },
         {
             "name": "aura/sql",
@@ -115,7 +114,7 @@
                 "sqlserver",
                 "sqlsrv"
             ],
-            "time": "2016-10-03 20:31:07"
+            "time": "2016-10-03T20:31:07+00:00"
         },
         {
             "name": "aura/sqlquery",
@@ -179,7 +178,7 @@
                 "sqlserver",
                 "update"
             ],
-            "time": "2016-10-03 20:34:56"
+            "time": "2016-10-03T20:34:56+00:00"
         },
         {
             "name": "devster/uauth",
@@ -227,7 +226,7 @@
                 "library",
                 "micro"
             ],
-            "time": "2016-02-13 14:32:47"
+            "time": "2016-02-13T14:32:47+00:00"
         },
         {
             "name": "dflydev/apache-mime-types",
@@ -282,7 +281,7 @@
                 "mime",
                 "mimetypes"
             ],
-            "time": "2013-05-14 02:02:01"
+            "time": "2013-05-14T02:02:01+00:00"
         },
         {
             "name": "gregwar/cache",
@@ -325,7 +324,7 @@
                 "file-system",
                 "system"
             ],
-            "time": "2016-09-23 08:16:04"
+            "time": "2016-09-23T08:16:04+00:00"
         },
         {
             "name": "gregwar/image",
@@ -334,12 +333,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/Image.git",
-                "reference": "72568cf"
+                "reference": "c9899e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/Image/zipball/72568cf",
-                "reference": "72568cf",
+                "url": "https://api.github.com/repos/Gregwar/Image/zipball/c9899e4",
+                "reference": "c9899e4",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +376,7 @@
                 "gd",
                 "image"
             ],
-            "time": "2016-07-12 17:02:18"
+            "time": "2017-01-24 09:29:39"
         },
         {
             "name": "mattyg/array_column_maintain_keys",
@@ -409,7 +408,7 @@
                 "array",
                 "array_column"
             ],
-            "time": "2016-01-16 02:20:32"
+            "time": "2016-01-16T02:20:32+00:00"
         },
         {
             "name": "mattyg/fb-privacy-auth",
@@ -452,7 +451,7 @@
                 "groups",
                 "privacy"
             ],
-            "time": "2016-01-18 09:02:59"
+            "time": "2016-01-18T09:02:59+00:00"
         },
         {
             "name": "mattyg/monolog-cascade",
@@ -511,20 +510,20 @@
                 "monolog plugin",
                 "monolog utils"
             ],
-            "time": "2016-02-16 08:38:03"
+            "time": "2016-02-16T08:38:03+00:00"
         },
         {
             "name": "miljar/php-exif",
-            "version": "v0.6.1",
+            "version": "v0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPExif/php-exif.git",
-                "reference": "266c5e37ac7850c8a67653697b1d74fdabbf546e"
+                "reference": "51add6bc262903927e80b81cf137db4163474840"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPExif/php-exif/zipball/266c5e37ac7850c8a67653697b1d74fdabbf546e",
-                "reference": "266c5e37ac7850c8a67653697b1d74fdabbf546e",
+                "url": "https://api.github.com/repos/PHPExif/php-exif/zipball/51add6bc262903927e80b81cf137db4163474840",
+                "reference": "51add6bc262903927e80b81cf137db4163474840",
                 "shasum": ""
             },
             "require": {
@@ -538,6 +537,7 @@
                 "squizlabs/php_codesniffer": "1.4.*@stable"
             },
             "suggest": {
+                "ext-exif": "Use exif PHP extension as adapter",
                 "lib-exiftool": "Use perl lib exiftool as adapter"
             },
             "type": "library",
@@ -565,20 +565,20 @@
                 "jpeg",
                 "tiff"
             ],
-            "time": "2016-07-25 10:05:08"
+            "time": "2016-12-27T16:53:40+00:00"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.21.0",
+            "version": "1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "f42fbdfd53e306bda545845e4dbfd3e72edb4952"
+                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f42fbdfd53e306bda545845e4dbfd3e72edb4952",
-                "reference": "f42fbdfd53e306bda545845e4dbfd3e72edb4952",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bad29cb8d18ab0315e6c477751418a82c850d558",
+                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558",
                 "shasum": ""
             },
             "require": {
@@ -589,7 +589,7 @@
                 "psr/log-implementation": "1.0.0"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "^2.4.9",
+                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
                 "jakub-onderka/php-parallel-lint": "0.9",
@@ -643,7 +643,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-07-29 03:23:52"
+            "time": "2016-11-26T00:15:39+00:00"
         },
         {
             "name": "pekkis/mime-types",
@@ -691,7 +691,7 @@
                 "mime",
                 "mime type"
             ],
-            "time": "2015-07-27 20:03:55"
+            "time": "2015-07-27T20:03:55+00:00"
         },
         {
             "name": "psr/log",
@@ -738,20 +738,20 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.1.5",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "205b5ffbb518a98ba2ae60a52656c4a31ab00c6f"
+                "reference": "8c71141cae8e2957946b403cc71a67213c0380d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/205b5ffbb518a98ba2ae60a52656c4a31ab00c6f",
-                "reference": "205b5ffbb518a98ba2ae60a52656c4a31ab00c6f",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/8c71141cae8e2957946b403cc71a67213c0380d6",
+                "reference": "8c71141cae8e2957946b403cc71a67213c0380d6",
                 "shasum": ""
             },
             "require": {
@@ -760,7 +760,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -787,7 +787,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-28 00:11:12"
+            "time": "2017-01-02T20:32:22+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -841,7 +841,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2016-06-29 05:29:29"
+            "time": "2016-06-29T05:29:29+00:00"
         }
     ],
     "packages-dev": [],
@@ -853,7 +853,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~5.6.0|~7.0.0",
+        "php": "~5.6.0|~7.0.6|~7.1.0",
         "ext-exif": "*",
         "ext-gd": "*"
     },
