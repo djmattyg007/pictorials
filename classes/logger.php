@@ -45,6 +45,10 @@ class Logger
 
 class PictorialsLogProcessor
 {
+    /**
+     * @param array $record
+     * @return array
+     */
     public function __invoke(array $record)
     {
         if (defined("USERNAME")) {
