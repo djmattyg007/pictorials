@@ -18,6 +18,8 @@ if ($webroot = PicCLI::getGetopt("--webroot")) {
         $io->errln($e->getMessage());
         exit(PicCLI::EXIT_USAGE);
     }
+} elseif (getenv("PICTORIALS_INSTALL_NONINTERACTIVE") === "true") {
+    $webroot = null;
 } else {
     $io->outln("Pictorials can automatically create the web entry point and asset symlink/hook for you.");
     $io->outln("Enter the absolute path to the web root, or leave it empty so you can do this later.");
