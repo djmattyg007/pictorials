@@ -14,6 +14,8 @@ PicCLI::initGetopt(array(
     "appname:",
     "php-static",
     "cachedir:",
+    "loggingdir:",
+    "disable-logging",
     "asset-baseurl:",
     "script-baseurl:",
     "webroot:",
@@ -37,6 +39,7 @@ $dbConf = array(
     "type" => $dbType,
     "config" => PicDBInstall::configure(),
 );
+$loggingConf = loadPicFile("helpers/install/loggingconf.php");
 $webroot = loadPicFile("helpers/install/webroot.php");
 
 $webEntryTemplate = '<?php
@@ -48,6 +51,7 @@ require(BASE_PATH . "entry/static.php");';
 
 file_put_contents(BASE_PATH . "/conf/app.json", json_encode($appConf, JSON_PRETTY_PRINT));
 file_put_contents(BASE_PATH . "/conf/db.json", json_encode($dbConf, JSON_PRETTY_PRINT));
+file_put_contents(BASE_PATH . "/conf/logging.json", json_encode($loggingConf, JSON_PRETTY_PRINT));
 if ($webroot) {
     $webroot = rtrim($webroot, "/");
     file_put_contents($webroot . $appConf["constants"]["SCRIPT_BASE_URL"], sprintf($webEntryTemplate, BASE_PATH));
