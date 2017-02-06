@@ -9,22 +9,24 @@ class PicDBInstall
     {
         $io = PicCLI::getIO();
 
-        $io->outln("Please specify the full path to where the SQLite database file should be created.");
-        $path = PicCLI::prompt("Path");
-        if (!$path) {
-            $io->errln("No path specified.");
-            exit(PicCLI::EXIT_INPUT);
+        if (!($path = PicCLI::getGetopt("--sqlite-path"))) {
+            $io->outln("Please specify the full path to where the SQLite database file should be created.");
+            $path = PicCLI::prompt("Path");
+            if (!$path) {
+                $io->errln("No path specified.");
+                exit(PicCLI::EXIT_INPUT);
+            }
         }
         if ($path[0] !== "/") {
-            $io->errln("Must provide absolute path.");
+            $io->errln("The SQLite database file path must be absolute, not relative.");
             exit(PicCLI::EXIT_INPUT);
         }
         if (file_exists($path)) {
-            $io->errln("Path to database file already exists.");
+            $io->errln("The path to SQLite database file already exists.");
             exit(PicCLI::EXIT_INPUT);
         }
         if (!is_writeable(dirname($path))) {
-            $io->errln("The current user does not have permission to write to that directory.");
+            $io->errln("The current user does not have permission to write to the SQLite database directory.");
             exit(PicCLI::EXIT_INPUT);
         }
 

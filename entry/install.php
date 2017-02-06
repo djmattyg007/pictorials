@@ -10,7 +10,6 @@ require(BASE_PATH . "main/bootstrap-base.php");
 loadPicFile("classes/cli.php");
 PicCLI::initCLI();
 PicCLI::initGetopt(array(
-    "dbtype:",
     "appname:",
     "php-static",
     "cachedir:",
@@ -19,6 +18,8 @@ PicCLI::initGetopt(array(
     "asset-baseurl:",
     "script-baseurl:",
     "webroot:",
+    "dbtype:",
+    "sqlite-path:"
 ));
 $io = PicCLI::getIO();
 
