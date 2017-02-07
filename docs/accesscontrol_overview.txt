@@ -1,10 +1,13 @@
 Pictorials has two core concepts with regards to user management: Users and
-Groups. Anyone you wish to give access to your Pictorials web interface must
-have a User account with an associated password. Groups are used for the sole
-purpose of simplifying access control management through the privacy control
-system (see the following URL for an overview of how access control works:
+Groups.
+
+Anyone you wish to give access to your Pictorials web interface must have a
+User account with an associated password. Groups are used for the sole purpose
+of simplifying access control management through the privacy control system
+(see the following URL for an overview of how access control works:
 https://github.com/djmattyg007/fb-privacy-auth/blob/1.0.1/README.txt).
-Therefore, a User does not have to be a member of any Groups. Finally, there is
-no signup form through the web interface. It is protected by basic
-authentication, and all Users are managed by the administrator through a CLI
-interface.
+Therefore, a User does not have to be a member of any Groups.
+
+Finally, there is no signup form through the web interface. It is protected by
+HTTP basic authentication, and all Users are managed by the administrator
+through a CLI interface.

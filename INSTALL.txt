@@ -8,68 +8,60 @@ Installation Guide
    tarball provided by Github.
 
 3. Run 'composer install' in the root folder of the Pictorials codebase. You'll
-   need to install composer to do this. You can obtain composer from the website
-   https://getcomposer.org
+   need to install composer to do this. You can obtain composer from the
+   website https://getcomposer.org
 
-4. Create an empty directory somewhere outside the webroot, and ensure it is
-   writeable by the webserver. This folder will hold the application's cache.
-   Inside the Pictorials codebase directory is fine.
+4. Create two empty directories somewhere outside the webroot, and ensure they
+   are writeable by the webserver. One of these folders will hold the
+   application's cache, and the other will hold the log files. Putting them
+   inside the Pictorials codebase directory is fine. If you intend to disable
+   logging, you can forego creating a 2nd directory.
 
-5. In the conf directory, make a copy of auth.json.example, naming it auth.json.
-   In here, you'll define all the different accounts that can access your gallery.
-   Some things to note:
-    - You can have as many users as you want.
-    - Each user must have a password.
-    - Each user can be placed in as many groups as you want.
-    - You should remove all of the default users and groups before adding your own.
+5. Run the Pictorials installer with the following command:
+   php entry/install.php
+   You will need to supply various flags. These are all detailed in
+   installer.txt in the documentation.
 
-6. Also in the conf directory, make a copy of paths.json.example, naming it
-   paths.json. This is where you tell the Pictorials software about all of the
-   photos you uploaded in Step 1.
-    - You can have as many paths as you want.
-    - A "path" is essentially an album.
-    - Almost all images (with a few exceptions) inside this path and all of its
-      subfolders will be browseable from within the webpage.
-    - For details on how the privacy controls work, consult this link:
-      https://github.com/djmattyg007/fb-privacy-auth/blob/1.0.1/README.txt
-    - The path to each folder should be an absolute path, not relative.
-    - Each path can have its own set of permissions that enable various bits of
-      functionality. For an explanation of what each of these are, check out
-      permissions.txt in the documetatnion.
+6. Create a User account to access the web interface by running the following
+   command:
+   php entry/user.php create name username password
+   For more information about managing Users, look at user_management.txt in
+   the documentation. For more broad information on access control, look at
+   accesscontrol_overview.txt.
 
-7. Again in the conf directory, make a copy of logging.conf.example, naming it
-   logging.json. This is where you configure all of the loggers used by Pictorials.
-   For documentation on how to do this, consult this link:
-   https://github.com/djmattyg007/monolog-cascade/blob/1.0.0/README.md
-   The most important thing is that two loggers are configured: "main" and "error".
-   Pictorials will try and use these, so they must exist, but everything else is
-   optional. If you wish to disable all logging, you can use logging.json.disabled-example
-   instead, which will automatically configure the two loggers with NullHandlers.
+7. Add your first Path! Albums are represented as Paths in Pictorials:
+   php entry/path.php create name fullpath
+   For more information about managing Paths, look at path_management.txt in
+   the documentation. For general information about Paths, look at
+   paths_overview.txt.
 
-8. Somewhere inside the webroot, create a PHP file (it can be named whatever you want)
-   with the following contents:
-   <?php
-   define("BASE_PATH", "/path/to/pictorials/installation/"); // Must have a trailing slash
-   require(BASE_PATH . "main.php");
+8. Give your User account access to your first Path:
+   php entry/path.php allow --user --add path_id username
 
-9. Create a symlink somewhere inside the webroot (alongside the PHP file you just
-   created is fine) to the assets directory in the Pictorials codebase.
+9. If you told the installer to automatically create the webroot files for you,
+   you're done! If not, now is when you need to create those files. First,
+   create a PHP file (at the path specified for the --script-baseurl flag) with
+   the following contents:
 
-10.Again in the conf directory, make a copy of app.json.example, naming it
-   app.json. This is where general application configuration is contained.
-   a) APP_NAME: You can change this to anything else if you wish. It's used in the
-      headings of the site.
-   b) CACHE_DIR: The absolute path to the caching directory you created in Step 4.
-   c) ASSET_BASE_URL: The base used when generating URLs to assets. This must
-      reflect where you created the symlink to the assets directory in Step 9,
-      and it must have a trailing slash.
-   d) SCRIPT_BASE_URL: The path to the PHP file you created in Step 8.
-   You can add "gif" to the list of allowed image types if you wish, but it's
-   excluded by default. Also note that "jpg" and "jpeg" are equivalent - you don't
-   need to list both.
+     <?php
+     define("BASE_PATH", "/path/to/pictorials/installation/"); // Must have a trailing slash
+     require(BASE_PATH . "entry/web.php");
+
+   If you passed the --php-static-assets flag, create a PHP file (at the path
+   specified for the --asset-baseurl flag) with the following contents:
+
+     <?php
+     define("BASE_PATH", "/path/to/pictorials/installation/"); // Must have a trailing slash
+     require(BASE_PATH . "entry/static.php");
+
+   If you did not pass the --php-static-assets flag, create a symlink (at the
+   path specified for the --asset-baseurl flag) like so:
+
+     ln -s /path/to/pictorials/installation/assets /pictorials/
 
 That's it! You should now have a fully functioning image gallery. Point your
-web browser to the PHP file you created in Step 8, login with one of the accounts
-you created in Step 5, and browse one of the paths you configured in Step 6.
+web browser to the PHP file specified for the --script-baseurl flag, login with
+the User account you created in Step 6, and browse one of the paths you
+configured in Step 7.
 
-Remember that you can view a live demo at http://pictorials-demo.matthewgamble.net
+Remember that you can view a live demo at https://pictorials-demo.matthewgamble.net

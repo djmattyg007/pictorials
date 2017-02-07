@@ -17,7 +17,7 @@ started mainly as a file viewer (not a gallery), hence the current appearance.
 Contributions are welcome - feel free to submit an issue or pull request.
 
 You can view a live demo of this software at the following URL:
-http://pictorials-demo.matthewgamble.net
+https://pictorials-demo.matthewgamble.net
 
 Feedback of any nature can be directed at the following channels:
 - Github: https://github.com/djmattyg007/pictorials
