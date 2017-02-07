@@ -11,7 +11,7 @@ loadPicFile("classes/cli.php");
 PicCLI::initCLI();
 PicCLI::initGetopt(array(
     "appname:",
-    "php-static",
+    "php-static-assets",
     "cachedir:",
     "loggingdir:",
     "disable-logging",

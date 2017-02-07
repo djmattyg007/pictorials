@@ -6,7 +6,7 @@ $appConf = array(
     "constants" => array(
         "APP_NAME" => PicCLI::getGetopt("--appname", "Pictorials"),
     ),
-    "assets_through_php" => PicCLI::getGetopt("--php-static", false),
+    "assets_through_php" => PicCLI::getGetopt("--php-static-assets", false),
     "image_sizes" => array(
         "small" => array("width" => 250, "height" => 250),
         "medium" => array("width" => 400, "height" => 400),

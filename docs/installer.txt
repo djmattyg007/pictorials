@@ -1,0 +1,53 @@
+This document contains a reference for all flags that can be passed to the
+installer.
+
+--cachedir=/path/to/cachedir
+Required. Must be absolute.
+
+--loggingdir=/path/to/logdir
+Must be absolute. Required unless --disable-logging is passed.
+
+--disable-logging
+Pass this flag to completely disable logging. --loggingdir will be ignored if
+this is passed.
+
+--dbtype=sqlite
+Required. Only SQLite is supported at the moment, so this is in place purely
+for the purposes of forwards-compatibility.
+
+--sqlite-path=/path/to/pictorials.db
+Optional. Must be absolute. If this is omitted, you will be greeted with an
+interactive prompt to enter the path. Only necessary when using SQLite.
+
+--script-baseurl=(default|/path/under/webroot/pictorials.php)
+Optional. Must be absolute if not using the default. This controls the base
+path used to actually access the frontend web interface, and is also used for
+generating script URLs used by the frontend javascript. If this is omitted, you
+will be greeted with an interactive prompt to enter the path. The default value
+is "/pictorials.php".
+
+--asset-baseurl=(default|/path/under/webroot/pictorials/|/path/under/webroot/pictorials-static.php)
+Optional. Must be absolute if not using the default. This controls the base
+path used for generating asset URLs. If this is omitted, you will be greeted
+with an interactive prompt to enter the path. If --php-static-assets is also
+passed, the default is "/pictorials-static.php". If not, the default is
+"/pictorials/".
+
+--php-static-assets
+This will switch over asset URL generation to send all assets through PHP,
+rather than relying on a web server. This could be preferable for certain types
+of deployments.
+
+--webroot=/path/to/webroot
+Optional. Must be absolute. If you supply this flag, the installer will
+automatically create the entry point script as specified by the --script-baseurl
+flag, and either symlink the assets folder or create the static assets script.
+If this is omitted, you will be greeted with an interactive prompt to
+optionally enter the path. To avoid being greeted with an interactive prompt
+AND avoid the automatic file/symlink creation, ensure the following environment
+variable is set:
+PICTORIALS_INSTALL_NONINTERACTIVE=true
+
+--appname=<name>
+Optional. The default value is "Pictorials". This is used purely for branding
+purposes on the frontend web interface.
