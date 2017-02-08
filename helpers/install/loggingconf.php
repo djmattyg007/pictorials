@@ -3,7 +3,7 @@
 $io = PicCLI::getIO();
 
 if (PicCLI::getGetopt("--disable-logging", false)) {
-    return loadPicFile("conf/logging.disabled-example.json");
+    return loadPicFile("docs/examples/logging.disabled-example.json");
 }
 
 $loggingDir = PicCLI::getGetopt("--loggingdir");
@@ -16,7 +16,7 @@ if ($loggingDir[0] !== "/") {
     exit(PicCLI::EXIT_USAGE);
 }
 
-$loggingConf = loadPicFile("conf/logging.example.json");
+$loggingConf = loadPicFile("docs/examples/logging.example.json");
 $loggingConf["handlers"]["mainFile"]["stream"] = rtrim($loggingDir, "/") . "/main.log";
 $loggingConf["handlers"]["errorFile"]["stream"] = rtrim($loggingDir, "/") . "/error.log";
 return $loggingConf;
