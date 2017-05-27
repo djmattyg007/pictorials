@@ -4,8 +4,11 @@ PicCLI::initGetopt(array());
 $io = PicCLI::getIO();
 
 if (!($username = PicCLI::getGetopt(1))) {
-    $io->errln("No username specified.");
-    exit(PicCLI::EXIT_USAGE);
+    $username = PicCLI::prompt("Username");
+    if (!$username) {
+        $io->errln("No username specified.");
+        exit(PicCLI::EXIT_INPUT);
+    }
 }
 
 loadPicFile("classes/db.php");
