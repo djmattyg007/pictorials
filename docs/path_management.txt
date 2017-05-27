@@ -9,9 +9,14 @@ Run: php entry/path.php create [--sortorder=<number>] [name [path]]
 The two non-optional arguments must be passed in order. If you omit one or more
 of them, you will be greeted with an interactive prompt to enter the remaining
 details.
-The --sortorder flag must be passed a positive integer that is greaterthan
+The --sortorder flag must be passed a positive integer that is greater than
 zero. The sort order affects the order of albums presented to the end user in
 the web interface.
+
+Delete
+Run: php entry/path.php delete path_id
+
+Use this to delete a single path.
 
 List
 Run: php entry/path.php list [--sort[=(sortorder|name)]]
@@ -19,7 +24,13 @@ Run: php entry/path.php list [--sort[=(sortorder|name)]]
 Displays the full list of Paths in the system, optionally sorted. Pass
 --sort=sortorder to sort the list by the sort order values specified in the
 database. Pass --sort=name to sort by path names. Passing --sort with no value
-defaults to sorting by the sort order values in the database.
+defaults to sorting by the sort order values specified in the database.
+
+Update
+Run: php entry/path.php update path_id [--name=<name>] [--path=<path>] [--sortorder=<number>]
+
+Updates various details about a given path. At least one of --name, --path or
+--sortorder must be specified.
 
 View
 Run: php entry/path.php view path_id
