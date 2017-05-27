@@ -9,12 +9,18 @@ Run: php entry/user.php create [name [username [password]]]
 The three arguments must be passed in order. If you omit one or more of them,
 you will be greeted with an interactive prompt to enter the remaining details.
 
+Delete
+Run: php entry/user.php delete [username]
+
+Use this to delete a single user. If you omit the username, you will be greeted
+with an interactive prompt to enter the username.
+
 View
 Run: php entry/user.php view [username]
 
 This presents you with the User's name, and a list of any Groups they are a
 member of. If you omit the username, you will be greeted with an interactive
-prompt to enter the remaining details.
+prompt to enter the username.
 
 Update
 Run: php entry/user.php update [username [name]]
