@@ -31,7 +31,7 @@ if (!$userId) {
 $update = PicDB::newUpdate();
 $update->table("users")
     ->cols(array("name" => $name))
-    ->where("username = :username")
-    ->bindValue("username", $username);
+    ->where("id = :id")
+    ->bindValue("id", $userId);
 PicDB::crud($update);
 PicCLI::success();
