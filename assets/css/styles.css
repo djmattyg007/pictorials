@@ -113,6 +113,11 @@ body {
     display: none;
 }
 
+#files-display-selector {
+    overflow-y: scroll;
+    max-height: 200px;
+}
+
 #files-display-selector .slick-dots > li {
     margin-bottom: 2px;
 }
