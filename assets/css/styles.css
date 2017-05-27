@@ -97,6 +97,7 @@ body {
 }
 
 #files-display-details {
+    min-height: 26px;
     margin-bottom: 15px;
 }
 
