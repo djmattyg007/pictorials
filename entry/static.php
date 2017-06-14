@@ -20,6 +20,7 @@ switch ($_GET["type"]) {
     default:
         sendError(400);
 }
+loadPicFile("helpers/filenamereject.php", array("filename" => $filename));
 if (is_readable($filename) === false) {
     sendError(404);
 }
