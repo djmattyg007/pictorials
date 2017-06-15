@@ -1,5 +1,7 @@
 <?php
 
+use Aura\Sql\ExtendedPdo;
+
 class PicDBInstall
 {
     /**
@@ -38,6 +40,7 @@ class PicDBInstall
      */
     public static function create(array $config)
     {
+        /** @var $conn ExtendedPdo */
         $conn = loadPicFile("helpers/db/sqlite.php", array("config" => $config));
 
         $conn->exec("CREATE TABLE system (
@@ -93,5 +96,31 @@ class PicDBInstall
             UNIQUE (path_id, files)
         )");
         $conn->exec("INSERT INTO system (key, value) VALUES ('version', '" . VERSION . "')");
+    }
+
+    /**
+     * @param ExtendedPdo $conn
+     * @param string $oldVersion
+     */
+    public static function upgrade(ExtendedPdo $conn, $oldVersion)
+    {
+        if (version_compare($oldVersion, "0.4.0-dev2", "<") === "true") {
+            $conn->exec("CREATE TABLE albums (
+                id INTEGER PRIMARY KEY NOT NULL,
+                name TEXT NOT NULL,
+                user_id INTEGER NOT NULL,
+                path_id INTEGER NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                FOREIGN KEY (path_id) REFERNCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE
+            )");
+
+            $conn->exec("CREATE TABLE album_files (
+                id INTEGER PRIMARY KEY NOT NULL,
+                album_id INTEGER NOT NULL,
+                file TEXT NOT NULL,
+                FOREIGN KEY (album_id) REFERENCES albums (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                UNIQUE (album_id, file)
+            )");
+        }
     }
 }

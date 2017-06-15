@@ -6,6 +6,7 @@ use Aura\Cli\Stdio;
 
 class PicCLI
 {
+    const EXIT_SUCCESS = Status::SUCCESS;
     const EXIT_FAIL = Status::FAILURE;
     const EXIT_USAGE = Status::USAGE;
     const EXIT_INPUT = Status::DATAERR;

@@ -1,8 +1,9 @@
 <?php
 
-use Aura\SqlQuery\QueryFactory;
+use Aura\Sql\ExtendedPdo;
 use Aura\SqlQuery\AbstractDmlQuery;
 use Aura\SqlQuery\Common\SelectInterface;
+use Aura\SqlQuery\QueryFactory;
 
 class PicDB
 {
@@ -12,15 +13,33 @@ class PicDB
     private static $queryFactory = null;
 
     /**
-     * @var Aura\Sql\ExtendedPdo
+     * @var ExtendedPdo
      */
     private static $conn = null;
 
+    /**
+     * @var string
+     */
+    private static $dbType = null;
+
+    /**
+     * @return ExtendedPdo
+     */
     public static function initDB()
     {
         $dbConf = loadPicFile("conf/db.json");
         self::$queryFactory = new QueryFactory($dbConf["type"], QueryFactory::COMMON);
         self::$conn = loadPicFile("helpers/db/" . $dbConf["type"] . ".php", array("config" => $dbConf["config"]));
+        self::$dbType = $dbConf["type"];
+        return self::$conn;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDBType()
+    {
+        return self::$dbType;
     }
 
     /**
@@ -85,5 +104,19 @@ class PicDB
     public static function lastInsertId()
     {
         return (int) self::$conn->lastInsertId();
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public static function getSystemVal($key)
+    {
+        $select = self::newSelect();
+        $select->cols(array("value"))
+            ->from("system")
+            ->where("key = :key")
+            ->bindValue("key", $key);
+        return self::fetch($select, "value");
     }
 }
