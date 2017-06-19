@@ -47,5 +47,28 @@ BootboxWrapper.prototype = {
             "show": false
         });
         this.modalManager.addModal(bPrompt);
+    },
+
+    showOptionsPrompt: function(title, inputType, inputOptions, userCallback, ignoreCancel) {
+        if (typeof ignoreCancel === "undefined") {
+            ignoreCancel = true;
+        }
+        var self = this;
+        var bPrompt = this.bootbox.prompt({
+            "title": title,
+            "inputType": inputType,
+            "inputOptions": inputOptions,
+            "callback": function(value) {
+                if (ignoreCancel === true && value === null) {
+                    return true;
+                }
+                self.modalManager.safeHide(bPrompt, function() {
+                    userCallback(value);
+                });
+                return false;
+            },
+            "show": false
+        });
+        this.modalManager.addModal(bPrompt);
     }
 };
