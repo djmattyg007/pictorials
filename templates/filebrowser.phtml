@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php echo APP_NAME; ?> - File Browser</title>
+<title><?php echo htmlspecialchars(APP_NAME); ?> - File Browser</title>
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "bootstrap.min.css"); ?>" media="all">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" media="all" integrity="sha256-jySGIHdxeqZZvJ9SHgPNjbsBP8roij7/WjgkoGTJICk=" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "styles.css"); ?>" media="all">
@@ -12,7 +12,7 @@
 
 <body>
 <div id="content" class="container">
-<h1><?php echo APP_NAME; ?></h1>
+<h1><?php echo htmlspecialchars(APP_NAME); ?></h1>
 <h2>File Browser</h2>
 
 <div class="row">
@@ -22,7 +22,7 @@
     <select id="paths-select" class="form-control">
     <option value=""></option>
     <?php foreach ($paths as $pathID => $pathName): ?>
-    <option value="<?php echo $pathID; ?>"><?php echo $pathName; ?></option>
+    <option value="<?php echo $pathID; ?>"><?php echo htmlspecialchars($pathName); ?></option>
     <?php endforeach; ?>
     </select>
 </div>
