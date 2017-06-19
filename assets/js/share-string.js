@@ -15,7 +15,7 @@ ShareString.prototype = {
             successCallback(result.path, result.files);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while looking up your share ID";
-            if (textStatus == "error") {
+            if (textStatus === "error") {
                 msg += ":\n" + errorThrown;
             }
             msg += "\nPlease report this to the owner";

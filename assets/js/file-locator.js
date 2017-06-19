@@ -20,7 +20,6 @@ FileLocator.prototype = {
 
     _handlePromptResponse: function(shareID) {
         var self = this;
-        var fileInfo;
         this.shareString.decode(shareID, function(pathID, files) {
             jQuery(document).trigger("pictorials:display_files", {"pathID": pathID, "files": files});
         }, function(errorMsg) {
