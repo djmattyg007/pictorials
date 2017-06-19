@@ -111,7 +111,7 @@ class PicDBInstall
                 user_id INTEGER NOT NULL,
                 path_id INTEGER NOT NULL,
                 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
-                FOREIGN KEY (path_id) REFERNCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE
+                FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE
             )");
 
             $conn->exec("CREATE TABLE album_files (
