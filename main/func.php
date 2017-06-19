@@ -78,7 +78,7 @@ function loadPicTemplate($filename, array $vars = array())
         loadPicFile("helpers/jstemplates.php", array("template" => $template));
     } else {
         header("Content-type: text/html; charset=UTF-8");
-        loadPicFile($filename, $vars);
+        loadPicFile("templates/$filename", $vars);
     }
     exit();
 }
