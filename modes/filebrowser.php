@@ -14,7 +14,7 @@ if (empty($_POST)) {
     if (isset($appConf["mapbox"])) {
         $templateVars["mapboxConf"] = $appConf["mapbox"];
     }
-    loadPicTemplate("templates/filebrowser.phtml", $templateVars);
+    loadPicTemplate("filebrowser.phtml", $templateVars);
     exit();
 }
 

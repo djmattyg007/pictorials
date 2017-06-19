@@ -1,0 +1,3 @@
+<?php
+
+loadPicTemplate("home.phtml");

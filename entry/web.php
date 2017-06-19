@@ -11,7 +11,7 @@ PicDB::initDB();
 loadPicFile("main/auth.php");
 
 if (empty($_GET["mode"])) {
-    loadPicFile("modes/filebrowser.php");
+    loadPicFile("modes/home.php");
     exit();
 }
 
