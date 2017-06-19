@@ -125,7 +125,7 @@ class Access
             ->bindValue("path_id", $pathID);
         $permissions = PicDB::fetch($permSelect, "col");
 
-        self::$currentPath = new PicPath($pathDetails["name"], $pathDetails["path"], $permissions);
+        self::$currentPath = new PicPath($pathID, $pathDetails["name"], $pathDetails["path"], $permissions);
         return self::$currentPath;
     }
 }

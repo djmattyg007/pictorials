@@ -3,6 +3,11 @@
 class PicPath
 {
     /**
+     * @return int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $name;
@@ -18,12 +23,14 @@ class PicPath
     private $permissions;
 
     /**
+     * @param int $id
      * @param string $name
      * @param string $path
      * @param array $permissions
      */
-    public function __construct($name, $path, array $permissions)
+    public function __construct($id, $name, $path, array $permissions)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->path = $path;
         $this->permissions = $permissions;
@@ -31,11 +38,13 @@ class PicPath
 
     /**
      * @param string $property
-     * @return string
+     * @return string|int
      */
     public function __get($property)
     {
-        if ($property === "name") {
+        if ($property === "id") {
+            return $this->id;
+        } elseif ($property === "name") {
             return $this->name;
         } elseif ($property === "path") {
             return $this->path;
