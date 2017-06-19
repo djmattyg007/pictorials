@@ -104,7 +104,7 @@ class PicDBInstall
      */
     public static function upgrade(ExtendedPdo $conn, $oldVersion)
     {
-        if (version_compare($oldVersion, "0.4.0-dev2", "<") === "true") {
+        if (version_compare($oldVersion, "0.4.0-dev2", "<") === true) {
             $conn->exec("CREATE TABLE albums (
                 id INTEGER PRIMARY KEY NOT NULL,
                 name TEXT NOT NULL,

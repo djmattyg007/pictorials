@@ -14,7 +14,7 @@ PicDBInstall::upgrade($conn, $oldVersion);
 
 $update = PicDB::newUpdate();
 $update->table("system")
-    ->cols("value" => VERSION)
+    ->cols(array("value" => VERSION))
     ->where("key = :key")
     ->bindValue("key", "version");
 PicDB::crud($update);
