@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo htmlspecialchars(APP_NAME); ?> - Album Manager</title>
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "bootstrap.min.css"); ?>" media="all">
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "styles.css"); ?>" media="all">
+</head>
+
+<body>
+
+<div id="content" class="container">
+<h1><?php echo htmlspecialchars(APP_NAME); ?></h1>
+<h2>Album Manager</h2>
+
+<div class="row">
+    <div id="albums" class="col-xs-12 col-md-6">
+        <div class="form-group">
+            <label for="albums-select">Albums</label>
+            <select id="albums-select" class="form-control">
+            <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+    <div id="global-toolbar" class="col-xs-12 col-md-6">
+        <div class="dropdown hidden-xs hidden-sm">
+            <button type="button" id="actions-menu" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
+                <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu pull-right" role="menu" aria-labelledby="actions-menu">
+                <button type="button" data-album-creator-activate class="btn btn-link btn-block">Create Album</button>
+            </div>
+        </div>
+        <div class="visible-xs visible-sm">
+            <button type="button" id="actions-list" class="btn btn-link" data-toggle="visible-state" data-target="global-toolbar-mobile" aria-expanded="false">
+                Actions
+                <span class="caret"></span>
+            </button>
+            <ul id="global-toolbar-mobile" class="list-inline" data-visible-state="closed" role="menu" aria-labelledby="actions-list">
+                <li><button type="button" data-album-creator-activate class="btn btn-block">Create Album</button></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div id="footer">
+<div class="container">
+<small>This site runs Pictorials v<?php echo VERSION; ?></small>
+</div>
+</div>
+
+<div style="display:none;">
+
+<script type="application/json" id="ajax-urls">
+{
+    "createalbum": "<?php echo scriptUrl("albummanager", array("action" => "create")); ?>",
+    "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>"
+}
+</script>
+
+</div>
+
+<div style="display:none;">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
+
+<script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
+</div>
+
+</body>
+</html>
