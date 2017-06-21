@@ -1,7 +1,15 @@
 <?php
 
 if (empty($_POST)) {
-    loadPicTemplate("albummanager.phtml");
+    $pathSelect = PicDB::newSelect();
+    $pathSelect->cols(array("id", "name"))
+        ->from("paths")
+        ->where("id IN (:ids)")
+        ->bindValue("ids", Access::getAllowedPaths());
+    $templateVars = array(
+        "paths" => PicDB::fetch($pathSelect, "pairs"),
+    );
+    loadPicTemplate("albummanager.phtml", $templateVars);
     exit();
 }
 

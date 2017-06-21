@@ -1,13 +1,20 @@
-function AlbumDetails(userInputHandler, albumCreateUrl, albumEditUrl)
+function AlbumCreator(userInputHandler, paths, albumCreateUrl)
 {
     this.userInputHandler = userInputHandler;
     this.albumCreateUrl = albumCreateUrl;
-    this.albumEditUrl = albumEditUrl;
+
+    this.options = [];
+    Object.keys(paths).forEach(function(pathID) {
+        this.options.push({
+            "value": pathID,
+            "text": paths[pathID]
+        });
+    }.bind(this));
 
     this.initEvents();
 }
 
-AlbumDetails.prototype = {
+AlbumCreator.prototype = {
     initEvents: function() {
         var self = this;
         jQuery(document).on("click", "[data-album-creator-activate]", function() {
@@ -17,11 +24,7 @@ AlbumDetails.prototype = {
 
     runCreatePrompt: function() {
         var self = this;
-        var options = [
-            {"text": "", "value": null},
-            {"text": "Nexus5x", "value": 1}
-        ];
-        this.userInputHandler.showOptionsPrompt("Select path", "select", options, function(pathID) {
+        this.userInputHandler.showOptionsPrompt("Select path", "select", this.options, function(pathID) {
             self.userInputHandler.showPrompt("Enter album name", "text", self._handleCreatePromptResponse.bind(self, pathID));
         });
     },
@@ -35,7 +38,7 @@ AlbumDetails.prototype = {
             "url": this.albumCreateUrl
         }).done(function(albumID) {
             self.userInputHandler.showSuccess("Your album was successfully created");
-            jQuery(document).trigger("pictorials:album_chosen", {albumID: albumID})
+            jQuery(document).trigger("pictorials:album_created", {albumID: parseInt(albumID)})
         }).fail(function(jqXHR, textStatus, errorThrown) {
             msg = "An error occurred while attempting to create your album";
             if (textStatus === "error") {

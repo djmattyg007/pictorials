@@ -46,6 +46,13 @@
     </div>
 </div>
 
+<br>
+
+<div class="row">
+    <div class="col-xs-12">
+    </div>
+</div>
+
 </div>
 
 <div id="footer">
@@ -55,6 +62,10 @@
 </div>
 
 <div style="display:none;">
+
+<script type="application/json" id="paths">
+<?php echo json_encode($paths); ?>
+</script>
 
 <script type="application/json" id="ajax-urls">
 {
@@ -66,6 +77,46 @@
 </div>
 
 <div style="display:none;">
+<script type="text/x-html-template" id="album-edit-form-template">
+<div class="flip">
+<div class="card">
+    <div class="face front">
+        <div class="well well-sm inner">
+            <h3>#{name}</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <th>Path</th>
+                        <td>#{path_name}</td>
+                    </tr>
+                    <tr>
+                        <th>Picture Count</th>
+                        <td>#{picture_count}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="face back">
+        <div class="well well-sm inner">
+            <h3>Edit</h3>
+            <form data-album-edit-form>
+                <div class="form-group">
+                    <label for="album-edit-name">Name</label>
+                    <input type="text" id="album-edit-name" class="form-control" value="${name}">
+                </div>
+                <button type="submit" class="btn btn-default">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</script>
+</div>
+
+<div style="display:none;">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
@@ -73,6 +124,10 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "album-creator.js"); ?>"></script>
+
+<script type="text/javascript" src="<?php echo templateUrl("albummanager"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "album-manager.js"); ?>"></script>
 </div>
 
 </body>
