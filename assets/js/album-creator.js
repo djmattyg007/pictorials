@@ -1,9 +1,11 @@
-function AlbumCreator(userInputHandler, paths, albumCreateUrl)
+function AlbumCreator(userInputHandler, notificationManager, loader, paths, albumCreateUrl)
 {
     this.userInputHandler = userInputHandler;
+    this.notificationManager = notificationManager;
+    this.loader = loader;
     this.albumCreateUrl = albumCreateUrl;
 
-    this.options = [];
+    this.options = [{"value": "", "text": ""}];
     Object.keys(paths).forEach(function(pathID) {
         this.options.push({
             "value": pathID,
@@ -31,13 +33,15 @@ AlbumCreator.prototype = {
 
     _handleCreatePromptResponse: function(pathID, albumName) {
         var self = this;
+        this.loader.show(false);
         jQuery.ajax({
             "method": "POST",
             "data": {"path": pathID, "name": albumName},
             "dataType": "text",
             "url": this.albumCreateUrl
         }).done(function(albumID) {
-            self.userInputHandler.showSuccess("Your album was successfully created");
+            self.loader.hide();
+            self.notificationManager.displaySuccess("Your album was successfully created");
             jQuery(document).trigger("pictorials:album_created", {albumID: parseInt(albumID)})
         }).fail(function(jqXHR, textStatus, errorThrown) {
             msg = "An error occurred while attempting to create your album";
@@ -45,6 +49,7 @@ AlbumCreator.prototype = {
                 msg += ":\n" + errorThrown;
             }
             msg += "\nPlease report this to the owner";
+            self.loader.hide();
             self.userInputHandler.showError(msg);
         });
     }

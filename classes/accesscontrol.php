@@ -94,7 +94,7 @@ class Access
         }
         $pathID = (int) $_POST["path"];
         $allowedPaths = self::getAllowedPaths();
-        if (!isset($allowedPaths[$pathID])) {
+        if (!in_array($pathID, $allowedPaths)) {
             sendError(404);
         }
         return $pathID;

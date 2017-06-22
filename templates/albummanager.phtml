@@ -6,6 +6,9 @@
 <title><?php echo htmlspecialchars(APP_NAME); ?> - Album Manager</title>
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "bootstrap.min.css"); ?>" media="all">
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "styles.css"); ?>" media="all">
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "fontawesome.css"); ?>" media="all">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.css" integrity="sha256-d0mtrHsQZQe2+DIl6Z+F1rVWLI++ycF3BEXQUWf04xs=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.css" integrity="sha256-jXmPL1Q5E9IDaGmoKFLCbahYWC8zrPDwq8oNBQlzoyM=" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -20,6 +23,9 @@
             <label for="albums-select">Albums</label>
             <select id="albums-select" class="form-control">
             <option value=""></option>
+            <?php foreach ($albums as $albumID => $albumName): ?>
+            <option value="<?php echo $albumID; ?>"><?php echo htmlspecialchars($albumName); ?></option>
+            <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -59,6 +65,13 @@
 <div class="container">
 <small>This site runs Pictorials v<?php echo VERSION; ?></small>
 </div>
+</div>
+
+<div id="loader" style="display:none;">
+    <img src="<?php echo assetUrl("img", "spinner.svg"); ?>" alt="Loading" class="loader-img fa-pulse" data-loader-indicator>
+    <div class="progress" data-loader-progress style="display:none;">
+        <div data-progress-bar class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">&nbsp;</div>
+    </div>
 </div>
 
 <div style="display:none;">
@@ -119,10 +132,14 @@
 <div style="display:none;">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.js" integrity="sha256-Wdie7xDu6PuVG6BqNy/dEEYY0jK2JutDYnn0sI19yTw=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.js" integrity="sha256-84wtYJTPHtuXdY+6x/khPD5SruMKvYOUsJcYPNJ9dvk=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "notification-manager.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-creator.js"); ?>"></script>
 
