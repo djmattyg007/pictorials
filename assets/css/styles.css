@@ -236,9 +236,9 @@ body {
 .flip .card {
     height: 100%;
     -webkit-transform-style: preserve-3d;
-    -webkit-transition: 1s;
+    -webkit-transition: 0.8s;
             transform-style: preserve-3d;
-            transition: 1s;
+            transition: 0.8s;
 }
 .flip .card.flipped {
     -webkit-transform: rotatey(-180deg);

@@ -16,7 +16,7 @@ NotificationManager.prototype = {
             "type": type
         };
         if (msg) {
-            options["msg"] = msg;
+            options["text"] = msg;
         }
         new PNotify(options);
     },

@@ -20,7 +20,7 @@ class Access
     private static $allowedPaths = null;
 
     /**
-     * @var array
+     * @var PicPath
      */
     private static $currentPath = null;
 

@@ -1,5 +1,7 @@
 <?php
 
+/** @var $albumID int */
+
 $select = PicDB::newSelect();
 $select->cols(array("name", "path_id", "user_id"))
     ->from("albums")

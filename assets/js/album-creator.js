@@ -41,7 +41,7 @@ AlbumCreator.prototype = {
             "url": this.albumCreateUrl
         }).done(function(albumID) {
             self.loader.hide();
-            self.notificationManager.displaySuccess("Your album was successfully created");
+            self.notificationManager.displaySuccess("Success", "Your album was successfully created");
             jQuery(document).trigger("pictorials:album_created", {albumID: parseInt(albumID)})
         }).fail(function(jqXHR, textStatus, errorThrown) {
             msg = "An error occurred while attempting to create your album";
