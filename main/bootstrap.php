@@ -5,3 +5,4 @@ loadPicFile("main/func.php");
 loadPicFile("classes/cache.php");
 loadPicFile("classes/conf.php");
 loadPicFile("classes/path.php");
+loadPicFile("classes/album.php");

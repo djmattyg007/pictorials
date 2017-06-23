@@ -41,21 +41,16 @@ if ($_GET["action"] === "create") {
     header("Content-type: text/plain");
     echo PicDB::lastInsertId();
 } elseif ($_GET["action"] === "edit") {
-    if (empty($_POST["album"]) || empty($_POST["name"])) {
+    if (empty($_POST["name"])) {
         sendError(400);
     }
-    $albumDetails = loadPicFile("helpers/albums/load.php", array("albumID" => (int) $_POST["album"]));
-    if (!$albumDetails) {
-        sendError(404);
-    } elseif ($albumDetails["user_id"] !== USER_ID) {
-        sendError(404);
-    }
+    $album = Access::getCurrentAlbum();
 
     $update = PicDB::newUpdate();
     $update->table("albums")
         ->cols(array("name" => $_POST["name"]))
         ->where("id = :id")
-        ->bindValue("id", (int) $_POST["album"]);
+        ->bindValue("id", $album->id);
     PicDB::crud($update);
 } else {
     sendError(404);

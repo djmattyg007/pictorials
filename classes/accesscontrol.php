@@ -25,6 +25,11 @@ class Access
     private static $currentPath = null;
 
     /**
+     * @var PicAlbum
+     */
+    private static $currentAlbum = null;
+
+    /**
      * @return array
      */
     private static function buildGroups()
@@ -111,21 +116,42 @@ class Access
 
         $pathID = self::verifyCurrentPathAccess();
 
-        $pathSelect = PicDB::newSelect();
-        $pathSelect->cols(array("name", "path"))
-            ->from("paths")
-            ->where("id = :id")
-            ->bindValue("id", $pathID);
-        $pathDetails = PicDB::fetch($pathSelect, "one");
-
-        $permSelect = PicDB::newSelect();
-        $permSelect->cols(array("permission"))
-            ->from("path_permissions")
-            ->where("path_id = :path_id")
-            ->bindValue("path_id", $pathID);
-        $permissions = PicDB::fetch($permSelect, "col");
-
-        self::$currentPath = new PicPath($pathID, $pathDetails["name"], $pathDetails["path"], $permissions);
+        self::$currentPath = loadPicFile("helpers/paths/load.php", array("pathID" => $pathID));
         return self::$currentPath;
+    }
+
+    /**
+     * @return PicAlbum
+     */
+    public static function verifyCurrentAlbumAccess()
+    {
+        if (!isset($_POST["album"]) || !is_numeric($_POST["album"])) {
+            sendError(400);
+        }
+        $albumID = (int) $_POST["album"];
+        $album = loadPicFile("helpers/albums/load.php", array("albumID" => $albumID));
+        if ($album === null) {
+            sendError(404);
+        } elseif ($album->userID !== USER_ID) {
+            sendError(404);
+        }
+        $allowedPaths = self::getAllowedPaths();
+        if (!in_array($album->pathID, $allowedPaths, true)) {
+            sendError(404);
+        }
+        return $album;
+    }
+
+    /**
+     * @return PicAlbum
+     */
+    public static function getCurrentAlbum()
+    {
+        if (self::$currentAlbum !== null) {
+            return self::$currentAlbum;
+        }
+
+        self::$currentAlbum = self::verifyCurrentAlbumAccess();
+        return self::$currentAlbum;
     }
 }

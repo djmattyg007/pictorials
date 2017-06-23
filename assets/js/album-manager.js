@@ -5,6 +5,8 @@ var modalManager = new ModalManager();
 var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);
 var notificationManager = new NotificationManager();
 var loader = new Loader(jQuery("#loader"));
+var templater = new Templater(window.templates);
 var albums = new Albums(jQuery("#albums"));
 
 var albumCreator = new AlbumCreator(userInputHandler, notificationManager, loader, paths, ajaxUrls.createalbum);
+var albumDetailEditor = new AlbumDetailEditor(jQuery("#album-details-container"), loader, templater, notificationManager, ajaxUrls.getalbumdetails);

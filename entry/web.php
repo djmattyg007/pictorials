@@ -22,6 +22,7 @@ switch ($_GET["mode"]) {
     case "share":
     case "sysload":
     case "albummanager":
+    case "albumdetails":
         loadPicFile("modes/{$_GET["mode"]}.php");
         break;
     default:

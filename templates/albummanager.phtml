@@ -55,7 +55,8 @@
 <br>
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-md-6">
+        <div id="album-details-container"></div>
     </div>
 </div>
 
@@ -83,7 +84,8 @@
 <script type="application/json" id="ajax-urls">
 {
     "createalbum": "<?php echo scriptUrl("albummanager", array("action" => "create")); ?>",
-    "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>"
+    "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>",
+    "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>"
 }
 </script>
 
@@ -93,11 +95,11 @@
 <script type="text/x-html-template" id="album-edit-form-template">
 <div class="flip">
 <div class="card">
-    <div class="face front">
-        <div class="well well-sm inner">
-            <h3>#{name}</h3>
+    <div class="panel panel-info face front">
+        <div class="panel-heading"><strong>#{name}</strong></div>
+        <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <tbody>
                     <tr>
                         <th>Path</th>
@@ -110,17 +112,18 @@
                     </tbody>
                 </table>
             </div>
+            <button type="button" class="btn btn-primary" data-toggle="flip">Edit</button>
         </div>
     </div>
-    <div class="face back">
-        <div class="well well-sm inner">
-            <h3>Edit</h3>
+    <div class="panel panel-primary face back">
+        <div class="panel-heading"><strong>Edit</strong></div>
+        <div class="panel-body">
             <form data-album-edit-form>
                 <div class="form-group">
                     <label for="album-edit-name">Name</label>
                     <input type="text" id="album-edit-name" class="form-control" value="${name}">
                 </div>
-                <button type="submit" class="btn btn-default">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
     </div>
@@ -140,11 +143,15 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "notification-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "templater.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-creator.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "album-detail-editor.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo templateUrl("albummanager"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-manager.js"); ?>"></script>
+
+<script type="text/javascript" src="<?php echo assetUrl("js", "flipper.js"); ?>"></script>
 </div>
 
 </body>
