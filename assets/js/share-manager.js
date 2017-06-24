@@ -20,20 +20,20 @@ ShareManager.prototype = {
         this.shareString.encode(pathID, files, function(shareID) {
             var check = self.clipboardHandler.copy(shareID);
             if (check) {
-                self._handleShareSuccess();
+                self._handleCopySuccess();
             } else {
-                self._handleShareFailure(shareID);
+                self._handleCopyFailure(shareID);
             }
         }, function(errorMsg) {
             self.userInputHandler.showError(errorMsg);
         });
     },
 
-    _handleShareSuccess: function() {
+    _handleCopySuccess: function() {
         this.userInputHandler.showSuccess('The share ID was successfully copied to your clipboard.');
     },
 
-    _handleShareFailure: function(shareID) {
+    _handleCopyFailure: function(shareID) {
         var inputId = "pic-share-copy-" + Math.random();
         var message = '<p>Copy the share ID and send it to your friend</p><input type="text" id="' + inputId + '" class="form-control" readonly value="' + shareID + '">';
         this.userInputHandler.showMessage(message, function() {
