@@ -18,6 +18,7 @@ Toolbox.prototype = {
             self.container.show();
         });
         jQuery(document).on("pictorials:selection_changed", function(event, eventData) {
+            self.container.find("[data-toolbox-selected-count]").text(eventData.selectedCount);
             self.container.find("[data-toolbox-selected-only]").prop("disabled", eventData.selectedCount === 0);
         });
     }
