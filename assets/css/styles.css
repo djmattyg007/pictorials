@@ -131,6 +131,22 @@ body {
     height: 420px;
 }
 
+#albums .loader-img {
+    width: 1em;
+}
+#albums .input-group {
+    width: 100%;
+}
+#albums-select + .input-group-addon {
+    display: none;
+}
+#albums-select:enabled {
+    border-radius: 4px;
+}
+#albums-select:disabled + .input-group-addon {
+    display: table-cell;
+}
+
 .sidebar-toolbox {
     position: fixed;
     right: 0;
