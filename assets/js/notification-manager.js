@@ -5,7 +5,7 @@ PNotify.prototype.options.text_escape = true;
 
 function NotificationManager()
 {
-    this.stack = {"dir1": "left", "dir2": "up", "push": "top"};
+    this.stack = {"dir1": "up", "dir2": "right", "push": "top"};
 }
 
 NotificationManager.prototype = {
