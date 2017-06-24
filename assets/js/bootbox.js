@@ -53,11 +53,23 @@ BootboxWrapper.prototype = {
         if (typeof ignoreCancel === "undefined") {
             ignoreCancel = true;
         }
+        var actualInputOptions;
+        if (Array.isArray(inputOptions)) {
+            actualInputOptions = inputOptions;
+        } else {
+            actualInputOptions = [];
+            Object.keys(inputOptions).forEach(function(key) {
+                actualInputOptions.push({
+                    "value": key,
+                    "text": inputOptions[key]
+                });
+            });
+        }
         var self = this;
         var bPrompt = this.bootbox.prompt({
             "title": title,
             "inputType": inputType,
-            "inputOptions": inputOptions,
+            "inputOptions": actualInputOptions,
             "callback": function(value) {
                 if (ignoreCancel === true && value === null) {
                     return true;

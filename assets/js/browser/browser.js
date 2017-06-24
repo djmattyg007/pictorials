@@ -33,6 +33,9 @@ Browser.prototype = {
         jQuery(document).on("pictorials:browser_load_selected_files", function() {
             self._dispatchLoadEvent();
         });
+        jQuery(document).on("pictorials:browser_add_selected_files_to_album", function() {
+            jQuery(document).trigger("pictorials:add_files_to_album", { "pathID": self.paths.getSelectedPathID(), "files": self.files.getSelected() });
+        });
         jQuery(document).on("pictorials:browser_share_selected_files", function() {
             jQuery(document).trigger("pictorials:share_files", { "pathID": self.paths.getSelectedPathID(), "files": self.files.getSelected() });
         });

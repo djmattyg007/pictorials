@@ -7,6 +7,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "bootstrap.min.css"); ?>" media="all">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" media="all" integrity="sha256-jySGIHdxeqZZvJ9SHgPNjbsBP8roij7/WjgkoGTJICk=" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "styles.css"); ?>" media="all">
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "fontawesome.css"); ?>" media="all">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.css" integrity="sha256-d0mtrHsQZQe2+DIl6Z+F1rVWLI++ycF3BEXQUWf04xs=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.css" integrity="sha256-jXmPL1Q5E9IDaGmoKFLCbahYWC8zrPDwq8oNBQlzoyM=" crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" media="all" integrity="sha256-bOWY8F32FGGbNDMPAnwWl/Lv9CKen4IQsNZ4RU9rcs0=" crossorigin="anonymous">
 </head>
 
@@ -52,7 +55,7 @@
 <br>
 
 <div class="row">
-<div class="col-xs-12">
+<div class="col-xs-12 col-md-11">
 <div id="browser-container" class="table-responsive" style="display:none;">
 
 <h4 id="browser-curpath" data-browser-curpath></h4>
@@ -147,8 +150,9 @@
 <ul class="list-unstyled">
 <li><b>Selected:</b> <span data-toolbox-selected-count>0</span></li>
 <li><button type="button" data-event="browser_load_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Load selected files">Load</button></li>
-<li><button type="button" data-event="browser_clear_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Clear selected files">Clear</button></li>
+<li><button type="button" data-event="browser_add_selected_files_to_album" data-toolbox-selected-only disabled class="btn btn-info" title="Add selected files to album">Add to Album</button></li>
 <li><button type="button" data-event="browser_share_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Share selected files">Share</button></li>
+<li><button type="button" data-event="browser_clear_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Clear selected files">Clear</button></li>
 </ul>
 </div>
 
@@ -171,6 +175,8 @@ Keyboard<br>shortcuts
     "filebrowser": "<?php echo scriptUrl("filebrowser"); ?>",
     "download": "<?php echo scriptUrl("loadimage"); ?>",
     "downloadFile": "<?php echo scriptUrl("download"); ?>",
+    "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>",
+    "addFileToAlbum": "<?php echo scriptUrl("albumfiles", array("action" => "add")); ?>",
     "shareReceive": "<?php echo scriptUrl("share", array("share" => "receive")); ?>",
     "shareSubmit": "<?php echo scriptUrl("share", array("share" => "submit")); ?>",
     "sysload": "<?php echo scriptUrl("sysload"); ?>"
@@ -251,6 +257,8 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery-ajax-native.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery.shiftcheckbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.js" integrity="sha256-Wdie7xDu6PuVG6BqNy/dEEYY0jK2JutDYnn0sI19yTw=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.js" integrity="sha256-84wtYJTPHtuXdY+6x/khPD5SruMKvYOUsJcYPNJ9dvk=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js" integrity="sha256-4Cr335oZDYg4Di3OwgUOyqSTri0jUm2+7Gf2kH3zp1I=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js" integrity="sha256-GXUdrV9FHGDyzoSGD3O+jR3eYZaZZsjbsMvFhK3C0qg=" crossorigin="anonymous"></script>
@@ -264,6 +272,7 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "notification-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "toolbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "cancellable-file-loader.js"); ?>"></script>
@@ -277,6 +286,7 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-viewer.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-locator.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "share-manager.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-album-adder.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo templateUrl("filebrowser"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-browser.js"); ?>"></script>

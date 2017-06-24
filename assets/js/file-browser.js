@@ -10,6 +10,7 @@ var shareString = new ShareString(ajaxUrls.shareReceive, ajaxUrls.shareSubmit);
 var templater = new Templater(window.templates);
 var modalManager = new ModalManager();
 var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);
+var notificationManager = new NotificationManager();
 var shareManager = new ShareManager(shareString, userInputHandler, clipboardHandler);
 var loader = new Loader(jQuery("#loader"));
 var toolbox = new Toolbox(jQuery("#available-actions"));
@@ -25,6 +26,7 @@ var paths = new Paths(jQuery("#paths"));
 var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileDownloader, fileMap, 3, galleryFlFactory);
 
 var fileLocator = new FileLocator(shareString, userInputHandler);
+var fileAlbumAdder = new FileAlbumAdder(paths, loader, userInputHandler, notificationManager, ajaxUrls.getalbumdetails, ajaxUrls.addFileToAlbum);
 
 var $browserContainer = jQuery("#browser-container");
 var browserCurpath = new BrowserCurPath($browserContainer.find("[data-browser-curpath]"));
