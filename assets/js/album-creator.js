@@ -26,7 +26,7 @@ AlbumCreator.prototype = {
 
     runCreatePrompt: function() {
         var self = this;
-        this.userInputHandler.showOptionsPrompt("Select path", "select", this.options, function(pathID) {
+        this.userInputHandler.showOptionsPrompt("Select a path", "select", this.options, function(pathID) {
             self.userInputHandler.showPrompt("Enter album name", "text", self._handleCreatePromptResponse.bind(self, pathID));
         });
     },
