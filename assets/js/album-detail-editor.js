@@ -15,6 +15,10 @@ AlbumDetailEditor.prototype = {
     initEvents: function() {
         var self = this;
 
+        jQuery(document).on("pictorials:album_changed", function() {
+            self.albumDetailsContainer.empty();
+        });
+
         jQuery(document).on("pictorials:album_chosen", function(event, eventData) {
             self.prepareEditForm(eventData.albumID);
         });
