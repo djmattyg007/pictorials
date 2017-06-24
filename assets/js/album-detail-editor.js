@@ -23,6 +23,10 @@ AlbumDetailEditor.prototype = {
             self.prepareEditForm(eventData.albumID);
         });
 
+        jQuery(document).on("change", "[data-album-edit-form]", function(event) {
+            jQuery(this).find("button[type='submit']").prop("disabled", false);
+        });
+
         jQuery(document).on("submit", "[data-album-edit-form]", function(event) {
             event.preventDefault();
             var formData = jQuery(this).serializeObject();
