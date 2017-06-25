@@ -87,6 +87,7 @@
 {
     "createalbum": "<?php echo scriptUrl("albummanager", array("action" => "create")); ?>",
     "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>",
+    "deletealbum": "<?php echo scriptUrl("albummanager", array("action" => "delete")); ?>",
     "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>"
 }
 </script>
@@ -114,7 +115,14 @@
                     </tbody>
                 </table>
             </div>
-            <button type="button" class="btn btn-primary" data-toggle="flip">Edit</button>
+            <div class="row">
+                <div class="col-xs-6">
+                    <button type="button" class="btn btn-primary" data-toggle="flip">Edit</button>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="button" class="btn btn-danger" data-album-delete-activate>Delete</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="panel panel-primary face back">

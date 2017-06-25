@@ -27,6 +27,9 @@ Albums.prototype = {
         jQuery(document).on("pictorials:album_updated", function() {
             self._loadAlbums();
         });
+        jQuery(document).on("pictorials:album_deleted", function() {
+            self._loadAlbums();
+        });
     },
 
     _loadAlbums: function() {

@@ -1,12 +1,14 @@
-function AlbumDetailEditor(albumDetailsContainer, albums, loader, templater, notificationManager, albumGetDetailsUrl, albumEditUrl)
+function AlbumDetailEditor(albumDetailsContainer, albums, loader, templater, userInputHandler, notificationManager, albumGetDetailsUrl, albumEditUrl, albumDeleteUrl)
 {
     this.albumDetailsContainer = albumDetailsContainer;
     this.albums = albums;
     this.loader = loader;
     this.templater = templater;
+    this.userInputHandler = userInputHandler;
     this.notificationManager = notificationManager;
     this.albumGetDetailsUrl = albumGetDetailsUrl;
     this.albumEditUrl = albumEditUrl;
+    this.albumDeleteUrl = albumDeleteUrl;
 
     this.initEvents();
 }
@@ -21,6 +23,10 @@ AlbumDetailEditor.prototype = {
 
         jQuery(document).on("pictorials:album_chosen", function(event, eventData) {
             self.prepareEditForm(eventData.albumID);
+        });
+
+        jQuery(document).on("click", "[data-album-delete-activate]", function() {
+            self.deleteCurrentAlbum();
         });
 
         jQuery(document).on("change", "[data-album-edit-form]", function(event) {
@@ -81,6 +87,46 @@ AlbumDetailEditor.prototype = {
             self.prepareEditForm(albumID);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             msg = "An error occurred while updating the selected album";
+            if (textStatus === "error") {
+                msg += ":\n" + errorThrown;
+            }
+            msg += "\nPlease try again, or report the error to the owner";
+            self.loader.hide();
+            self.notificationManager.displayError("Error", msg);
+        });
+    },
+
+    deleteCurrentAlbum: function() {
+        var self = this;
+        this.userInputHandler.showConfirmPrompt("Are you sure?", false, function(result) {
+            if (result !== true) {
+                return;
+            }
+            self.userInputHandler.showConfirmPrompt("Seriously, are you sure? This action is irreversible!", false, function(result) {
+                if (result !== true) {
+                    return;
+                }
+                self._deleteCurrentAlbum();
+            });
+        });
+    },
+
+    _deleteCurrentAlbum: function() {
+        var albumID = this.albums.getSelectedAlbumID();
+
+        this.loader.show(false);
+        jQuery.ajax({
+            "method": "POST",
+            "data": {"album": albumID},
+            "dataType": "text",
+            "url": this.albumDeleteUrl
+        }).done(function() {
+            self.loader.hide();
+            self.notificationManager.displaySuccess("Success", "The album '" + self.albums.getLabel(albumID) + "' was successfully deleted.");
+            jQuery(document).trigger("pictorials:album_deleted", {"album": albumID});
+            jQuery(document).trigger("pictorials:album_changed");
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            msg = "An error occurred while deleting the selected album";
             if (textStatus === "error") {
                 msg += ":\n" + errorThrown;
             }

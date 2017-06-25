@@ -49,6 +49,32 @@ BootboxWrapper.prototype = {
         this.modalManager.addModal(bPrompt);
     },
 
+    showConfirmPrompt: function(message, goodPrompt, userCallback, ignoreCancel) {
+        if (typeof ignoreCancel === "undefined") {
+            ignoreCancel = true;
+        }
+        var self = this;
+        var bPrompt = this.bootbox.confirm({
+            "message": message,
+            "buttons": {
+                "confirm": {
+                    "className": goodPrompt === true ? "btn-primary" : "btn-danger"
+                }
+            },
+            "callback": function(result) {
+                if (ignoreCancel === true && result === false) {
+                    return true;
+                }
+                self.modalManager.safeHide(bPrompt, function() {
+                    userCallback(result);
+                });
+                return false;
+            },
+            "show": false
+        });
+        this.modalManager.addModal(bPrompt);
+    },
+
     showOptionsPrompt: function(title, inputType, inputOptions, userCallback, ignoreCancel) {
         if (typeof ignoreCancel === "undefined") {
             ignoreCancel = true;

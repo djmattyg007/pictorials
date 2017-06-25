@@ -52,6 +52,14 @@ if ($_GET["action"] === "create") {
         ->where("id = :id")
         ->bindValue("id", $album->id);
     PicDB::crud($update);
+} elseif ($_GET["action"] === "delete") {
+    $album = Access::getCurrentAlbum();
+
+    $delete = PicDB::newDelete();
+    $delete->from("albums")
+        ->where("id = :id")
+        ->bindValue("id", $album->id);
+    PicDB::crud($delete);
 } else {
     sendError(404);
 }
