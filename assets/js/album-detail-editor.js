@@ -29,7 +29,7 @@ AlbumDetailEditor.prototype = {
             self.deleteCurrentAlbum();
         });
 
-        jQuery(document).on("change", "[data-album-edit-form]", function(event) {
+        jQuery(document).on("change keydown", "[data-album-edit-form]", function(event) {
             jQuery(this).find("button[type='submit']").prop("disabled", false);
         });
 
