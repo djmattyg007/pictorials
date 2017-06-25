@@ -1,5 +1,6 @@
-function FileLoaderFactory(downloadUrl, sysloadUrl)
+function FileLoaderFactory(notificationManager, downloadUrl, sysloadUrl)
 {
+    this.notificationManager = notificationManager;
     this.downloadUrl = downloadUrl;
     this.sysloadUrl = sysloadUrl;
 }
@@ -8,16 +9,17 @@ FileLoaderFactory.prototype = {
     create: function(pathID, files, concurrencyLimit) {
         var fl;
         if (concurrencyLimit) {
-            fl = new FileLoader(pathID, files, this.downloadUrl, concurrencyLimit, this.sysloadUrl);
+            fl = new FileLoader(this.notificationManager, pathID, files, this.downloadUrl, concurrencyLimit, this.sysloadUrl);
         } else {
-            fl = new FileLoader(pathID, files, this.downloadUrl);
+            fl = new FileLoader(this.notificationManager, pathID, files, this.downloadUrl);
         }
         return fl;
     }
 };
 
-function FileLoader(pathID, files, downloadUrl, concurrency_limit, sysloadUrl)
+function FileLoader(notificationManager, pathID, files, downloadUrl, concurrency_limit, sysloadUrl)
 {
+    this.notificationManager = notificationManager;
     this.pathID = pathID;
     this.files = files;
     this.downloadUrl = downloadUrl;
@@ -34,7 +36,7 @@ function FileLoader(pathID, files, downloadUrl, concurrency_limit, sysloadUrl)
 FileLoader.prototype = {
     load: function(loadCallback, errorCallback) {
         if (!errorCallback) {
-            errorCallback = alert;
+            errorCallback = this._defaultLoadErrorCallback.bind(this);
         }
         jQuery(this).trigger("pictorials:file_load_start");
         var self = this;
@@ -86,6 +88,10 @@ FileLoader.prototype = {
                 jQuery(self).trigger("pictorials:file_load_finish");
             }
         });
+    },
+
+    _defaultLoadErrorCallback: function(msg, value) {
+        self.notificationManager.displayError("Error", msg);
     },
 
     _checkSysload: function() {

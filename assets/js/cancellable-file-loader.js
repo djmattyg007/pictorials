@@ -1,5 +1,6 @@
-function CancellableFileLoaderFactory(downloadUrl, sysloadUrl)
+function CancellableFileLoaderFactory(notificationManager, downloadUrl, sysloadUrl)
 {
+    this.notificationManager = notificationManager;
     this.downloadUrl = downloadUrl;
     this.sysloadUrl = sysloadUrl;
 }
@@ -8,16 +9,17 @@ CancellableFileLoaderFactory.prototype = {
     create: function(concurrencyLimit) {
         var cfl;
         if (concurrencyLimit) {
-            cfl = new CancellableFileLoader(this.downloadUrl, concurrencyLimit, this.sysloadUrl);
+            cfl = new CancellableFileLoader(this.notificationManager, this.downloadUrl, concurrencyLimit, this.sysloadUrl);
         } else {
-            cfl = new CancellableFileLoader(this.downloadUrl);
+            cfl = new CancellableFileLoader(this.notificationManager, this.downloadUrl);
         }
         return cfl;
     }
 };
 
-function CancellableFileLoader(downloadUrl, concurrencyLimit, sysloadUrl)
+function CancellableFileLoader(notificationManager, downloadUrl, concurrencyLimit, sysloadUrl)
 {
+    this.notificationManager = notificationManager;
     this.downloadUrl = downloadUrl;
 
     this.openCount = 0;
@@ -95,7 +97,7 @@ CancellableFileLoader.prototype = {
             if (textStatus == "error") {
                 msg += "\n" + errorThrown;
             }
-            alert(msg);
+            self.notificationManager.displayError("Error", msg);
         }).always(function() {
             self.openCount--;
         });
