@@ -19,6 +19,10 @@ FileLocator.prototype = {
     },
 
     _handlePromptResponse: function(shareID) {
+        shareID = shareID.trim();
+        if (shareID === "") {
+            return;
+        }
         var self = this;
         this.shareString.decode(shareID, function(pathID, files) {
             jQuery(document).trigger("pictorials:display_files", {"pathID": pathID, "files": files});
