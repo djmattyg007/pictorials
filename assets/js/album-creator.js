@@ -32,6 +32,10 @@ AlbumCreator.prototype = {
     },
 
     _handleCreatePromptResponse: function(pathID, albumName) {
+        albumName = albumName.trim();
+        if (albumName === "") {
+            return;
+        }
         var self = this;
         this.loader.show(false);
         jQuery.ajax({

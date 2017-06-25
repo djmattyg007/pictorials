@@ -32,7 +32,7 @@ if ($_GET["action"] === "create") {
     $insert = PicDB::newInsert();
     $insert->into("albums")
         ->cols(array(
-            "name" => $_POST["name"],
+            "name" => trim($_POST["name"]),
             "user_id" => USER_ID,
             "path_id" => $pathID,
         ));
@@ -48,7 +48,7 @@ if ($_GET["action"] === "create") {
 
     $update = PicDB::newUpdate();
     $update->table("albums")
-        ->cols(array("name" => $_POST["name"]))
+        ->cols(array("name" => trim($_POST["name"])))
         ->where("id = :id")
         ->bindValue("id", $album->id);
     PicDB::crud($update);
