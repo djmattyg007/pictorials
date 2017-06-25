@@ -36,7 +36,7 @@ AlbumDetailEditor.prototype = {
         jQuery(document).on("submit", "[data-album-edit-form]", function(event) {
             event.preventDefault();
             var formData = jQuery(this).serializeObject();
-            self.updateAlbum(formData);
+            self.updateCurrentAlbum(formData);
         });
     },
 
@@ -63,7 +63,7 @@ AlbumDetailEditor.prototype = {
         });
     },
 
-    updateAlbum: function(formData) {
+    updateCurrentAlbum: function(formData) {
         var albumID = this.albums.getSelectedAlbumID();
         formData["album"] = albumID;
         if (formData["album_name"]) {
