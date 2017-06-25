@@ -32,6 +32,9 @@ AlbumDetailEditor.prototype = {
         jQuery(document).on("change keydown", "[data-album-edit-form]", function(event) {
             jQuery(this).find("button[type='submit']").prop("disabled", false);
         });
+        jQuery(document).on("click", "[data-album-edit-cancel-activate]", function(event) {
+            jQuery(this).closest("[data-album-edit-form]").find("button[type='submit']").prop("disabled", true);
+        });
 
         jQuery(document).on("submit", "[data-album-edit-form]", function(event) {
             event.preventDefault();
