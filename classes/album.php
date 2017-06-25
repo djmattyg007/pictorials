@@ -15,11 +15,6 @@ class PicAlbum implements JsonSerializable
     /**
      * @var int
      */
-    private $pictureCount = 0;
-
-    /**
-     * @var int
-     */
     private $pathID;
 
     /**
@@ -31,6 +26,11 @@ class PicAlbum implements JsonSerializable
      * @var PicPath
      */
     private $path;
+
+    /**
+     * @var string[]
+     */
+    private $files;
 
     /**
      * @param int $id
@@ -57,13 +57,15 @@ class PicAlbum implements JsonSerializable
         } elseif ($property === "name") {
             return $this->name;
         } elseif ($property === "pictureCount") {
-            return $this->pictureCount;
+            return count($this->getFiles());
         } elseif ($property === "pathID") {
             return $this->pathID;
         } elseif ($property === "userID") {
             return $this->userID;
         } elseif ($property === "path") {
             return $this->getPath();
+        } elseif ($property === "files") {
+            return $this->getFiles();
         } else {
             throw new Exception("nope");
         }
@@ -77,7 +79,7 @@ class PicAlbum implements JsonSerializable
         return array(
             "id" => $this->id,
             "name" => $this->name,
-            "picture_count" => $this->pictureCount,
+            "picture_count" => count($this->getFiles()),
             "path_name" => $this->getPath()->name,
         );
     }
@@ -91,5 +93,29 @@ class PicAlbum implements JsonSerializable
             $this->path = loadPicFile("helpers/paths/load.php", array("pathID" => $this->pathID));
         }
         return clone $this->path;
+    }
+
+    /**
+     * @return Aura\SqlQuery\Common\SelectInterface
+     */
+    private function prepareFileSelect()
+    {
+        $select = PicDB::newSelect();
+        $select->cols(array("file"))
+            ->from("album_files")
+            ->where("album_id = :id")
+            ->bindValue("id", $this->id);
+        return $select;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getFiles()
+    {
+        if ($this->files === null) {
+            $this->files = PicDB::fetch($this->prepareFileSelect(), "col");
+        }
+        return $this->files;
     }
 }
