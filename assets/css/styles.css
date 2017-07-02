@@ -274,3 +274,25 @@ body {
     -webkit-transform: rotatey(-180deg);
             transform: rotatey(-180deg);
 }
+
+.drag-handle {
+    cursor: move;
+}
+.drag-handle.burger {
+    display: block;
+    margin: 2px 3px 0;
+}
+.drag-handle.burger > span.bar {
+    border-top: 2px solid black;
+    height: 30%;
+    display: block;
+    padding-bottom: 4px;
+    width: 75%;
+}
+.sortable-ghost {
+    opacity: 0.4;
+}
+#album-image-sorter .btn-remove {
+    font-size: 22px;
+    line-height: 16px;
+}

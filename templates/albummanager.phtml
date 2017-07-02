@@ -62,6 +62,41 @@
     </div>
 </div>
 
+<br>
+
+<div id="album-image-sorter" style="display:none;">
+<div class="row">
+    <div class="col-xs-12">
+        <h4>Images</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+            <button type="button" class="btn btn-success" data-album-image-sorter-save>Save</button>
+            <button type="button" class="btn btn-info" data-album-image-sorter-close>Close</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-lg-11">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 50px;">&nbsp;</th>
+                <th>Filename</th>
+                <th style="width: 50px;">&nbsp;</th>
+            </tr>
+            </thead>
+
+            <tbody data-image-sorter-files></tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
 </div>
 
 <div id="footer">
@@ -88,7 +123,9 @@
     "createalbum": "<?php echo scriptUrl("albummanager", array("action" => "create")); ?>",
     "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>",
     "deletealbum": "<?php echo scriptUrl("albummanager", array("action" => "delete")); ?>",
-    "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>"
+    "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>",
+    "getalbumsortedfiles": "<?php echo scriptUrl("albumfiles"); ?>",
+    "savealbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("action" => "save")); ?>"
 }
 </script>
 
@@ -118,6 +155,7 @@
             <div class="row">
                 <div class="col-xs-6">
                     <button type="button" class="btn btn-primary" data-toggle="flip">Edit</button>
+                    <button type="button" class="btn btn-default" data-album-sortimages-activate>Sort Images</button>
                 </div>
                 <div class="col-xs-6 text-right">
                     <button type="button" class="btn btn-danger" data-album-delete-activate>Delete</button>
@@ -141,6 +179,26 @@
 </div>
 </div>
 </script>
+
+<script type="text/x-html-template" id="album-image-sorter-row-template">
+<tr data-album-image data-relpath="${relpath}">
+    <td>
+        <span class="sr-only">Drag</span>
+        <div class="drag-handle burger" data-drag-handle>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </td>
+    <td>#{relpath}</td>
+    <td>
+        <a href="#" class="btn-remove" role="button" title="Remove" data-album-file-remove>
+            <span class="sr-only">Remove</span>
+            &times;
+        </a>
+    </td>
+</tr>
+</script>
 </div>
 
 <div style="display:none;">
@@ -150,6 +208,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.js" integrity="sha256-84wtYJTPHtuXdY+6x/khPD5SruMKvYOUsJcYPNJ9dvk=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "jquery-extensions.js"); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js" integrity="sha256-ncVUo40HSaxFORNNlffKfkkhbsUHNLAzQ2SFlRUw7gA=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/sortable-jquery-binding.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
@@ -159,6 +219,7 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-creator.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-detail-editor.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "album-image-sorter.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo templateUrl("albummanager"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-manager.js"); ?>"></script>

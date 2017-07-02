@@ -37,6 +37,7 @@ assets/js/vendor/bootbox-dev-4.4.1.js
 assets/js/vendor/bootstrap.js
 assets/js/vendor/bootstrap.min.js
 assets/js/vendor/jquery-ajax-native.js
+assets/js/vendor/sortable-jquery-binding.js
 
 Links to and/or copies of the appropriate licenses for each file can
 be found at the top of each file.

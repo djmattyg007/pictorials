@@ -98,6 +98,16 @@ class PicDB
         self::$conn->perform($crudObj->getStatement(), $crudObj->getBindValues());
     }
 
+    public function beginTransaction()
+    {
+        self::$conn->beginTransaction();
+    }
+
+    public function commit()
+    {
+        self::$conn->commit();
+    }
+
     /**
      * @return int
      */

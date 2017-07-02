@@ -33,6 +33,11 @@ class PicAlbum implements JsonSerializable
     private $files;
 
     /**
+     * @var string[]
+     */
+    private $sortedFiles;
+
+    /**
      * @param int $id
      * @param string $name
      * @param int $pathID
@@ -66,6 +71,8 @@ class PicAlbum implements JsonSerializable
             return $this->getPath();
         } elseif ($property === "files") {
             return $this->getFiles();
+        } elseif ($property === "sortedFiles") {
+            return $this->getSortedFiles();
         } else {
             throw new Exception("nope");
         }
@@ -117,5 +124,18 @@ class PicAlbum implements JsonSerializable
             $this->files = PicDB::fetch($this->prepareFileSelect(), "col");
         }
         return $this->files;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getSortedFiles()
+    {
+        if ($this->sortedFiles === null) {
+            $select = $this->prepareFileSelect();
+            $select->orderBy(array("sort_order ASC"));
+            $this->sortedFiles = PicDB::fetch($select, "col");
+        }
+        return $this->sortedFiles;
     }
 }

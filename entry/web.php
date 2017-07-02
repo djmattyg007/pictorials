@@ -24,7 +24,11 @@ switch ($_GET["mode"]) {
     case "albummanager":
     case "albumdetails":
     case "albumfiles":
-        loadPicFile("modes/{$_GET["mode"]}.php");
+        try {
+            loadPicFile("modes/{$_GET["mode"]}.php");
+        } catch (Exception $e) {
+            sendError(500);
+        }
         break;
     default:
         sendError(404);

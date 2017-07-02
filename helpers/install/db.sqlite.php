@@ -122,5 +122,11 @@ class PicDBInstall
                 UNIQUE (album_id, file)
             )");
         }
+
+        if (version_compare($oldVersion, "0.4.0-dev3", "<") === true) {
+            $conn->exec("ALTER TABLE album_files
+                ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0 CHECK (sort_order > 0)
+            ");
+        }
     }
 }

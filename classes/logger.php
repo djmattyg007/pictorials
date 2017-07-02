@@ -54,6 +54,9 @@ class PictorialsLogProcessor
         if (defined("USERNAME")) {
             $record["extra"]["username"] = USERNAME;
         }
+        if (defined("USER_ID")) {
+            $record["extra"]["user_id"] = USER_ID;
+        }
         return $record;
     }
 }
