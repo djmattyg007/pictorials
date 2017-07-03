@@ -1,4 +1,6 @@
 (function($) {
+    "use strict";
+
     var $w = $(window);
     var wh = $w.height();
     $w.on("resize.lazyload", function() {
