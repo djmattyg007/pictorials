@@ -56,10 +56,15 @@ AlbumImageSorter.prototype = {
             "dataType": "json",
             "url": this.albumGetSortedFilesUrl
         }).done(function(result) {
-            self.render(result, function() {
-                self.init();
+            if (result.length) {
+                self.render(result, function() {
+                    self.init();
+                    self.loader.hide();
+                });
+            } else {
                 self.loader.hide();
-            });
+                self.notificationManager.displayNotice("No Images", "There are no images associated with this album.");
+            }
         }).fail(function(jqXHR, textStatus, errorThrown) {
             self.loader.hide();
             self.notificationManager.displayError("Error", "There was a problem loading the files for the selected album. Please try again.");
