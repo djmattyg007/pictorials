@@ -3,7 +3,10 @@
 if (empty($_GET["action"])) {
     $album = Access::getCurrentAlbum();
     $files = array_map(function($relpath) {
-        return array("relpath" => $relpath);
+        return array(
+            "filename" => basename($relpath),
+            "relpath" => $relpath,
+        );
     }, $album->sortedFiles);
     header("Content-type: application/json");
     echo json_encode($files);

@@ -1,15 +1,21 @@
-function AlbumImageSorter(container, albums, loader, notificationManager, templater, albumGetSortedFilesUrl, albumSaveSortedFilesUrl)
+function AlbumImageSorter(container, albums, loader, userInputHandler, notificationManager, templater, thumbnailFlFactory, albumGetSortedFilesUrl, albumSaveSortedFilesUrl)
 {
     this.container = container;
     this.sortContainer = container.find("[data-image-sorter-files]");
     this.albums = albums;
     this.loader = loader;
+    this.userInputHandler = userInputHandler;
     this.notificationManager = notificationManager;
     this.templater = templater;
+    this.thumbnailLoader = thumbnailFlFactory.create(4);
     this.albumGetSortedFilesUrl = albumGetSortedFilesUrl;
     this.albumSaveSortedFilesUrl = albumSaveSortedFilesUrl;
 
+    this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 900);
+    this.lazyLoader = null;
+
     this._alive = false;
+    this._warnDelete = false;
 
     this.initEvents();
 }
@@ -36,6 +42,7 @@ AlbumImageSorter.prototype = {
 
         jQuery(document).on("click", "[data-album-file-remove]", function(event) {
             jQuery(this).closest("[data-album-image]").remove();
+            self._warnDelete = true;
             if (this.tagName === "A") {
                 event.preventDefault();
                 return false;
@@ -78,7 +85,7 @@ AlbumImageSorter.prototype = {
         var totalPages = files.length / groupSize;
         var self = this;
         var iterFunc = function() {
-            html = self.templater.render("album-image-sorter-row", files.slice(curPage * groupSize, curPage * groupSize + groupSize));
+            html = self.templater.render("album-image-sorter-block", files.slice(curPage * groupSize, curPage * groupSize + groupSize));
             self.sortContainer.append(html);
             curPage++;
             if (curPage < totalPages) {
@@ -94,9 +101,23 @@ AlbumImageSorter.prototype = {
         if (this._alive === false) {
             return;
         }
+        if (this._warnDelete === true) {
+            var self = this;
+            this.userInputHandler.showConfirmPrompt("You're about to remove some images from this album. Are you sure?", true, function(result) {
+                if (result === true) {
+                    self._save();
+                }
+            });
+        } else {
+            this._save();
+        }
+    },
+
+    _save: function() {
         this.loader.show(false);
         var files = this.sortContainer.sortable("toArray");
         var albumID = this.albums.getSelectedAlbumID();
+        var self = this;
         jQuery.ajax({
             "method": "POST",
             "data": {"album": albumID, "files": files},
@@ -108,6 +129,8 @@ AlbumImageSorter.prototype = {
         }).fail(function(jqXHR, textStatus, errorThrown) {
             self.loader.hide();
             self.notificationManager.displayError("Error", "Something went wrong while saving your changes. Please try again.");
+        }).always(function() {
+            self._warnDelete = false;
         });
     },
 
@@ -116,23 +139,37 @@ AlbumImageSorter.prototype = {
             return;
         }
         this.container.show();
+        this.thumbnailLoader.start(this.albums.getPathID(this.albums.getSelectedAlbumID()), this._imgLoad.bind(this), {size: "small"});
         this.sortContainer.sortable({
-            animation: 90,
-            //handle: "[data-drag-handle]", can't use data attributes because it doesn't use element.matches()
-            handle: ".drag-handle",
-            draggable: "tr",
+            aimation: 80,
+            draggable: ".album-thumb-container",
             dataIdAttr: "data-relpath"
         });
+        this.lazyLoader = this.lazyLoaderFactory.create(this.sortContainer.find("img.album-thumb"));
         this._alive = true;
+        this._warnDelete = false;
     },
 
     deinit: function() {
         if (this._alive === false) {
             return;
         }
+        this.thumbnailLoader.stop();
+        this.thumbnailLoader.removeAllFiles();
         this.sortContainer.sortable("destroy");
+        this.lazyLoader.deinit();
+        this.lazyLoader = null;
         this.sortContainer.empty();
         this.container.hide();
         this._alive = false;
+        this._warnDelete = false;
+    },
+
+    _imgInView: function(img) {
+        this.thumbnailLoader.addFile(img.dataset.relpath);
+    },
+
+    _imgLoad: function(filename, imgsrc) {
+        this.sortContainer.find("img.album-thumb[data-relpath='" + filename + "']").attr("src", imgsrc);
     }
 };

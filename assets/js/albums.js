@@ -79,5 +79,9 @@ Albums.prototype = {
 
     getLabel: function(albumID) {
         return this.container.find("select option[value=" + albumID + "]").text();
+    },
+
+    getPathID: function(albumID) {
+        return this.container.find("select option[value=" + albumID + "]").data("path");
     }
 };

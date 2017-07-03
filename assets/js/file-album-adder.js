@@ -29,11 +29,11 @@ FileAlbumAdder.prototype = {
             "url": this.albumGetDetailsUrl
         }).done(function(result) {
             self.loader.hide();
-            if (Object.keys(result).length === 0) {
+            if (result.length === 0) {
                 self.userInputHandler.showError("There are no albums associated with the current path.");
             } else {
                 var albums = {};
-                results.forEach(function(album) {
+                result.forEach(function(album) {
                     albums[album.id] = album.name;
                 });
                 self.userInputHandler.showOptionsPrompt("Select an album", "select", albums, function(albumID) {

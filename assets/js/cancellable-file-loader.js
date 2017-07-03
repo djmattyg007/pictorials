@@ -94,7 +94,9 @@ CancellableFileLoader.prototype = {
             self.loadCallback(filename, window.URL.createObjectURL(data));
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while loading '" + filename + "':\n" + textStatus;
-            if (textStatus == "error") {
+            if (textStatus === "error") {
+                msg += "\n" + errorThrown;
+            } else if (textStatus === "parsererror") {
                 msg += "\n" + errorThrown;
             }
             self.notificationManager.displayError("Error", msg);

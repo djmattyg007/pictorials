@@ -80,19 +80,7 @@
 </div>
 <div class="row">
 <div class="col-xs-12 col-lg-11">
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th style="width: 50px;">&nbsp;</th>
-                <th>Filename</th>
-                <th style="width: 50px;">&nbsp;</th>
-            </tr>
-            </thead>
-
-            <tbody data-image-sorter-files></tbody>
-        </table>
-    </div>
+    <div data-image-sorter-files></div>
 </div>
 </div>
 </div>
@@ -123,9 +111,11 @@
     "createalbum": "<?php echo scriptUrl("albummanager", array("action" => "create")); ?>",
     "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>",
     "deletealbum": "<?php echo scriptUrl("albummanager", array("action" => "delete")); ?>",
+    "download": "<?php echo scriptUrl("loadimage"); ?>",
     "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>",
     "getalbumsortedfiles": "<?php echo scriptUrl("albumfiles"); ?>",
-    "savealbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("action" => "save")); ?>"
+    "savealbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("action" => "save")); ?>",
+    "sysload": "<?php echo scriptUrl("sysload"); ?>"
 }
 </script>
 
@@ -180,29 +170,17 @@
 </div>
 </script>
 
-<script type="text/x-html-template" id="album-image-sorter-row-template">
-<tr data-album-image data-relpath="${relpath}">
-    <td>
-        <span class="sr-only">Drag</span>
-        <div class="drag-handle burger" data-drag-handle>
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </td>
-    <td>#{relpath}</td>
-    <td>
-        <a href="#" class="btn-remove" role="button" title="Remove" data-album-file-remove>
-            <span class="sr-only">Remove</span>
-            &times;
-        </a>
-    </td>
-</tr>
+<script type="text/x-html-template" id="album-image-sorter-block-template">
+<div class="album-thumb-container" data-album-image data-relpath="${relpath}">
+    <img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="${relpath}" alt="${filename}" class="album-thumb">
+    <button type="button" class="btn-remove" data-album-file-remove>&times;</button>
+</div>
 </script>
 </div>
 
 <div style="display:none;">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/jquery-ajax-native.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.js" integrity="sha256-Wdie7xDu6PuVG6BqNy/dEEYY0jK2JutDYnn0sI19yTw=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.js" integrity="sha256-84wtYJTPHtuXdY+6x/khPD5SruMKvYOUsJcYPNJ9dvk=" crossorigin="anonymous"></script>
@@ -211,11 +189,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js" integrity="sha256-ncVUo40HSaxFORNNlffKfkkhbsUHNLAzQ2SFlRUw7gA=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/sortable-jquery-binding.js"); ?>"></script>
 
+<script type="text/javascript" src="<?php echo assetUrl("js", "lazyload.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "modal-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "bootbox.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "notification-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "templater.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "cancellable-file-loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-creator.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-detail-editor.js"); ?>"></script>
