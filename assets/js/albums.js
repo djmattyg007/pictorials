@@ -44,10 +44,11 @@ Albums.prototype = {
         }).done(function(result) {
             var fragment = document.createDocumentFragment();
             fragment.appendChild(document.createElement("option"));
-            Object.keys(result).forEach(function(key) {
+            result.forEach(function(album) {
                 var opt = document.createElement("option");
-                opt.textContent = result[key];
-                opt.value = key;
+                opt.textContent = album.name;
+                opt.value = album.id;
+                opt.dataset.path = album.path_id;
                 fragment.appendChild(opt);
             });
             $select.html(jQuery(fragment));

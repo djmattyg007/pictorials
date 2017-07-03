@@ -32,7 +32,11 @@ FileAlbumAdder.prototype = {
             if (Object.keys(result).length === 0) {
                 self.userInputHandler.showError("There are no albums associated with the current path.");
             } else {
-                self.userInputHandler.showOptionsPrompt("Select an album", "select", result, function(albumID) {
+                var albums = {};
+                results.forEach(function(album) {
+                    albums[album.id] = album.name;
+                });
+                self.userInputHandler.showOptionsPrompt("Select an album", "select", albums, function(albumID) {
                     self.addFilesToAlbum(albumID, files);
                 });
             }
