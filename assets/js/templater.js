@@ -43,7 +43,8 @@ Templater.prototype = {
             return template(TemplateHelper, vals);
         }
         var result = "";
-        vals.forEach(function(value) {
+        vals.forEach(function(value, index) {
+            value.index = index;
             result += template(TemplateHelper, value);
         });
         return result;

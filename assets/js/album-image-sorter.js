@@ -140,10 +140,32 @@ AlbumImageSorter.prototype = {
         }
         this.container.show();
         this.thumbnailLoader.start(this.albums.getPathID(this.albums.getSelectedAlbumID()), this._imgLoad.bind(this), {size: "small"});
+        var self = this;
         this.sortContainer.sortable({
             aimation: 80,
             draggable: ".album-thumb-container",
-            dataIdAttr: "data-relpath"
+            dataIdAttr: "data-relpath",
+            onUpdate: function(event) {
+                var newIndex = event.newIndex;
+                var oldIndex = event.oldIndex;
+                // We need to use the DOM element's dataset object directly, because jQuery's data() method
+                // doesn't always propagate changes to the DOM. We need changes to propagate to the DOM for
+                // styling purposes.
+                var movedImage = self.sortContainer.find("[data-album-image][data-index='" + oldIndex + "']").get(0);
+                var idx;
+                if (newIndex < oldIndex) {
+                    // Moved left
+                    for (idx = (oldIndex - 1); idx >= newIndex; idx--) {
+                        self.sortContainer.find("[data-album-image][data-index='" + idx + "']").get(0).dataset.index = idx + 1;
+                    }
+                } else {
+                    // Moved right
+                    for (idx = (oldIndex + 1); idx <= newIndex; idx++) {
+                        self.sortContainer.find("[data-album-image][data-index='" + idx + "']").get(0).dataset.index = idx - 1;
+                    }
+                }
+                movedImage.dataset.index = newIndex;
+            }
         });
         this.lazyLoader = this.lazyLoaderFactory.create(this.sortContainer.find("img.album-thumb"));
         this._alive = true;

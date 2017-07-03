@@ -289,6 +289,16 @@ body {
     width: 100px;
     height: 100px;
 }
+#album-image-sorter .album-thumb-container::before {
+    content: attr(data-index);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: red;
+    background-color: white;
+    padding: 0 3px;
+    font-size: 0.8em;
+}
 #album-image-sorter .album-thumb {
     vertical-align: middle;
     border: 0;
