@@ -36,16 +36,16 @@ $permSelect->cols(array("permission"))
 $permissions = PicDB::fetch($permSelect, "col");
 
 $accessSelect = PicDB::newSelect();
-$accessSelect->cols(array("path_id", "id_type", "auth_id"))
+$accessSelect->cols(array("id_type", "auth_id"))
     ->from("path_access")
     ->where("path_id = :path_id")
     ->where("auth_type = :auth_type")
     ->bindValue("path_id", $pathID);
 
 $accessSelect->bindValue("auth_type", "allow");
-$allowRows = PicDB::fetch($accessSelect, "group", PDO::FETCH_NAMED);
+$allowRows = PicDB::fetch($accessSelect, "group");
 $accessSelect->bindValue("auth_type", "deny");
-$denyRows = PicDB::fetch($accessSelect, "group", PDO::FETCH_NAMED);
+$denyRows = PicDB::fetch($accessSelect, "group");
 
 $io->outln(sprintf("<<blue>>Name:<<reset>> %s", $mainRow["name"]));
 $io->outln(sprintf("<<blue>>Path:<<reset>> %s", $mainRow["path"]));
