@@ -4,11 +4,11 @@ PicCLI::initGetopt(array("add", "remove", "user", "group"));
 $io = PicCLI::getIO();
 
 if (PicCLI::getGetopt("--add")) {
-    $mode = "add";
+    $action = "add";
 } elseif (PicCLI::getGetopt("--remove")) {
-    $mode = "remove";
+    $action = "remove";
 } else {
-    $io->errln("No mode specified.");
+    $io->errln("No action specified.");
     exit(PicCLI::EXIT_USAGE);
 }
 
@@ -21,6 +21,10 @@ if (!is_numeric($pathID)) {
     exit(PicCLI::EXIT_INPUT);
 }
 $pathID = (int) $pathID;
+if ($pathID <= 0) {
+    $io->errln("Invalid path ID supplied.");
+    exit(PicCLI::EXIT_INPUT);
+}
 
 loadPicFile("classes/db.php");
 PicDB::initDB();
@@ -81,27 +85,27 @@ $row = PicDB::fetch($select, "one");
 
 class PicPathAccessException extends Exception
 {
-    public $mode;
+    public $action;
     public $idType;
     public $label;
 
-    public static function initE($mode, $idType, $label)
+    public static function initE($action, $idType, $label)
     {
         $e = new self();
-        $e->mode = $mode;
+        $e->action = $action;
         $e->idType = $idType;
         $e->label = $label;
         throw $e;
     }
 }
 
-if ($row && $mode === "add") {
-    PicPathAccessException::initE($mode, $idType, $label);
-} elseif ((!$row) && $mode === "remove") {
-    PicPathAccessException::initE($mode, $idType, $label);
+if ($row && $action === "add") {
+    PicPathAccessException::initE($action, $idType, $label);
+} elseif ((!$row) && $action === "remove") {
+    PicPathAccessException::initE($action, $idType, $label);
 }
 
-if ($mode === "add") {
+if ($action === "add") {
     $insert = PicDB::newInsert();
     $insert->into("path_access")
         ->cols(array(
@@ -111,7 +115,7 @@ if ($mode === "add") {
             "auth_id" => $id,
         ));
     PicDB::crud($insert);
-} elseif ($mode === "remove") {
+} elseif ($action === "remove") {
     $delete = PicDB::newDelete();
     $delete->from("path_access")
         ->where("id = :id")

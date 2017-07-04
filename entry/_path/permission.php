@@ -4,11 +4,11 @@ PicCLI::initGetopt(array("add", "remove"));
 $io = PicCLI::getIO();
 
 if (PicCLI::getGetopt("--add")) {
-    $mode = "add";
+    $action = "add";
 } elseif (PicCLI::getGetopt("--remove")) {
-    $mode = "remove";
+    $action = "remove";
 } else {
-    $io->errln("No mode specified.");
+    $io->errln("No action specified.");
     exit(PicCLI::EXIT_USAGE);
 }
 
@@ -52,15 +52,15 @@ $select->cols(array("id"))
     ));
 $row = PicDB::fetch($select, "one");
 
-if ($row && $mode === "add") {
+if ($row && $action === "add") {
     PicCLI::warn(sprintf('Path \'%1$s\' already has the \'%2$s\' permission.', $pathID, $permission));
     exit();
-} elseif ((!$row) && $mode === "remove") {
+} elseif ((!$row) && $action === "remove") {
     PicCLI::warn(sprintf('Path \'%1$s\' already doesn\'t have the \'%2$s\' permission.', $pathID, $permission));
     exit();
 }
 
-if ($mode === "add") {
+if ($action === "add") {
     $insert = PicDB::newInsert();
     $insert->into("path_permissions")
         ->cols(array(
@@ -68,7 +68,7 @@ if ($mode === "add") {
             "permission" => $permission,
         ));
     PicDB::crud($insert);
-} elseif ($mode === "remove") {
+} elseif ($action === "remove") {
     $delete = PicDB::newDelete();
     $delete->from("path_permissions")
         ->where("id = :id")
