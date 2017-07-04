@@ -12,11 +12,11 @@ if (!is_file($fullFilename)) {
 
 if ($path->hasPermission("nsfw") === false) {
     $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $fullFilename);
-    if ($nsfwRegexPathTest === 1 || $nsfwRegexPathTest === false) {
+    if ($nsfwRegexPathTest !== 0) {
         sendError(404);
     }
     $nsfwRegexPathTest = preg_match("/NSFW\/.*/", $fullFilename);
-    if ($nsfwRegexPathTest === 1 || $nsfwRegexPathTest === false) {
+    if ($nsfwRegexPathTest !== 0) {
         sendError(404);
     }
 }

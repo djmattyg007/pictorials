@@ -2,7 +2,18 @@
 
 if (empty($_GET["action"])) {
     $album = Access::getCurrentAlbum();
-    $files = array_map(function($relpath) {
+    $canNSFW = $album->path->hasPermission("nsfw");
+    $files = array_map(function($relpath) use ($canNSFW) {
+        if ($canNSFW === false) {
+            $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $relpath);
+            if ($nsfwRegexPathTest !== 0) {
+                sendError(500);
+            }
+            $nsfwRegexPathTest = preg_match("/NSFW\/.*/", $relpath);
+            if ($nsfwRegexPathTest !== 0) {
+                sendError(500);
+            }
+        }
         return array(
             "filename" => basename($relpath),
             "relpath" => $relpath,
@@ -18,6 +29,20 @@ if ($_GET["action"] === "add") {
         sendError(400);
     }
     $album = Access::getCurrentAlbum();
+    $files = $_POST["files"];
+
+    if ($album->path->hasPermission("nsfw") === false) {
+        foreach ($files as $file) {
+            $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $file);
+            if ($nsfwRegexPathTest !== 0) {
+                sendError(400);
+            }
+            $nsfwRegexPathTest = preg_match("/NSFW\/.*/", $file);
+            if ($nsfwRegexPathTest !== 0) {
+                sendError(400);
+            }
+        }
+    }
 
     $select = PicDB::newSelect();
     $select->cols(array("file"))
@@ -25,10 +50,10 @@ if ($_GET["action"] === "add") {
         ->where("album_id = :album_id")
         ->where("file IN (:files)")
         ->bindValue("album_id", $album->id)
-        ->bindValue("files", $_POST["files"]);
+        ->bindValue("files", $files);
     $alreadyAddedFiles = PicDB::fetch($select, "col");
 
-    $filesToAdd = array_diff($_POST["files"], $alreadyAddedFiles);
+    $filesToAdd = array_diff($files, $alreadyAddedFiles);
 
     if (count($filesToAdd)) {
         $sortOrderSelect = PicDB::newSelect();
@@ -53,6 +78,20 @@ if ($_GET["action"] === "add") {
         sendError(400);
     }
     $album = Access::getCurrentAlbum();
+    $files = $_POST["files"];
+
+    if ($album->path->hasPermission("nsfw") === false) {
+        foreach ($files as $file) {
+            $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $file);
+            if ($nsfwRegexPathTest !== 0) {
+                sendError(400);
+            }
+            $nsfwRegexPathTest = preg_match("/NSFW\/.*/", $file);
+            if ($nsfwRegexPathTest !== 0) {
+                sendError(400);
+            }
+        }
+    }
 
     PicDB::beginTransaction();
 

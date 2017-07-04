@@ -55,6 +55,7 @@ class PicPath
 
     /**
      * @param string $permission
+     * @return bool
      */
     public function hasPermission($permission)
     {

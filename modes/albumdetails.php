@@ -1,6 +1,5 @@
 <?php
 
-header("Content-type: application/json");
 if (empty($_POST["album"])) {
     $albumSelect = PicDB::newSelect();
     $albumSelect->cols(array("id", "name", "path_id"))
@@ -12,8 +11,11 @@ if (empty($_POST["album"])) {
         $albumSelect->where("path_id = :path_id")
             ->bindValue("path_id", $path->id);
     }
-    echo json_encode(PicDB::fetch($albumSelect, "all"));
+    $albums = PicDB::fetch($albumSelect, "all");
+    header("Content-type: application/json");
+    echo json_encode($albums);
 } else {
     $album = Access::getCurrentAlbum();
+    header("Content-type: application/json");
     echo json_encode($album);
 }
