@@ -14,15 +14,27 @@ if (!($username = PicCLI::getGetopt(1))) {
 loadPicFile("classes/db.php");
 PicDB::initDB();
 
-$userId = loadPicFile("helpers/id/user.php", array("username" => $username));
-if (!$userId) {
+$userID = loadPicFile("helpers/id/user.php", array("username" => $username));
+if (!$userID) {
     $io->errln(sprintf("User '%s' does not exist.", $username));
     exit(PicCLI::EXIT_INPUT);
 }
 
+PicDB::beginTransaction();
+
 $delete = PicDB::newDelete();
 $delete->from("users")
     ->where("id = :id")
-    ->bindValue("id", $userId);
+    ->bindValue("id", $userID);
 PicDB::crud($delete);
+
+$pathAccessDelete = PicDB::newDelete();
+$pathAccessDelete->from("path_access")
+    ->where("id_type = :id_type")
+    ->where("auth_id = :auth_id")
+    ->bindValue("id_type", "users")
+    ->bindValue("auth_id", $userID);
+PicDB::crud($pathAccessDelete);
+
+PicDB::commit();
 PicCLI::success();
