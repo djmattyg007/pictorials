@@ -13,7 +13,7 @@ require(BASE_PATH . "main/bootstrap.php");
 
 loadPicFile("classes/cli.php");
 try {
-    $command = PicCLI::initCommandCLI(array("create", "delete", "view", "adduser", "removeuser"));
+    $command = PicCLI::initCommandCLI(array("create", "delete", "view", "list", "adduser", "removeuser"));
 } catch (Exception $e) {
     PicCLI::getIO()->errln($e->getMessage());
     exit(PicCLI::EXIT_USAGE);
