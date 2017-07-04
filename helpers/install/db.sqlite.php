@@ -95,6 +95,22 @@ class PicDBInstall
             FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE,
             UNIQUE (path_id, files)
         )");
+        $conn->exec("CREATE TABLE albums (
+            id INTEGER PRIMARY KEY NOT NULL,
+            name TEXT NOT NULL,
+            user_id INTEGER NOT NULL,
+            path_id INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE
+        )");
+        $conn->exec("CREATE TABLE album_files (
+            id INTEGER PRIMARY KEY NOT NULL,
+            album_id INTEGER NOT NULL,
+            file TEXT NOT NULL,
+            sort_order INTEGER NOT NULL DEFAULT 0 CHECK (sort_order > 0),
+            FOREIGN KEY (album_id) REFERENCES albums (id) ON DELETE CASCADE ON UPDATE CASCADE,
+            UNIQUE (album_id, file)
+        )");
         $conn->exec("INSERT INTO system (key, value) VALUES ('version', '" . VERSION . "')");
     }
 
@@ -130,6 +146,7 @@ class PicDBInstall
         }
 
         if (version_compare($oldVersion, "0.4.0-dev4", "<") === true) {
+            $conn->beginTransaction();
             $select = PicDB::newSelect();
             $select->cols(array("id", "password"))
                 ->from("users");
@@ -143,6 +160,7 @@ class PicDBInstall
                     ->bindValue("id", (int) $id);
                 PicDB::crud($update);
             }
+            $conn->commit();
         }
     }
 }
