@@ -22,6 +22,13 @@ This presents you with the User's name, and a list of any Groups they are a
 member of. If you omit the username, you will be greeted with an interactive
 prompt to enter the username.
 
+List
+Run: php entry/user.php list [--sort[=(username|name)]]
+
+Displays the full list of Users in the system, optionally sorted. Pass
+--sort=username to sort the list by username. Pass --sort=name to sort by
+names. Passing --sort with no value defaults to sorting by username.
+
 Update
 Run: php entry/user.php update [username [name]]
 
