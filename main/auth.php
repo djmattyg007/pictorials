@@ -4,21 +4,30 @@ $userId = null;
 $basic = new Uauth\Basic("Secured Area", array());
 $basic->verify(function($username, $password) use (&$userId) {
     $select = PicDB::newSelect();
-    $select->cols(array("id"))
+    $select->cols(array("id", "password"))
         ->from("users")
         ->where("username = :username")
-        ->where("password = :password")
         ->bindValues(array(
             "username" => $username,
-            "password" => $password,
         ));
-    $id = PicDB::fetch($select, "value");
-    if ($id) {
-        $userId = (int) $id;
-        return true;
-    } else {
+    $row = PicDB::fetch($select, "one");
+    if (!$row) {
         return false;
     }
+    if (!password_verify($password, $row["password"])) {
+        return false;
+    }
+    if (password_needs_rehash($row["password"], PASSWORD_DEFAULT)) {
+        $newHash = password_hash($password, PASSWORD_DEFAULT);
+        $update = PicDB::newUpdate();
+        $update->table("users")
+            ->cols(array("password" => $newHash))
+            ->where("id = :id")
+            ->bindValue("id", (int) $row["id"]);
+        PicDB::crud($update);
+    }
+    $userId = (int) $row["id"];
+    return true;
 });
 $basic->deny(function($username) {
     if ($username !== null) {

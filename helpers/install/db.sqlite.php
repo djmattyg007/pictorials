@@ -128,5 +128,21 @@ class PicDBInstall
                 ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0 CHECK (sort_order > 0)
             ");
         }
+
+        if (version_compare($oldVersion, "0.4.0-dev4", "<") === true) {
+            $select = PicDB::newSelect();
+            $select->cols(array("id", "password"))
+                ->from("users");
+            $passwords = PicDB::fetch($select, "pairs");
+            foreach ($passwords as $id => $password) {
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $update = PicDB::newUpdate();
+                $update->table("users")
+                    ->cols(array("password" => $hash))
+                    ->where("id = :id")
+                    ->bindValue("id", (int) $id);
+                PicDB::crud($update);
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ $insert->into("users")
     ->cols(array(
         "name" => $name,
         "username" => $username,
-        "password" => $password,
+        "password" => password_hash($password, PASSWORD_DEFAULT),
     ));
 PicDB::crud($insert);
 PicCLI::success();
