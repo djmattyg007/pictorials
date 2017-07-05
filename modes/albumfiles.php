@@ -1,5 +1,9 @@
 <?php
 
+if (Access::modeCheckAny(array("manage", "view_album")) === false) {
+    sendError(404);
+}
+
 if (empty($_GET["action"])) {
     $album = Access::getCurrentAlbum();
     $canNSFW = $album->path->hasPermission("nsfw");
@@ -22,6 +26,10 @@ if (empty($_GET["action"])) {
     header("Content-type: application/json");
     echo json_encode($files);
     exit();
+}
+
+if (Access::modeCheckAny("manage") === false) {
+    sendError(404);
 }
 
 if ($_GET["action"] === "add") {

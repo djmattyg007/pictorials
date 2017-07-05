@@ -13,10 +13,7 @@ $pathIDSelect = PicDB::newSelect();
 $pathIDSelect->cols(array("id"))
     ->from("paths");
 $pathIDs = PicDB::fetch($pathIDSelect, "col");
-$authConfig = array();
-foreach ($pathIDs as $pathID) {
-    $authConfig[$pathID] = $authConfigTemplate;
-}
+$authConfig = array_fill_keys($pathIDs, $authConfigTemplate);
 
 $accessSelect = PicDB::newSelect();
 $accessSelect->cols(array("path_id", "id_type", "auth_id"))

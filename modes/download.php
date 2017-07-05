@@ -1,5 +1,9 @@
 <?php
 
+if (Access::modeCheckAny(array("manage", "view_album")) === false) {
+    sendError(404);
+}
+
 $fullFilename = loadPicFile("helpers/checkfilepath.php");
 loadPicFile("helpers/checkimagetype.php", array("filename" => $fullFilename));
 

@@ -1,5 +1,9 @@
 <?php
 
+if (Access::modeCheckAny("manage") === false) {
+    sendError(404);
+}
+
 if (empty($_POST)) {
     $appConf = loadPicFile("conf/app.json");
     $pathSelect = PicDB::newSelect();

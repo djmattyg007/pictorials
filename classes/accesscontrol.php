@@ -7,12 +7,27 @@ class Access
     /**
      * @var array
      */
+    private static $groups = null;
+
+    /**
+     * @var array
+     */
     private static $pathAuthConfig = null;
+
+    /**
+     * @var array
+     */
+    private static $modeAuthConfig = null;
 
     /**
      * @var AuthChecker
      */
-    private static $checker = null;
+    private static $pathChecker = null;
+
+    /**
+     * @var AuthChecker
+     */
+    private static $modeChecker = null;
 
     /**
      * @var array
@@ -34,10 +49,13 @@ class Access
      */
     private static function buildGroups()
     {
-        $select = PicDB::newSelect();
-        $select->cols(array("group_id", "user_id"))
-            ->from("group_memberships");
-        return PicDB::fetch($select, "group");
+        if (self::$groups === null) {
+            $select = PicDB::newSelect();
+            $select->cols(array("group_id", "user_id"))
+                ->from("group_memberships");
+            self::$groups = PicDB::fetch($select, "group");
+        }
+        return self::$groups;
     }
 
     /**
@@ -52,29 +70,76 @@ class Access
     }
 
     /**
+     * @return array
+     */
+    private static function modeAuthConfig()
+    {
+        if (self::$modeAuthConfig === null) {
+            self::$modeAuthConfig = loadPicFile("helpers/modeauthconfig.php");
+        }
+        return self::$modeAuthConfig;
+    }
+
+    /**
      * @return AuthChecker
      */
-    private static function getChecker()
+    private static function getPathChecker()
     {
-        if (self::$checker === null) {
+        if (self::$pathChecker === null) {
             $groups = self::buildGroups();
             $resources = self::pathAuthConfig();
-            self::$checker = new AuthChecker($groups, $resources);
+            self::$pathChecker = new AuthChecker($groups, $resources);
         }
-        return self::$checker;
+        return self::$pathChecker;
+    }
+
+    /**
+     * @return AuthChecker
+     */
+    private static function getModeChecker()
+    {
+        if (self::$modeChecker === null) {
+            $groups = self::buildGroups();
+            $resources = self::modeAuthConfig();
+            self::$modeChecker = new AuthChecker($groups, $resources);
+        }
+        return self::$modeChecker;
     }
 
     /**
      * @param int $pathID
-     * @param null|string $username
+     * @param null|int $userID
      * @return bool
      */
-    public static function check($pathID, $username = null)
+    public static function check($pathID, $userID = null)
     {
-        if ($username === null) {
-            $username = USERNAME;
+        if ($userID === null) {
+            $userID = USER_ID;
         }
-        return self::getChecker()->check($pathID, $username);
+        return self::getPathChecker()->check($pathID, $userID);
+    }
+
+    /**
+     * @param string|string[] $modeType
+     * @param null|int $userID
+     * @return bool
+     */
+    public static function modeCheckAny($modeType, $userID = null)
+    {
+        if ($userID === null) {
+            $userID = USER_ID;
+        }
+        $modeChecker = self::getModeChecker();
+        if (is_array($modeType)) {
+            foreach ($modeType as $_modeType) {
+                if ($modeChecker->check($_modeType, $userID)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            return $modeChecker->check($modeType, $userID);
+        }
     }
 
     /**
@@ -86,7 +151,7 @@ class Access
         if ($userID === null) {
             $userID = USER_ID;
         }
-        return self::getChecker()->getAllowedResourceIds($userID);
+        return self::getPathChecker()->getAllowedResourceIds($userID);
     }
 
     /**

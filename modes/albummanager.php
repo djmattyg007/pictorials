@@ -1,5 +1,9 @@
 <?php
 
+if (Access::modeCheckAny("manage") === false) {
+    sendError(404);
+}
+
 if (empty($_POST)) {
     $albumSelect = PicDB::newSelect();
     $albumSelect->cols(array("id", "name"))
