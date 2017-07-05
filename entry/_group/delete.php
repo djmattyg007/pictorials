@@ -28,6 +28,14 @@ $delete->from("groups")
     ->bindValue("id", $groupID);
 PicDB::crud($delete);
 
+$modeAccessDelete = PicDB::newDelete();
+$modeAccessDelete->from("mode_access")
+    ->where("id_type = :id_type")
+    ->where("auth_id = :auth_id")
+    ->bindValue("id_type", "groups")
+    ->bindValue("auth_id", $groupID);
+PicDB::crud($modeAccessDelete);
+
 $pathAccessDelete = PicDB::newDelete();
 $pathAccessDelete->from("path_access")
     ->where("id_type = :id_type")

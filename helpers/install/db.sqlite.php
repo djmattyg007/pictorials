@@ -65,6 +65,14 @@ class PicDBInstall
             FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
             UNIQUE (group_id, user_id)
         )");
+        $conn->exec("CREATE TABLE mode_access (
+            id INTEGER PRIMARY KEY NOT NULL,
+            mode_type TEXT NOT NULL CHECK (mode_type IN ('manage', 'view_album')),
+            auth_type TEXT NOT NULL CHECK (auth_type IN ('allow', 'deny')),
+            id_type TEXT NOT NULL CHECK (id_type IN ('users', 'groups')),
+            auth_id INTEGER NOT NULL CHECK (auth_id > 0),
+            UNIQUE (mode_type, auth_type, id_type, auth_id)
+        )");
         $conn->exec("CREATE TABLE paths (
             id INTEGER PRIMARY KEY NOT NULL,
             name TEXT NOT NULL,
@@ -83,7 +91,7 @@ class PicDBInstall
             path_id INTEGER NOT NULL,
             auth_type TEXT NOT NULL CHECK (auth_type IN ('allow', 'deny')),
             id_type TEXT NOT NULL CHECK (id_type IN ('users', 'groups')),
-            auth_id INTEGER NOT NULL,
+            auth_id INTEGER NOT NULL CHECK (auth_id > 0),
             FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE,
             UNIQUE (path_id, auth_type, id_type, auth_id)
         )");
@@ -160,6 +168,32 @@ class PicDBInstall
                     ->bindValue("id", (int) $id);
                 PicDB::crud($update);
             }
+            $conn->commit();
+        }
+
+        if (version_compare($oldVersion, "0.4.0-dev5", "<") === true) {
+            $conn->exec("CREATE TABLE mode_access (
+                id INTEGER PRIMARY KEY NOT NULL,
+                mode_type TEXT NOT NULL CHECK (mode_type IN ('manage', 'view_album')),
+                auth_type TEXT NOT NULL CHECK (auth_type IN ('allow', 'deny')),
+                id_type TEXT NOT NULL CHECK (id_type IN ('users', 'groups')),
+                auth_id INTEGER NOT NULL CHECK (auth_id > 0),
+                UNIQUE (mode_type, auth_type, id_type, auth_id)
+            )");
+
+            $conn->beginTransaction();
+            $conn->exec("CREATE TABLE path_access_new (
+                id INTEGER PRIMARY KEY NOT NULL,
+                path_id INTEGER NOT NULL,
+                auth_type TEXT NOT NULL CHECK (auth_type IN ('allow', 'deny')),
+                id_type TEXT NOT NULL CHECK (id_type IN ('users', 'groups')),
+                auth_id INTEGER NOT NULL CHECK (auth_id > 0),
+                FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                UNIQUE (path_id, auth_type, id_type, auth_id)
+            )");
+            $conn->exec("INSERT INTO path_access_new SELECT * FROM path_access");
+            $conn->exec("DROP TABLE path_access");
+            $conn->exec("ALTER TABLE path_access_new RENAME TO path_access");
             $conn->commit();
         }
     }
