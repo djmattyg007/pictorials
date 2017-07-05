@@ -4,33 +4,33 @@ various commands available for administrators. All examples assume your current
 working directory is the base Pictorials path.
 
 Create
-Run: php entry/user.php create [name [username [password]]]
+Run: php cli/user.php create [name [username [password]]]
 
 The three arguments must be passed in order. If you omit one or more of them,
 you will be greeted with an interactive prompt to enter the remaining details.
 
 Delete
-Run: php entry/user.php delete [username]
+Run: php cli/user.php delete [username]
 
 Use this to delete a single user. If you omit the username, you will be greeted
 with an interactive prompt to enter the username.
 
 View
-Run: php entry/user.php view [username]
+Run: php cli/user.php view [username]
 
 This presents you with the User's name, and a list of any Groups they are a
 member of. If you omit the username, you will be greeted with an interactive
 prompt to enter the username.
 
 List
-Run: php entry/user.php list [--sort[=(username|name)]]
+Run: php cli/user.php list [--sort[=(username|name)]]
 
 Displays the full list of Users in the system, optionally sorted. Pass
 --sort=username to sort the list by username. Pass --sort=name to sort by
 names. Passing --sort with no value defaults to sorting by username.
 
 Update
-Run: php entry/user.php update [username [name]]
+Run: php cli/user.php update [username [name]]
 
 Use this to update a user's name. If you omit any of the arguments, you will be
 greeted with an interactive prompt to enter the remaining details.

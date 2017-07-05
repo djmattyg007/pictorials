@@ -24,19 +24,19 @@ Installation Guide
 
 6. Create a User account to access the web interface by running the following
    command:
-   php entry/user.php create name username password
+   php cli/user.php create name username password
    For more information about managing Users, look at user_management.txt in
    the documentation. For more broad information on access control, look at
    accesscontrol_overview.txt.
 
 7. Add your first Path! Albums are represented as Paths in Pictorials:
-   php entry/path.php create name fullpath
+   php cli/path.php create name fullpath
    For more information about managing Paths, look at path_management.txt in
    the documentation. For general information about Paths, look at
    paths_overview.txt.
 
 8. Give your User account access to your first Path:
-   php entry/path.php allow --user --add path_id username
+   php cli/path.php allow --user --add path_id username
 
 9. If you told the installer to automatically create the webroot files for you,
    you're done! If not, now is when you need to create those files. First,
@@ -61,7 +61,7 @@ Installation Guide
 
 That's it! You should now have a fully functioning image gallery. Point your
 web browser to the PHP file specified for the --script-baseurl flag, login with
-the User account you created in Step 6, and browse one of the paths you
+the User account you created in Step 6, and browse to one of the paths you
 configured in Step 7.
 
 Remember that you can view a live demo at https://pictorials-demo.matthewgamble.net

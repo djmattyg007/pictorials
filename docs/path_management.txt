@@ -4,7 +4,7 @@ commands available for administrators. All examples assume your current working
 directory is the base Pictorials path.
 
 Create
-Run: php entry/path.php create [--sortorder=<number>] [name [path]]
+Run: php cli/path.php create [--sortorder=<number>] [name [path]]
 
 The two non-optional arguments must be passed in order. If you omit one or more
 of them, you will be greeted with an interactive prompt to enter the remaining
@@ -14,12 +14,12 @@ zero. The sort order affects the order of albums presented to the end user in
 the web interface.
 
 Delete
-Run: php entry/path.php delete path_id
+Run: php cli/path.php delete path_id
 
 Use this to delete a single path.
 
 List
-Run: php entry/path.php list [--sort[=(sortorder|name)]]
+Run: php cli/path.php list [--sort[=(sortorder|name)]]
 
 Displays the full list of Paths in the system, optionally sorted. Pass
 --sort=sortorder to sort the list by the sort order values specified in the
@@ -27,27 +27,27 @@ database. Pass --sort=name to sort by path names. Passing --sort with no value
 defaults to sorting by the sort order values specified in the database.
 
 Update
-Run: php entry/path.php update path_id [--name=<name>] [--path=<path>] [--sortorder=<number>]
+Run: php cli/path.php update path_id [--name=<name>] [--path=<path>] [--sortorder=<number>]
 
 Updates various details about a given path. At least one of --name, --path or
 --sortorder must be specified.
 
 View
-Run: php entry/path.php view path_id
+Run: php cli/path.php view path_id
 
 For the given Path, this command displays the name, full path, sort order,
 permissions, which Users and Groups have access and which Users and Groups are
 denied access.
 
 Permission
-Run: php entry/path.php permission (--add|--remove) path_id permission
+Run: php cli/path.php permission (--add|--remove) path_id permission
 
 This command is used to assign or remove permissions (eg. 'gps', 'symlinks',
 etc) from a particular Path. See permissions.txt for a detailed overview of all
 available permissions.
 
 Allow
-Run: php entry/path.php allow (--add|--remove) (--user|--group) path_id [entity_name]
+Run: php cli/path.php allow (--add|--remove) (--user|--group) path_id [entity_name]
 
 This command is used to allow a User or Group access to view a particular Path.
 You must specify whether you are adding or removing the access with --add or
@@ -57,7 +57,7 @@ the entity. If you omit the name of the entity, you will be greeted with an
 interactive prompt to enter the name.
 
 Deny
-Run: php entry/path.php deny (--add|--remove) (--user|--group) path_id [entity_name]
+Run: php cli/path.php deny (--add|--remove) (--user|--group) path_id [entity_name]
 
 This command is used to deny a User or Group access to view a particular Path.
 You must specify whether you are adding or removing the denial with --add or
