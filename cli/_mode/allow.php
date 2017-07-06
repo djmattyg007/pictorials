@@ -1,7 +1,7 @@
 <?php
 
 try {
-    loadPicFile("entry/_mode/_access.php", array("authType" => "allow"));
+    loadPicFile("cli/_mode/_access.php", array("authType" => "allow"));
 } catch (PicModeAccessException $e) {
     if ($e->action === "add") {
         PicCLI::warn(sprintf('%1$s \'%2$s\' is already allowed to access this mode.', $e->idLabel, $e->label));
