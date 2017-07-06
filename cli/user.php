@@ -19,4 +19,4 @@ try {
     exit(PicCLI::EXIT_USAGE);
 }
 
-loadPicFile("entry/_user/{$command}.php");
+loadPicFile("cli/_user/{$command}.php");
