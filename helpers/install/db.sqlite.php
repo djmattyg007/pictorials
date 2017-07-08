@@ -196,5 +196,17 @@ class PicDBInstall
             $conn->exec("ALTER TABLE path_access_new RENAME TO path_access");
             $conn->commit();
         }
+
+        if (version_compare($oldVersion, "0.4.0-dev6", "<") === true) {
+            $conn->exec("CREATE TABLE view_album_access (
+                id INTEGER PRIMARY KEY NOT NULL,
+                album_id INTEGER NOT NULL,
+                auth_type TEXT NOT NULL CHECK (auth_type IN ('allow', 'deny')),
+                id_type TEXT NOT NULL CHECK (id_type IN ('users', 'groups')),
+                auth_id INTEGER NOT NULL CHECK (auth_id > 0),
+                FOREIGN KEY (album_id) REFERENCES albums (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                UNIQUE (album_id, auth_type, id_type, auth_id)
+            )");
+        }
     }
 }

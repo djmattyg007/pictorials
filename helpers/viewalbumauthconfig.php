@@ -1,6 +1,6 @@
 <?php
 
-if ($authConfigJSON = PicConfCache::get("pathauth.json")) {
+if ($authConfigJSON = PicConfCache::get("viewalbumauth.json")) {
     $authConfig = json_decode($authConfigJSON, true);
     goto finalise;
 }
@@ -9,15 +9,15 @@ $authConfigTemplate = array(
     "allow" => array("users" => array(), "groups" => array()),
     "deny" => array("users" => array(), "groups" => array()),
 );
-$pathIDSelect = PicDB::newSelect();
-$pathIDSelect->cols(array("id"))
-    ->from("paths");
-$pathIDs = PicDB::fetch($pathIDSelect, "col");
-$authConfig = array_fill_keys($pathIDs, $authConfigTemplate);
+$albumIDSelect = PicDB::newSelect();
+$albumIDSelect->cols(array("id"))
+    ->from("albums");
+$albumIDs = PicDB::fetch($albumIDSelect, "col");
+$authConfig = array_fill_keys($albumIDs, $authConfigTemplate);
 
 $accessSelect = PicDB::newSelect();
-$accessSelect->cols(array("path_id", "id_type", "auth_id"))
-    ->from("path_access")
+$accessSelect->cols(array("album_id", "id_type", "auth_id"))
+    ->from("view_album_access")
     ->where("auth_type = :auth_type");
 
 $accessSelect->bindValue("auth_type", "allow");
@@ -36,11 +36,11 @@ foreach ($denyRows as $path => $denyRow) {
     }
 }
 
-PicConfCache::set("pathauth.json", $authConfig);
+PicConfCache::set("viewalbumauth.json", $authConfig);
 
 finalise:
-if (isset($selectedPathID)) {
-    return $authConfig[$selectedPathID];
+if (isset($selectedAlbumID)) {
+    return $authConfig[$selectedAlbumID];
 } else {
     return $authConfig;
 }
