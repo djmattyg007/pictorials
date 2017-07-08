@@ -175,8 +175,8 @@ Keyboard<br>shortcuts
     "filebrowser": "<?php echo scriptUrl("filebrowser"); ?>",
     "download": "<?php echo scriptUrl("loadimage"); ?>",
     "downloadFile": "<?php echo scriptUrl("download"); ?>",
-    "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>",
-    "addFileToAlbum": "<?php echo scriptUrl("albumfiles", array("action" => "add")); ?>",
+    "getalbumdetails": "<?php echo scriptUrl("albumdetails", array("access_mode" => "manage")); ?>",
+    "addFileToAlbum": "<?php echo scriptUrl("albumfiles", array("action" => "add", "access_mode" => "manage")); ?>",
     "shareReceive": "<?php echo scriptUrl("share", array("share" => "receive")); ?>",
     "shareSubmit": "<?php echo scriptUrl("share", array("share" => "submit")); ?>",
     "sysload": "<?php echo scriptUrl("sysload"); ?>"

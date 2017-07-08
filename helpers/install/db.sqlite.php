@@ -208,5 +208,48 @@ class PicDBInstall
                 UNIQUE (album_id, auth_type, id_type, auth_id)
             )");
         }
+
+        if (version_compare($oldVersion, "0.4.0-dev7", "<") === true) {
+            $conn->exec("CREATE TABLE manage_album_access (
+                id INTEGER PRIMARY KEY NOT NULL,
+                album_id INTEGER NOT NULL,
+                auth_type TEXT NOT NULL CHECK (auth_type IN ('allow', 'deny')),
+                id_type TEXT NOT NULL CHECK (id_type IN ('users', 'groups')),
+                auth_id INTEGER NOT NULL CHECK (auth_id > 0),
+                FOREIGN KEY (album_id) REFERENCES albums (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                UNIQUE (album_id, auth_type, id_type, auth_id)
+            )");
+
+            $conn->exec("PRAGMA foreign_keys = OFF");
+            $conn->beginTransaction();
+            $userIdSelect = PicDB::newSelect();
+            $userIdSelect->from("albums")
+                ->cols(array("id", "user_id"));
+            $albumUsers = PicDB::fetch($userIdSelect, "pairs");
+
+            $conn->exec("CREATE TABLE albums_new (
+                id INTEGER PRIMARY KEY NOT NULL,
+                name TEXT NOT NULL,
+                path_id INTEGER NOT NULL,
+                FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE
+            )");
+            $conn->exec("INSERT INTO albums_new SELECT id, name, path_id FROM albums");
+            $conn->exec("DROP TABLE albums");
+            $conn->exec("ALTER TABLE albums_new RENAME TO albums");
+
+            foreach ($albumUsers as $albumID => $userID) {
+                $manageAlbumInsert = PicDB::newInsert();
+                $manageAlbumInsert->into("manage_album_access")
+                    ->cols(array(
+                        "album_id" => (int) $albumID,
+                        "auth_type" => "allow",
+                        "id_type" => "users",
+                        "auth_id" => (int) $userID,
+                    ));
+                PicDB::crud($manageAlbumInsert);
+            }
+            $conn->commit();
+            $conn->exec("PRAGMA foreign_keys = ON");
+        }
     }
 }

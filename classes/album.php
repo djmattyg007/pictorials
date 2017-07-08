@@ -18,11 +18,6 @@ class PicAlbum implements JsonSerializable
     private $pathID;
 
     /**
-     * @var int
-     */
-    private $userID;
-
-    /**
      * @var PicPath
      */
     private $path;
@@ -41,14 +36,12 @@ class PicAlbum implements JsonSerializable
      * @param int $id
      * @param string $name
      * @param int $pathID
-     * @param int $userID
      */
-    public function __construct($id, $name, $pathID, $userID)
+    public function __construct($id, $name, $pathID)
     {
         $this->id = $id;
         $this->name = $name;
         $this->pathID = $pathID;
-        $this->userID = $userID;
     }
 
     /**
@@ -65,8 +58,6 @@ class PicAlbum implements JsonSerializable
             return count($this->getFiles());
         } elseif ($property === "pathID") {
             return $this->pathID;
-        } elseif ($property === "userID") {
-            return $this->userID;
         } elseif ($property === "path") {
             return $this->getPath();
         } elseif ($property === "files") {

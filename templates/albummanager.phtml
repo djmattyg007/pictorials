@@ -112,9 +112,9 @@
     "editalbum": "<?php echo scriptUrl("albummanager", array("action" => "edit")); ?>",
     "deletealbum": "<?php echo scriptUrl("albummanager", array("action" => "delete")); ?>",
     "download": "<?php echo scriptUrl("loadimage"); ?>",
-    "getalbumdetails": "<?php echo scriptUrl("albumdetails"); ?>",
-    "getalbumsortedfiles": "<?php echo scriptUrl("albumfiles"); ?>",
-    "savealbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("action" => "save")); ?>",
+    "getalbumdetails": "<?php echo scriptUrl("albumdetails", array("access_mode" => "manage")); ?>",
+    "getalbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("access_mode" => "manage")); ?>",
+    "savealbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("action" => "save", "access_mode" => "manage")); ?>",
     "sysload": "<?php echo scriptUrl("sysload"); ?>"
 }
 </script>

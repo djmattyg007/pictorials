@@ -1,10 +1,8 @@
 <?php
 
-if (Access::modeCheckAny(array("manage", "view_album")) === false) {
-    sendError(404);
-}
-
 if (empty($_GET["action"])) {
+    Access::verifyCurrentModeAccess(array("manage", "view_album"));
+
     $album = Access::getCurrentAlbum();
     $canNSFW = $album->path->hasPermission("nsfw");
     $files = array_map(function($relpath) use ($canNSFW) {
@@ -28,9 +26,7 @@ if (empty($_GET["action"])) {
     exit();
 }
 
-if (Access::modeCheckAny("manage") === false) {
-    sendError(404);
-}
+Access::verifyCurrentModeAccess(array("manage"));
 
 if ($_GET["action"] === "add") {
     if (empty($_POST["files"]) || is_array($_POST["files"]) === false) {

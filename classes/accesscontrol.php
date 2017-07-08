@@ -20,6 +20,16 @@ class Access
     private static $modeAuthConfig = null;
 
     /**
+     * @var array
+     */
+    private static $manageAlbumAuthConfig = null;
+
+    /**
+     * @var array
+     */
+    private static $viewAlbumAuthConfig = null;
+
+    /**
      * @var AuthChecker
      */
     private static $pathChecker = null;
@@ -28,6 +38,16 @@ class Access
      * @var AuthChecker
      */
     private static $modeChecker = null;
+
+    /**
+     * @var AuthChecker
+     */
+    private static $manageAlbumChecker = null;
+
+    /**
+     * @var AuthChecker
+     */
+    private static $viewAlbumChecker = null;
 
     /**
      * @var array
@@ -81,6 +101,28 @@ class Access
     }
 
     /**
+     * @return array
+     */
+    private static function manageAlbumAuthConfig()
+    {
+        if (self::$manageAlbumAuthConfig === null) {
+            self::$manageAlbumAuthConfig = loadPicFile("helpers/managealbumauthconfig.php");
+        }
+        return self::$manageAlbumAuthConfig;
+    }
+
+    /**
+     * @return array
+     */
+    private static function viewAlbumAuthConfig()
+    {
+        if (self::$viewAlbumAuthConfig === null) {
+            self::$viewAlbumAuthConfig = loadPicFile("helpers/viewalbumauthconfig.php");
+        }
+        return self::$viewAlbumAuthConfig;
+    }
+
+    /**
      * @return AuthChecker
      */
     private static function getPathChecker()
@@ -104,6 +146,32 @@ class Access
             self::$modeChecker = new AuthChecker($groups, $resources);
         }
         return self::$modeChecker;
+    }
+
+    /**
+     * @return AuthChecker
+     */
+    private static function getManageAlbumChecker()
+    {
+        if (self::$manageAlbumChecker === null) {
+            $groups = self::buildGroups();
+            $resources = self::manageAlbumAuthConfig();
+            self::$manageAlbumChecker = new AuthChecker($groups, $resources);
+        }
+        return self::$manageAlbumChecker;
+    }
+
+    /**
+     * @return AuthChecker
+     */
+    private static function getViewAlbumChecker()
+    {
+        if (self::$viewAlbumChecker === null) {
+            $groups = self::buildGroups();
+            $resources = self::viewAlbumAuthConfig();
+            self::$viewAlbumChecker = new AuthChecker($groups, $resources);
+        }
+        return self::$viewAlbumChecker;
     }
 
     /**
@@ -143,7 +211,33 @@ class Access
     }
 
     /**
-     * @param null|string $userID
+     * @param int $albumID
+     * @param null|int $userID
+     * @return bool
+     */
+    public static function manageAlbumCheck($albumID, $userID = null)
+    {
+        if ($userID === null) {
+            $userID = USER_ID;
+        }
+        return self::getManageAlbumChecker()->check($albumID, $userID);
+    }
+
+    /**
+     * @param int $albumID
+     * @param null|int $userID
+     * @return bool
+     */
+    public static function viewAlbumCheck($albumID, $userID = null)
+    {
+        if ($userID === null) {
+            $userID = USER_ID;
+        }
+        return self::getViewAlbumChecker()->check($albumID, $userID);
+    }
+
+    /**
+     * @param null|int $userID
      * @return array
      */
     public static function getAllowedPaths($userID = null)
@@ -152,6 +246,50 @@ class Access
             $userID = USER_ID;
         }
         return self::getPathChecker()->getAllowedResourceIds($userID);
+    }
+
+    /**
+     * @param null|int $userID
+     * @return array
+     */
+    public static function getAllowedManageAlbums($userID = null)
+    {
+        if ($userID === null) {
+            $userID = USER_ID;
+        }
+        $albumIDs = self::getManageAlbumChecker()->getAllowedResourceIds($userID);
+        $pathIDs = self::getAllowedPaths($userID);
+
+        $select = PicDB::newSelect();
+        $select->from("albums")
+            ->cols(array("id"))
+            ->where("id IN (:album_ids)")
+            ->where("path_id IN (:path_ids)")
+            ->bindValue("album_ids", $albumIDs)
+            ->bindValue("path_ids", $pathIDs);
+        return PicDB::fetch($select, "col");
+    }
+
+    /**
+     * @param null|int $userID
+     * @return array
+     */
+    public static function getAllowedViewAlbums($userID = null)
+    {
+        if ($userID === null) {
+            $userID = USER_ID;
+        }
+        $albumIDs = self::getViewAlbumChecker()->getAllowedResourceIds($userID);
+        $pathIDs = self::getAllowedPaths($userID);
+
+        $select = PicDB::newSelect();
+        $select->from("albums")
+            ->cols(array("id"))
+            ->where("id IN (:album_ids)")
+            ->where("path_id IN (:path_ids)")
+            ->bindValue("album_ids", $albumIDs)
+            ->bindValue("path_ids", $pathIDs);
+        return PicDB::fetch($select, "col");
     }
 
     /**
@@ -193,15 +331,22 @@ class Access
         if (!isset($_POST["album"]) || !is_numeric($_POST["album"])) {
             sendError(400);
         }
-        $albumID = (int) $_POST["album"];
-        $album = loadPicFile("helpers/albums/load.php", array("albumID" => $albumID));
-        if ($album === null) {
-            sendError(404);
-        } elseif ($album->userID !== USER_ID) {
+        if (empty($_GET["access_mode"])) {
             sendError(404);
         }
-        $allowedPaths = self::getAllowedPaths();
-        if (!in_array($album->pathID, $allowedPaths, true)) {
+        if ($_GET["access_mode"] === "manage") {
+            $allowedAlbums = self::getAllowedManageAlbums();
+        } elseif ($_GET["access_mode"] === "view_album") {
+            $allowedAlbums = self::getAllowedViewAlbums();
+        } else {
+            sendError(404);
+        }
+        $albumID = (int) $_POST["album"];
+        if (!in_array($albumID, $allowedAlbums)) {
+            sendError(404);
+        }
+        $album = loadPicFile("helpers/albums/load.php", array("albumID" => $albumID));
+        if ($album === null) {
             sendError(404);
         }
         return $album;
@@ -218,5 +363,28 @@ class Access
 
         self::$currentAlbum = self::verifyCurrentAlbumAccess();
         return self::$currentAlbum;
+    }
+
+    /**
+     * @param array $allowed
+     */
+    public static function verifyCurrentModeAccess(array $allowed)
+    {
+        if (empty($_GET["access_mode"])) {
+            sendError(404);
+        }
+        switch ($_GET["access_mode"]) {
+            case "manage":
+            case "view_album":
+                if (in_array($_GET["access_mode"], $allowed) === false) {
+                    sendError(404);
+                }
+                if (self::modeCheckAny($_GET["access_mode"]) === false) {
+                    sendError(404);
+                }
+                break;
+            default:
+                sendError(404);
+        }
     }
 }

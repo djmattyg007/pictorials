@@ -1,15 +1,19 @@
 <?php
 
-if (Access::modeCheckAny(array("manage", "view_album")) === false) {
-    sendError(404);
-}
-
 if (empty($_POST["album"])) {
+    Access::verifyCurrentModeAccess(array("manage", "view_album"));
+
     $albumSelect = PicDB::newSelect();
     $albumSelect->cols(array("id", "name", "path_id"))
         ->from("albums")
-        ->where("user_id = :user_id")
-        ->bindValue("user_id", USER_ID);
+        ->where("id IN (:ids)");
+    if ($_GET["access_mode"] === "manage") {
+        $albumSelect->bindValue("ids", Access::getAllowedManageAlbums());
+    } elseif ($_GET["access_mode"] === "view_album") {
+        $albumSelect->bindValue("ids", Access::getAllowedViewAlbums());
+    } else {
+        sendError(404);
+    }
     if (!empty($_POST["path"])) {
         $path = Access::getCurrentPath();
         $albumSelect->where("path_id = :path_id")
@@ -18,8 +22,11 @@ if (empty($_POST["album"])) {
     $albums = PicDB::fetch($albumSelect, "all");
     header("Content-type: application/json");
     echo json_encode($albums);
-} else {
-    $album = Access::getCurrentAlbum();
-    header("Content-type: application/json");
-    echo json_encode($album);
+    exit();
 }
+
+Access::verifyCurrentModeAccess(array("manage"));
+
+$album = Access::getCurrentAlbum();
+header("Content-type: application/json");
+echo json_encode($album);
