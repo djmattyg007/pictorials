@@ -21,6 +21,9 @@
 <li><a href="<?php echo scriptUrl("filebrowser"); ?>">File Browser</a></li>
 <li><a href="<?php echo scriptUrl("albummanager"); ?>">Album Manager</a></li>
 <?php endif; ?>
+<?php if (Access::modeCheckAny("view_album")): ?>
+<li><a href="<?php echo scriptUrl("albumviewer"); ?>">Album Viewer</a></li>
+<?php endif; ?>
 </ul>
 </div>
 </div>

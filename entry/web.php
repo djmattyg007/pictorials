@@ -24,6 +24,7 @@ switch ($_GET["mode"]) {
     case "albummanager":
     case "albumdetails":
     case "albumfiles":
+    case "albumviewer":
         try {
             loadPicFile("modes/{$_GET["mode"]}.php");
         } catch (Exception $e) {

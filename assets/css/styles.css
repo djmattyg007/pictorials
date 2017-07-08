@@ -311,3 +311,38 @@ body {
     font-size: 22px;
     line-height: 16px;
 }
+
+#album-images-container {
+    margin-left: 0;
+    margin-right: 0;
+}
+#album-images-container .album-image {
+    padding-left: 0;
+    padding-right: 0;
+}
+#album-images-container .album-thumb {
+    object-fit: cover;
+    object-position: center;
+    height: 100px;
+    width: 100px;
+}
+@media (max-width: 767px) {
+    #album-images-container .album-image:nth-child(2n+1) {
+        clear: both;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    #album-images-container .album-image:nth-child(3n+1) {
+        clear: both;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    #album-images-container .album-image:nth-child(6n+1) {
+        clear: both;
+    }
+}
+@media (min-width: 1200px) {
+    #album-images-container .album-image:nth-child(12n+1) {
+        clear: both;
+    }
+}
