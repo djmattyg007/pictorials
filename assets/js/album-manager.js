@@ -1,4 +1,4 @@
-var ajaxUrls = JSON.parse(jQuery("#ajax-urls").html());
+var ajaxUrls = JSON.parse(document.getElementById("ajax-urls").innerHTML);
 var paths = JSON.parse(jQuery("#paths").html());
 
 var modalManager = new ModalManager();

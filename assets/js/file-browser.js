@@ -1,4 +1,4 @@
-var ajaxUrls = JSON.parse(jQuery("#ajax-urls").html());
+var ajaxUrls = JSON.parse(document.getElementById("ajax-urls").innerHTML);
 var mapboxConfigEl = jQuery("#mapbox-config");
 var mapboxConfig = null;
 if (mapboxConfigEl.length) {
