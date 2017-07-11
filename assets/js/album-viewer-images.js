@@ -6,7 +6,8 @@ function AlbumViewerImages(container, albums, loader, notificationManager, templ
     this.loader = loader;
     this.notificationManager = notificationManager;
     this.templater = templater;
-    this.thumbnailLoader = thumbnailFlFactory.create(4);
+    this.thumbnailLoaderFactory = thumbnailFlFactory;
+    this.thumbnailLoader = null;
     this.albumGetSortedFilesUrl = albumGetSortedFilesUrl;
 
     this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 900);
@@ -82,7 +83,8 @@ AlbumViewerImages.prototype = {
             return;
         }
         this.container.show();
-        this.thumbnailLoader.start(this.albums.getPathID(this.albums.getSelectedAlbumID()), this._imgLoad.bind(this), {size: "small"});
+        this.thumbnailLoader = this.thumbnailLoaderFactory.create(this.albums.getPathID(this.albums.getSelectedAlbumID()), 4, this._imgLoad.bind(this), {size: "small"});
+        this.thumbnailLoader.start();
         this.lazyLoader = this.lazyLoaderFactory.create(this.imagesContainer.find("img.album-thumb"));
         this._alive = true;
     },
