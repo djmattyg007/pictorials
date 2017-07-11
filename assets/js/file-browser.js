@@ -14,9 +14,12 @@ var notificationManager = new NotificationManager();
 var shareManager = new ShareManager(shareString, userInputHandler, clipboardHandler);
 var loader = new Loader(jQuery("#loader"));
 var toolbox = new Toolbox(jQuery("#available-actions"));
+var sysloadChecker = new SysloadChecker(ajaxUrls.sysload);
+sysloadChecker.start();
+var concurrencyManagerFactory = new ConcurrencyManagerFactory();
 var galleryFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.downloadFile, ajaxUrls.sysload);
-var thumbnailFlFactory = new CancellableFileLoaderFactory(notificationManager, ajaxUrls.download, ajaxUrls.sysload);
+var thumbnailFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
 var fileDownloader = new Downloader(downloadFlFactory, loader);
 var fileMap = new FileMap(jQuery("#map-modal"), modalManager);
 if (mapboxConfig) {

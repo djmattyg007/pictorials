@@ -8,7 +8,7 @@ var loader = new Loader(jQuery("#loader"));
 var templater = new Templater(window.templates);
 var sysloadChecker = new SysloadChecker(ajaxUrls.sysload);
 sysloadChecker.start();
-var concurrencyManagerFactory = new ConcurrencyManagerFactory(sysloadChecker);
+var concurrencyManagerFactory = new ConcurrencyManagerFactory();
 var thumbnailFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
 
 var albums = new Albums(jQuery("#albums"), notificationManager, ajaxUrls.getalbumdetails);

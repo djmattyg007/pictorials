@@ -4,7 +4,8 @@ function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFa
     this.activeRowClass = activeRowClass;
     this.templater = templater;
     this.paths = paths;
-    this.thumbnailLoader = thumbnailFlFactory.create(4);
+    this.thumbnailLoaderFactory = thumbnailFlFactory;
+    this.thumbnailLoader = null;
     this.fileDownloader = fileDownloader;
 
     this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 900);
@@ -78,7 +79,8 @@ BrowserFiles.prototype = {
         if (this.container.html().trim() === "") {
             return;
         }
-        this.thumbnailLoader.start(this.paths.getSelectedPathID(), this._imgLoad.bind(this), {size: "small"});
+        this.thumbnailLoader = this.thumbnailLoaderFactory.create(this.paths.getSelectedPathID(), 4, this._imgLoad.bind(this), {size: "small"});
+        this.thumbnailLoader.start();
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
             ignoreClick: "a",
@@ -88,12 +90,14 @@ BrowserFiles.prototype = {
     },
 
     deinit: function() {
-        this.thumbnailLoader.stop();
-        this.thumbnailLoader.removeAllFiles();
         if (this.container.html().trim() !== "") {
             this.container.find("tr").off(".shiftcheckbox");
             this.lazyLoader.deinit();
             this.lazyLoader = null;
+        }
+        if (this.thumbnailLoader) {
+            this.thumbnailLoader.stop();
+            this.thumbnailLoader.removeAllFiles();
         }
         this.container.empty();
         jQuery(document).trigger("pictorials:selection_changed", { "selectedCount": 0 });

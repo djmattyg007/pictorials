@@ -1,18 +1,15 @@
-function ConcurrencyManagerFactory(sysloadChecker)
+function ConcurrencyManagerFactory()
 {
-    this.sysloadChecker = sysloadChecker;
 }
 
 ConcurrencyManagerFactory.prototype = {
     create: function(concurrencyLimit) {
-        return new ConcurrencyManager(concurrencyLimit, this.sysloadChecker);
+        return new ConcurrencyManager(concurrencyLimit);
     }
 };
 
-function ConcurrencyManager(concurrencyLimit, sysloadChecker)
+function ConcurrencyManager(concurrencyLimit)
 {
-    this.sysloadChecker = sysloadChecker;
-
     this.origConcurrencyLimit = (!isNaN(parseInt(concurrencyLimit)) && concurrencyLimit > 2 ? concurrencyLimit : 2);
     this.concurrencyLimit = this.origConcurrencyLimit;
 
@@ -23,8 +20,7 @@ ConcurrencyManager.prototype = {
     initEvents: function() {
         var self = this;
         jQuery(document).on("pictorials:sysload_update", function(event, eventData) {
-            var cLevel = eventData.concurrencyLevel;
-            switch (cLevel) {
+            switch (eventData.concurrencyLevel) {
                 case 2:
                     self.concurrencyLimit = self.origConcurrencyLimit;
                     break;
