@@ -7,7 +7,8 @@ function AlbumImageSorter(container, albums, loader, userInputHandler, notificat
     this.userInputHandler = userInputHandler;
     this.notificationManager = notificationManager;
     this.templater = templater;
-    this.thumbnailLoader = thumbnailFlFactory.create(4);
+    this.thumbnailLoaderFactory = thumbnailFlFactory;
+    this.thumbnailLoader = null;
     this.albumGetSortedFilesUrl = albumGetSortedFilesUrl;
     this.albumSaveSortedFilesUrl = albumSaveSortedFilesUrl;
 
@@ -139,7 +140,8 @@ AlbumImageSorter.prototype = {
             return;
         }
         this.container.show();
-        this.thumbnailLoader.start(this.albums.getPathID(this.albums.getSelectedAlbumID()), this._imgLoad.bind(this), {size: "small"});
+        this.thumbnailLoader = this.thumbnailLoaderFactory.create(this.albums.getPathID(this.albums.getSelectedAlbumID()), 4, this._imgLoad.bind(this), {size: "small"});
+        this.thumbnailLoader.start();
         var self = this;
         this.sortContainer.sortable({
             aimation: 80,
@@ -176,11 +178,11 @@ AlbumImageSorter.prototype = {
         if (this._alive === false) {
             return;
         }
+        this.lazyLoader.deinit();
+        this.lazyLoader = null;
         this.thumbnailLoader.stop();
         this.thumbnailLoader.removeAllFiles();
         this.sortContainer.sortable("destroy");
-        this.lazyLoader.deinit();
-        this.lazyLoader = null;
         this.sortContainer.empty();
         this.container.hide();
         this._alive = false;

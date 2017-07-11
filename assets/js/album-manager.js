@@ -6,7 +6,10 @@ var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);
 var notificationManager = new NotificationManager();
 var loader = new Loader(jQuery("#loader"));
 var templater = new Templater(window.templates);
-var thumbnailFlFactory = new CancellableFileLoaderFactory(notificationManager, ajaxUrls.download, ajaxUrls.sysload);
+var sysloadChecker = new SysloadChecker(ajaxUrls.sysload);
+sysloadChecker.start();
+var concurrencyManagerFactory = new ConcurrencyManagerFactory(sysloadChecker);
+var thumbnailFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
 
 var albums = new Albums(jQuery("#albums"), notificationManager, ajaxUrls.getalbumdetails);
 var albumCreator = new AlbumCreator(userInputHandler, notificationManager, loader, paths, ajaxUrls.createalbum);

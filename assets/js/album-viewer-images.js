@@ -93,10 +93,10 @@ AlbumViewerImages.prototype = {
         if (this._alive === false) {
             return;
         }
-        this.thumbnailLoader.stop();
-        this.thumbnailLoader.removeAllFiles();
         this.lazyLoader.deinit();
         this.lazyLoader = null;
+        this.thumbnailLoader.stop();
+        this.thumbnailLoader.removeAllFiles();
         this.imagesContainer.empty();
         this.container.hide();
         this._alive = false;
