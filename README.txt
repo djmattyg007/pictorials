@@ -12,8 +12,9 @@ It may work in IE11, and probably works in Edge, but I don't particularly care
 about it or Safari.
 
 There are several features that are planned, but for which there is no code
-right now. Chief among these is a traditional gallery view. This project
-started mainly as a file viewer (not a gallery), hence the current appearance.
+right now. Chief among these is a traditional gallery view, although work on
+this particular feature has commenced. This project started mainly as a file
+viewer (not a gallery), hence the current appearance.
 Contributions are welcome - feel free to submit an issue or pull request.
 
 You can view a live demo of this software at the following URL:

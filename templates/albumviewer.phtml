@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "fontawesome.css"); ?>" media="all">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.css" integrity="sha256-d0mtrHsQZQe2+DIl6Z+F1rVWLI++ycF3BEXQUWf04xs=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.css" integrity="sha256-jXmPL1Q5E9IDaGmoKFLCbahYWC8zrPDwq8oNBQlzoyM=" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "galleria-themes/galleria.classicmod.css"); ?>" media="all">
 </head>
 
 <body>
@@ -28,6 +29,9 @@
             </div>
         </div>
     </div>
+    <div class="col-xs-12 col-md-6">
+        <button type="button" data-gallery-activate class="btn btn-primary">Gallery</button>
+    </div>
 </div>
 
 <div id="album-images" style="display:none;">
@@ -39,6 +43,19 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="row" id="album-images-container" data-images-container></div>
+    </div>
+</div>
+</div>
+
+<div id="album-gallery">
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Gallery</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div id="galleria"></div>
     </div>
 </div>
 </div>
@@ -76,6 +93,7 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootstrap.min.js"); ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.js" integrity="sha256-Wdie7xDu6PuVG6BqNy/dEEYY0jK2JutDYnn0sI19yTw=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.js" integrity="sha256-84wtYJTPHtuXdY+6x/khPD5SruMKvYOUsJcYPNJ9dvk=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js" integrity="sha256-vcRq33WsCAofqsEfm42WcAdAjyj8Q+XnuAnvg8ZuMLk=" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="<?php echo assetUrl("js", "lazyload.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "notification-manager.js"); ?>"></script>
@@ -86,9 +104,13 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "progressive-file-loader.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-viewer-images.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "galleria-loader.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "album-gallery.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo templateUrl("albumviewer"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-viewer.js"); ?>"></script>
+
+<script type="text/javascript" src="<?php echo assetUrl("js", "vendor/galleria.classicmod.js"); ?>"></script>
 </div>
 
 </body>

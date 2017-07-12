@@ -28,7 +28,7 @@ public domain software license:
     For more information, please refer to <http://unlicense.org>
 
 
-The following files fall under the MIT license, and have not had any
+The following file(s) fall under the MIT license, and have not had any
 modifications made to them:
 
 assets/css/bootstrap.css
@@ -42,14 +42,23 @@ assets/js/vendor/sortable-jquery-binding.js
 Links to and/or copies of the appropriate licenses for each file can
 be found at the top of each file.
 
+All of the files within the following folder(s) fall under the MIT license,
+and have not had any modifications made to them:
 
-The following files fall under the MIT license, and have had
-modifications made to them for the purpose of use within this codebase:
+assets/css/galleria-themes
 
+Where the file format allows, links to and/or copies of the appropriate
+licenses for each file can be found at the top of each file.
+
+
+The following file(s) fall under the MIT license, and have had modifications
+made to them for the purpose of use within this codebase:
+
+assets/js/vendor/galleria.classicmod.js
 assets/js/vendor/jquery.shiftcheckbox.js
 
-These modifications are licensed under the MIT license. Unless there is
-interest from the developer(s)/maintainer(s) of the original software,
-it is unlikely these modifications will be submitted upstream, as they
-change the behaviour of the plugin, sometimes beyond the intentions of
-the original developer.
+These modifications are licensed under the MIT license.
+Unless there is interest from the developer(s)/maintainer(s) of the original
+jquery.shiftcheckbox.js software, it is unlikely these modifications will be
+submitted upstream, as they change the behaviour of the plugin, sometimes
+beyond the intentions of the original developer.

@@ -10,3 +10,6 @@ var thumbnailFlFactory = new ProgressiveFileLoaderFactory(notificationManager, a
 
 var albums = new Albums(jQuery("#albums"), notificationManager, ajaxUrls.getalbumdetails);
 var albumViewerImages = new AlbumViewerImages(jQuery("#album-images"), albums, loader, notificationManager, templater, thumbnailFlFactory, ajaxUrls.getalbumsortedfiles);
+
+window.galleriaLoaderInit(albums, thumbnailFlFactory);
+var albumGallery = new AlbumGallery(albums, loader, notificationManager, thumbnailFlFactory, concurrencyManagerFactory, ajaxUrls.getalbumsortedfiles);
