@@ -352,3 +352,10 @@ body {
         height: 100px;
     }
 }
+
+#album-gallery .galleria-loader {
+    opacity: 1 !important;
+    background-size: cover !important;
+    width: 25px !important;
+    height: 25px !important;
+}
