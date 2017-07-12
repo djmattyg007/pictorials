@@ -21,7 +21,7 @@ $image = PicImage::open($fullFilename);
 $image->cropResize($imageSize["width"], $imageSize["height"]);
 $image->fixOrientation();
 
-$imageData = $image->cacheData($normalisedExtension);
+$imageData = $image->cacheData($normalisedExtension, 95);
 
 header("Content-type: $mimeType");
 
