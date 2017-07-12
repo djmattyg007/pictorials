@@ -1,4 +1,4 @@
-window.galleriaLoaderInit = function(albums, imageDownloaderFactory) {
+window.galleriaLoaderInit = function(albums, imageDownloaderFactory, dummyImage) {
     var imageDownloader = null;
     var currentPath = null;
     jQuery(document).on("pictorials:album_changed", function() {
@@ -60,6 +60,7 @@ window.galleriaLoaderInit = function(albums, imageDownloaderFactory) {
     };
 
     Galleria.configure({
+        dummy: dummyImage,
         height: 0.5625, // 16 by 9
         imageCrop: false,
         imageTimeout: 60000,
