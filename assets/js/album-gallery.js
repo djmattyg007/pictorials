@@ -25,6 +25,14 @@ AlbumGallery.prototype = {
         jQuery(document).on("pictorials:album_chosen", function() {
             self.open();
         });
+
+        jQuery(document).on("click", "[data-gallery-fullscreen-activate]", function() {
+            if (self.galleria) {
+                self.galleria.enterFullscreen();
+            } else {
+                self.notificationManager.displayNotice("Gallery", "There is no gallery active. Cannot enter fullscreen.");
+            }
+        });
     },
 
     open: function() {
