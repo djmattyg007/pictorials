@@ -83,7 +83,7 @@ BrowserFiles.prototype = {
         this.thumbnailLoader.start();
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
-            ignoreClick: "a",
+            ignoreClick: "a, img.file-thumb[data-toggle='popover'], [role='tooltip']",
             onChange: this._rowClick.bind(this)
         });
         this.lazyLoader = this.lazyLoaderFactory.create(this.container.find("img.file-thumb"));
