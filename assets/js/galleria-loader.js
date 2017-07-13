@@ -22,6 +22,9 @@ window.galleriaLoaderInit = function(albums, imageDownloaderFactory, dummyImage)
         if (this.cache[src]) {
             return;
         }
+        if (!currentPath) {
+            return;
+        }
         var self = this;
         imageDownloader.addFile(src, function(filename, dataSrc) {
             self.cache[src] = dataSrc;
@@ -29,6 +32,9 @@ window.galleriaLoaderInit = function(albums, imageDownloaderFactory, dummyImage)
     };
 
     Galleria.Picture.prototype.load = function(src, size, callback) {
+        if (!currentPath) {
+            return;
+        }
         if (typeof size === "function") {
             callback = size;
             size = null;

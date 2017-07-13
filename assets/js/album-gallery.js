@@ -1,14 +1,15 @@
-function AlbumGallery(albums, loader, notificationManager, imageFlFactory, concurrencyManagerFactory, albumGetSortedFilesUrl)
+function AlbumGallery(container, albums, loader, notificationManager, albumGetSortedFilesUrl)
 {
+    this.container = container;
+    this.galleryContainer = container.find("[data-gallery-container]");
     this.albums = albums;
     this.loader = loader;
     this.notificationManager = notificationManager;
-    this.imageFactory = imageFlFactory;
-    this.concurrencyManager = concurrencyManagerFactory.create(3);
     this.albumGetSortedFilesUrl = albumGetSortedFilesUrl;
 
-    this.openCount = 0;
     this._alive = false;
+    this.galleria = null;
+    this.galleryData = null;
 
     this.initEvents();
 }
@@ -17,7 +18,11 @@ AlbumGallery.prototype = {
     initEvents: function() {
         var self = this;
 
-        jQuery(document).on("click", "[data-gallery-activate]", function() {
+        jQuery(document).on("pictorials:album_changed", function() {
+            self.close();
+        });
+
+        jQuery(document).on("pictorials:album_chosen", function() {
             self.open();
         });
     },
@@ -37,17 +42,57 @@ AlbumGallery.prototype = {
             "url": this.albumGetSortedFilesUrl
         }).done(function(result) {
             self.loader.hide();
-            window.hmmmm = result;
-            var bigSize;
-            if (jQuery(window).height() > 950) {
-                bigSize = "xlarge";
-            } else {
-                bigSize = "large";
-            }
-            window.beep = window.hmmmm.map(function(el) { return {"image": el.relpath + "?large", "thumb": el.relpath + "?small", "big": el.relpath + "?" + bigSize}; });
+            var galleryData = self._prepareGalleryData(result);
+            self._startGalleria(galleryData);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             self.loader.hide();
             self.notificationManager.displayError("Error", "There was a problem loading the images for the selected album. Please try again.");
         });
+    },
+
+    close: function() {
+        if (this._alive === false) {
+            return;
+        }
+        this._alive = false;
+        this.galleria.destroy();
+        this.galleria = null;
+        this.container.hide();
+        this.galleryData = null;
+    },
+
+    _prepareGalleryData(imageData) {
+        var bigSize = jQuery(window).height() > 950 ? "xlarge" : "large";
+        return imageData.map(function(image) {
+            return {
+                "image": image.relpath + "?large",
+                "thumb": image.relpath + "?small",
+                "big": image.relpath + "?" + bigSize
+            };
+        });
+    },
+
+    _startGalleria: function(galleryData) {
+        this.container.show();
+        this.galleryData = galleryData;
+        this.galleryContainer.galleria({dataSource: galleryData.slice(0, 10)});
+        this.galleria = this.galleryContainer.data("galleria");
+
+        var curPage = 1;
+        var groupSize = 10;
+        var totalPages = galleryData.length / groupSize;
+        var self = this;
+        var moreLoad = function() {
+            if (self.galleria === null) {
+                return;
+            }
+            var images = galleryData.slice(curPage * groupSize, curPage * groupSize + groupSize);
+            self.galleria.push(images);
+            curPage++;
+            if (curPage < totalPages) {
+                setTimeout(moreLoad, 2500);
+            }
+        };
+        setTimeout(moreLoad, 3000);
     }
 };
