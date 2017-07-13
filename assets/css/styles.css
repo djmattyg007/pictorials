@@ -8,6 +8,11 @@ body {
 #content {
     flex: 1 0 auto;
 }
+@media (max-width: 767px) {
+    #content {
+        width: 100%;
+    }
+}
 
 #footer {
     margin-top: 15px;
