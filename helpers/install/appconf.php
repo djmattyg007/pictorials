@@ -11,6 +11,7 @@ $appConf = array(
         "small" => array("width" => 250, "height" => 250),
         "medium" => array("width" => 400, "height" => 400),
         "large" => array("width" => 750, "height" => 750),
+        "xlarge" => array("width" => 1000, "height" => 1000),
     ),
     "image_types" => array("jpg", "png"),
 );
