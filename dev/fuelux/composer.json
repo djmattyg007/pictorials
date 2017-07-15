@@ -1,0 +1,6 @@
+{
+    "require": {
+        "oyejorge/less.php": "1.7.0.14",
+        "sabberworm/php-css-parser": "8.1.0"
+    }
+}
