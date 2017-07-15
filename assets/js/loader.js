@@ -41,11 +41,14 @@ function Loader(container)
 }
 
 Loader.prototype = {
-    hide: function() {
+    hide: function(callback) {
         if (this._showTimeout) {
             clearTimeout(this._showTimeout);
             this._showTimeout = null;
         } else {
+            if (callback) {
+                this.container.one("hidden.bs.modal", callback);
+            }
             this.container.modal("hide");
             if (this._modalAlreadyOpen === true) {
                 this._$body.addClass("modal-open");

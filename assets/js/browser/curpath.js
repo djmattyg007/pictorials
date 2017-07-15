@@ -2,6 +2,8 @@ function BrowserCurPath(container)
 {
     this.container = container;
 
+    this.currentPath = "";
+
     this.initEvents();
 }
 
@@ -13,11 +15,20 @@ BrowserCurPath.prototype = {
             event.stopPropagation();
             jQuery(document).trigger("pictorials:change_dir", {relpath: event.target.dataset.relpath});
         });
+
+        jQuery(document).on("pictorials:path_changed", function(event) {
+            self.currentPath = "";
+        });
     },
 
-    render: function(pathLabel, relpath) {
+    getCurrentPath: function() {
+        return this.currentPath;
+    },
+
+    update: function(pathLabel, relpath) {
         var html = pathLabel;
         if (relpath) {
+            this.currentPath = relpath;
             html = '<a href="#" class="dir" data-relpath="">' + html + '</a>';
             var relpathParts = relpath.split("/");
             var lastRelpathPart = relpathParts.pop();
@@ -27,6 +38,8 @@ BrowserCurPath.prototype = {
                 html += ' &gt; <a href="#" class="dir" data-relpath="' + newrelpath.join("/") + '">' + value + '</a>';
             });
             html += " &gt; " + lastRelpathPart;
+        } else {
+            this.currentPath = "";
         }
         this.container.html(html);
     }

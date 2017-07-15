@@ -62,6 +62,14 @@ body {
     margin-right: auto;
 }
 
+.element-focus {
+    background-color: yellow;
+    /** transition: background-color 800ms linear; */
+}
+.element-focus-transition {
+    transition: background-color 800ms linear;
+}
+
 .file-thumb {
     width: 25px;
     height: 25px;

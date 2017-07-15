@@ -67,6 +67,7 @@ Browser.prototype = {
     },
 
     changeDir: function(pathID, relpath) {
+        var prevDir = this.curpath.getCurrentPath();
         var postData = {"path": pathID};
         var errorValue;
         if (relpath) {
@@ -83,16 +84,19 @@ Browser.prototype = {
             data: postData,
             dataType: "json"
         }).done(function(data) {
+            jQuery(document).trigger("pictorials:changing_dir_before", {prevDir: prevDir, newDir: relpath});
             self.deinit();
-            self.curpath.render(self.paths.getLabel(pathID), relpath);
+            self.curpath.update(self.paths.getLabel(pathID), relpath);
             self.directories.render(data.directories);
             self.files.render(data.files, function() {
-                self.init();
                 if (self._containerVisible === false) {
                     self.container.show();
                     self._containerVisible = true;
                 }
-                self.loader.hide();
+                self.init();
+                self.loader.hide(function() {
+                    jQuery(document).trigger("pictorials:changing_dir_after", {prevDir: prevDir, newDir: relpath});
+                });
             });
         }).fail(function(jqXHR, textStatus, errorThrown) {
             var msg = "An error occurred while loading '" + errorValue + "':\n" + textStatus;
