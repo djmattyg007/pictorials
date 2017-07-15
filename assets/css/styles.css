@@ -12,6 +12,31 @@ body {
     #content {
         width: 100%;
     }
+    /** Like Bootstrap's hidden-xs class, but without !important */
+    .xs-hidden {
+        display: none;
+    }
+}
+@media (min-width: 768px) {
+    /** Like Bootstrap's visible-xs class, but without !important */
+    .xs-visible {
+        display: none;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .force-sm-visible {
+        display: block !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .force-md-visible {
+        display: block !important;
+    }
+}
+@media (min-width: 1200px) {
+    .force-lg-visible {
+        display: block !important;
+    }
 }
 
 #footer {
