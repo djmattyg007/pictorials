@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="visible-xs visible-sm">
-        <button type="button" id="actions-list" class="btn btn-link" data-toggle="visible-state" data-target="global-toolbar-mobile" aria-expanded="false">
+        <button type="button" id="actions-list" class="btn btn-link" data-toggle="visible-state" data-target="#global-toolbar-mobile" aria-expanded="false">
             Actions
             <span class="caret"></span>
         </button>
@@ -146,14 +146,19 @@
 </div>
 </div>
 
-<div id="available-actions" class="sidebar-toolbox" style="display: none;">
-<ul class="list-unstyled">
-<li><b>Selected:</b> <span data-toolbox-selected-count>0</span></li>
-<li><button type="button" data-event="browser_load_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Load selected files">Load</button></li>
-<li><button type="button" data-event="browser_add_selected_files_to_album" data-toolbox-selected-only disabled class="btn btn-info" title="Add selected files to album">Add to Album</button></li>
-<li><button type="button" data-event="browser_share_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Share selected files">Share</button></li>
-<li><button type="button" data-event="browser_clear_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Clear selected files">Clear</button></li>
-</ul>
+<div id="available-actions" style="display: none;">
+<div id="available-actions-toolbox" class="sidebar-toolbox hidden-xs" role="menu" aria-label="Toolbox">
+    <ul class="list-unstyled">
+    <li><b>Selected:</b> <span data-toolbox-selected-count>0</span></li>
+    <li><button type="button" data-event="browser_load_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Load selected files">Load</button></li>
+    <li><button type="button" data-event="browser_add_selected_files_to_album" data-toolbox-selected-only disabled class="btn btn-info" title="Add selected files to album">Add to Album</button></li>
+    <li><button type="button" data-event="browser_share_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Share selected files">Share</button></li>
+    <li><button type="button" data-event="browser_clear_selected_files" data-toolbox-selected-only disabled class="btn btn-info" title="Clear selected files">Clear</button></li>
+    </ul>
+</div>
+<div class="sidebar-toolbox-toggle visible-xs">
+    <button type="button" class="btn btn-link" aria-expanded="false">Toolbox</button>
+</div>
 </div>
 
 <div id="keyboard-shortcut-notify" class="sidebar-toolbox hidden-xs" data-toggle="popover" data-placement="left">
