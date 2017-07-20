@@ -11,8 +11,19 @@ function ModalManager()
 ModalManager.prototype = {
     initEvents: function() {
         var self = this;
+
         jQuery(document).on("hide.bs.modal", ".modal", function() {
             self._onRemoveModal();
+        });
+
+        jQuery(document).on("pictorials:loader_activated", function(event, eventData) {
+            var currentModal = self.getCurrentModal();
+            if (currentModal) {
+                currentModal.find(".modal-dialog").append('<div class="modal-blocking-overlay"></div>');
+                eventData.deactivateCallbacks.push(function() {
+                    currentModal.find(".modal-blocking-overlay").remove();
+                });
+            }
         });
     },
 

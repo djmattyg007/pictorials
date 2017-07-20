@@ -1,5 +1,9 @@
 <?php
 
+if (Access::modeCheckAny(array("manage", "view_album")) === false) {
+    sendError(404);
+}
+
 header("Content-type: text/plain");
 
 $cores = ((int) exec("nproc")) * 100;

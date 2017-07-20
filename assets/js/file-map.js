@@ -1,7 +1,7 @@
 function FileMap(modal, modalManager)
 {
     this.modal = modal;
-    this.mapContainer = jQuery("[data-map-container]");
+    this.mapContainer = modal.find("[data-map-container]");
     this.modalManager = modalManager;
 
     this.map = null;

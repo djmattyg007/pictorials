@@ -19,7 +19,7 @@ sysloadChecker.start();
 var concurrencyManagerFactory = new ConcurrencyManagerFactory();
 var galleryFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.downloadFile, ajaxUrls.sysload);
-var thumbnailFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
+var progressiveFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
 var fileDownloader = new Downloader(downloadFlFactory, loader);
 var fileMap = new FileMap(jQuery("#map-modal"), modalManager);
 if (mapboxConfig) {
@@ -34,8 +34,10 @@ var fileAlbumAdder = new FileAlbumAdder(paths, loader, userInputHandler, notific
 var $browserContainer = jQuery("#browser-container");
 var browserCurpath = new BrowserCurPath($browserContainer.find("[data-browser-curpath]"));
 var browserDirs = new BrowserDirectories($browserContainer.find("table tbody[data-browser-directories]"), templater);
-var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-browser-files]"), "success", templater, paths, thumbnailFlFactory, fileDownloader);
+var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-browser-files]"), "success", templater, paths, progressiveFlFactory, fileDownloader);
 var browser = new Browser($browserContainer, ajaxUrls.filebrowser, paths, loader, browserCurpath, browserDirs, browserFiles);
+
+var fileMetadataEditor = new FileMetadataEditor(jQuery("#filemetadataeditor-modal"), paths, loader, modalManager, progressiveFlFactory, notificationManager, ajaxUrls.fileMetadataFormDownload, ajaxUrls.fileMetadataUpdate);
 
 var documentKeyListener = new KeyListener(document);
 browserFiles.registerWithKeyListener(documentKeyListener);

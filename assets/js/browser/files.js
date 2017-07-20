@@ -17,10 +17,13 @@ function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFa
 BrowserFiles.prototype = {
     initEvents: function() {
         var self = this;
-        this.container.on("click", "a.file-download", function(event) {
-            event.preventDefault();
-            var file = jQuery(event.target).closest("[data-relpath]").data("relpath");
+        this.container.on("click", "[data-file-action='download']", function(event) {
+            var file = jQuery(this).closest("[data-relpath]").data("relpath");
             self.fileDownloader.downloadFile(self.paths.getSelectedPathID(), file);
+        });
+        this.container.on("click", "[data-file-action='edit-metadata']", function(event) {
+            var file = jQuery(this).closest("[data-relpath]").data("relpath");
+            jQuery(document).trigger("pictorials:edit_file_metadata", {"relpath": file});
         });
         this.container.on("change", "input.file-chk", function(event) {
             self._rowClick.call(self, this, this.checked);
@@ -83,7 +86,7 @@ BrowserFiles.prototype = {
         this.thumbnailLoader.start();
         this.container.find("tr").shiftcheckbox({
             checkboxSelector: "input.file-chk",
-            ignoreClick: "a, img.file-thumb[data-toggle='popover'], [role='tooltip']",
+            ignoreClick: "[data-file-action], img.file-thumb[data-toggle='popover'], [role='tooltip']",
             onChange: this._rowClick.bind(this)
         });
         this.lazyLoader = this.lazyLoaderFactory.create(this.container.find("img.file-thumb"));

@@ -1,6 +1,6 @@
 <?php
 
-define("VERSION", "0.4.0-dev7");
+define("VERSION", "0.4.0-dev8");
 
 /**
  * @param string $includePicFilename

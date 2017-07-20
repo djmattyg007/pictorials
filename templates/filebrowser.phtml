@@ -129,6 +129,22 @@
 </div>
 </div>
 
+<div class="modal fade" id="filemetadataeditor-modal" tabindex="-1" role="dialog" aria-labelledby="filemetadataeditor-dialog-heading">
+<div class="modal-dialog modal-lg">
+    <form class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="filemetadataeditor-dialog-heading" data-form-heading>Metadata</h4>
+        </div>
+        <div class="modal-body" data-form-container></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
+</div>
+
 <div class="modal fade" id="map-modal" tabindex="-1" role="dialog" aria-labelledby="map-dialog-heading">
 <div class="modal-dialog">
     <div class="modal-content">
@@ -179,6 +195,8 @@ Keyboard<br>shortcuts
 <script type="application/json" id="ajax-urls">
 {
     "filebrowser": "<?php echo scriptUrl("filebrowser"); ?>",
+    "fileMetadataFormDownload": "<?php echo scriptUrl("filemetadataeditor", array("action" => "getform")); ?>",
+    "fileMetadataUpdate": "<?php echo scriptUrl("filemetadataeditor", array("action" => "update")); ?>",
     "download": "<?php echo scriptUrl("loadimage"); ?>",
     "downloadFile": "<?php echo scriptUrl("download"); ?>",
     "getalbumdetails": "<?php echo scriptUrl("albumdetails", array("access_mode" => "manage")); ?>",
@@ -218,7 +236,14 @@ Keyboard<br>shortcuts
     <td>#{filename}</td>
     <td>#{size}</td>
     <td>#{mtime}</td>
-    <td><a href="#" class="file-download">Download</a></td>
+    <td>
+        <button type="button" data-file-action="edit-metadata" class="btn btn-link btn-file-action">
+            <img src="<?php echo assetUrl("img", "pencil.svg"); ?>" alt="Edit Metadata" title="Edit Metadata">
+        </button>
+        <button type="button" data-file-action="download" class="btn btn-link btn-file-action">
+            <img src="<?php echo assetUrl("img", "download.svg"); ?>" alt="Download" title="Download">
+        </button>
+    </td>
 </tr>
 </script>
 
@@ -266,6 +291,7 @@ Keyboard<br>shortcuts
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.js" integrity="sha256-Wdie7xDu6PuVG6BqNy/dEEYY0jK2JutDYnn0sI19yTw=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.js" integrity="sha256-84wtYJTPHtuXdY+6x/khPD5SruMKvYOUsJcYPNJ9dvk=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "jquery-extensions.js"); ?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js" integrity="sha256-4Cr335oZDYg4Di3OwgUOyqSTri0jUm2+7Gf2kH3zp1I=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js" integrity="sha256-GXUdrV9FHGDyzoSGD3O+jR3eYZaZZsjbsMvFhK3C0qg=" crossorigin="anonymous"></script>
 
@@ -294,6 +320,7 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "browser/browser.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-map.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-viewer.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-metadata-editor.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-locator.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "share-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "file-album-adder.js"); ?>"></script>

@@ -251,5 +251,33 @@ class PicDBInstall
             $conn->commit();
             $conn->exec("PRAGMA foreign_keys = ON");
         }
+
+        if (version_compare($oldVersion, "0.4.0-dev8", "<") === true) {
+            $conn->exec("CREATE TABLE file_metadata (
+                id INTEGER PRIMARY KEY NOT NULL,
+                path_id INTEGER NOT NULL,
+                file TEXT NOT NULL,
+                title TEXT NOT NULL DEFAULT '',
+                description TEXT NOT NULL DEFAULT '',
+                author TEXT NOT NULL DEFAULT '',
+                location TEXT NOT NULL DEFAULT '',
+                latitude TEXT DEFAULT NULL,
+                longitude TEXT DEFAULT NULL,
+                FOREIGN KEY (path_id) REFERENCES paths (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                UNIQUE (path_id, file)
+            )");
+            $conn->exec("CREATE TABLE file_metadata_people (
+                id INTEGER PRIMARY KEY NOT NULL,
+                file_id INTEGER NOT NULL,
+                name TEXT NOT NULL,
+                FOREIGN KEY (file_id) REFERENCES file_metadata (id) ON DELETE CASCADE ON UPDATE CASCADE
+            )");
+            $conn->exec("CREATE TABLE file_metadata_tags (
+                id INTEGER PRIMARY KEY NOT NULL,
+                file_id INTEGER NOT NULL,
+                tag TEXT NOT NULL,
+                FOREIGN KEY (file_id) REFERENCES file_tags (id) ON DELETE CASCADE ON UPDATE CASCADE
+            )");
+        }
     }
 }

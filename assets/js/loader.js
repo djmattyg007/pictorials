@@ -63,6 +63,15 @@ Loader.prototype = {
         this._showTimeout = setTimeout(function() {
             self._showTimeout = null;
             self._modalAlreadyOpen = self._$body.hasClass("modal-open");
+            self.container.one("shown.bs.modal", function() {
+                var hideCallbacks = [];
+                jQuery(document).trigger("pictorials:loader_activated", {"deactivateCallbacks": hideCallbacks});
+                self.container.one("hidden.bs.modal", function() {
+                    hideCallbacks.forEach(function(hideCallback) {
+                        hideCallback();
+                    });
+                });
+            });
             self.container.modal("show");
             if (includeProgressBar === true) {
                 self.progressBar.reset().show();

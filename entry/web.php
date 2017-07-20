@@ -18,6 +18,7 @@ if (empty($_GET["mode"])) {
 switch ($_GET["mode"]) {
     case "download":
     case "filebrowser":
+    case "filemetadataeditor":
     case "loadimage":
     case "share":
     case "sysload":
