@@ -16,8 +16,8 @@ $validateData = function($field) {
     }
 };
 
+$path = Access::getCurrentPath();
 if ($_GET["action"] === "getform") {
-    $path = Access::getCurrentPath();
     loadPicFile("helpers/checkfilepath.php");
     $filename = $_POST["filename"];
 
@@ -31,7 +31,6 @@ if ($_GET["action"] === "getform") {
     if (isset($_POST["fileid"]) === false) {
         sendError(400);
     }
-    $path = Access::getCurrentPath();
     loadPicFile("helpers/checkfilepath.php");
     $filename = $_POST["filename"];
 
@@ -73,6 +72,45 @@ if ($_GET["action"] === "getform") {
             ->bindValue("file", $filename);
         PicDB::crud($update);
     }
+} elseif ($_GET["action"] === "getautocompletedata") {
+    $authorSelect = PicDB::newSelect();
+    $authorSelect->cols(array("author"))
+        ->from("file_metadata")
+        ->distinct()
+        ->where("path_id = :path_id")
+        ->bindValue("path_id", $path->id);
+
+    $locationSelect = PicDB::newSelect();
+    $locationSelect->cols(array("location"))
+        ->from("file_metadata")
+        ->distinct()
+        ->where("path_id = :path_id")
+        ->bindValue("path_id", $path->id);
+
+    $peopleSelect = PicDB::newSelect();
+    $peopleSelect->cols(array("p.name"))
+        ->from("file_metadata_people p")
+        ->distinct()
+        ->join("inner", "file_metadata AS f", "f.id = p.file_id")
+        ->where("f.path_id = :path_id")
+        ->bindValue("path_id", $path->id);
+
+    $tagsSelect = PicDB::newSelect();
+    $tagsSelect->cols(array("t.tag"))
+        ->from("file_metadata_tags t")
+        ->distinct()
+        ->join("inner", "file_metadata AS f", "f.id = t.file_id")
+        ->where("f.path_id = :path_id")
+        ->bindValue("path_id", $path->id);
+
+    $autocompleteData = array(
+        "author" => PicDB::fetch($authorSelect, "col"),
+        "location" => PicDB::fetch($locationSelect, "col"),
+        "people" => PicDB::fetch($peopleSelect, "col"),
+        "tags" => PicDB::fetch($tagsSelect, "col"),
+    );
+    header("Content-type: application/json");
+    echo json_encode($autocompleteData);
 } else {
     sendError(404);
 }

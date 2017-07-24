@@ -1,4 +1,4 @@
-function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderFactory, notificationManager, downloadFormUrl, metadataUpdateUrl)
+function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderFactory, autocompleteSearcherFactory, notificationManager, downloadFormUrl, metadataUpdateUrl, autocompleteDataUrl)
 {
     this.modal = modal;
     this.form = modal.find("form");
@@ -9,9 +9,13 @@ function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderF
     this.modalManager = modalManager;
     this.imageDownloaderFactory = imageDownloaderFactory;
     this.imageDownloader = null;
+    this.autocompleteSearcherFactory = autocompleteSearcherFactory;
     this.notificationManager = notificationManager;
     this.downloadFormUrl = downloadFormUrl;
     this.metadataUpdateUrl = metadataUpdateUrl;
+    this.autocompleteDataUrl = autocompleteDataUrl;
+
+    this.autocompleters = {};
 
     this.initEvents();
 }
@@ -35,6 +39,7 @@ FileMetadataEditor.prototype = {
         });
 
         jQuery(document).on("pictorials:path_changed", function() {
+            self.autocompleters = {};
             if (self.imageDownloader) {
                 self.imageDownloader.stop();
                 self.imageDownloader.removeAllFiles();
@@ -45,6 +50,32 @@ FileMetadataEditor.prototype = {
             var currentPath = self.paths.getSelectedPathID();
             self.imageDownloader = self.imageDownloaderFactory.create(currentPath, 1, self._imgLoad.bind(self), {size: "medium"});
             self.imageDownloader.start();
+        });
+    },
+
+    initAutocompleteData: function(callback) {
+        var pathID = this.paths.getSelectedPathID();
+        if (!pathID) {
+            // This code path should never occur, so just use a regular alert.
+            alert("No path selected.");
+            return;
+        }
+        var self = this;
+        jQuery.ajax({
+            "method": "POST",
+            "data": {"path": pathID},
+            "dataType": "json",
+            "url": this.autocompleteDataUrl
+        }).done(function(data) {
+            self.autocompleters["author"] = self.autocompleteSearcherFactory.create(data["author"]);
+            self.autocompleters["location"] = self.autocompleteSearcherFactory.create(data["location"]);
+            self.autocompleters["people"] = self.autocompleteSearcherFactory.create(data["people"]);
+            self.autocompleters["tags"] = self.autocompleteSearcherFactory.create(data["tags"]);
+            if (callback) {
+                callback();
+            }
+        }).fail(function() {
+            // show a warning, maybe
         });
     },
 
@@ -62,6 +93,7 @@ FileMetadataEditor.prototype = {
             self.loader.hide();
             self.modalManager.addModal(self.modal, function() {
                 self.imageDownloader.addFile(filename);
+                self._initAutocomplete();
             });
         }).fail(function() {
             self.loader.hide();
@@ -71,6 +103,34 @@ FileMetadataEditor.prototype = {
 
     _imgLoad: function(filename, imgsrc) {
         this.modal.find("img[data-relpath='" + filename + "']").attr("src", imgsrc);
+    },
+
+    _initAutocomplete: function() {
+        if (Object.keys(this.autocompleters).length === 0) {
+            this.initAutocompleteData(this._initAutocomplete.bind(this));
+            return;
+        }
+        var typeaheadBinder = function(fieldName) {
+            this.form.find("input[name='" + fieldName + "']").typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, {
+                name: fieldName,
+                source: this.autocompleters[fieldName],
+                limit: 8
+            });
+        }.bind(this);
+        typeaheadBinder("author");
+        typeaheadBinder("location");
+    },
+
+    _updateAutocompleteData: function(formData) {
+        Object.keys(this.autocompleters).forEach(function(fieldName) {
+            if (typeof formData[fieldName] === "string" && formData[fieldName].trim()) {
+                this.autocompleters[fieldName].addNewItem(formData[fieldName].trim());
+            }
+        }.bind(this));
     },
 
     updateFile: function(formData) {
@@ -88,6 +148,7 @@ FileMetadataEditor.prototype = {
                 self.modal.modal("hide");
             });
             self.notificationManager.displaySuccess("Success");
+            self._updateAutocompleteData(formData);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             msg = "An error occurred while updating the selected file";
             if (textStatus === "error") {

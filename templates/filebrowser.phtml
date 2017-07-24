@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.css" integrity="sha256-d0mtrHsQZQe2+DIl6Z+F1rVWLI++ycF3BEXQUWf04xs=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.css" integrity="sha256-jXmPL1Q5E9IDaGmoKFLCbahYWC8zrPDwq8oNBQlzoyM=" crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" media="all" integrity="sha256-bOWY8F32FGGbNDMPAnwWl/Lv9CKen4IQsNZ4RU9rcs0=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css" integrity="sha256-ASp4bvLQ21NxBA4wvjJMyb/mZfPm2/HWSCTvQPhg3wE=" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -197,6 +198,7 @@ Keyboard<br>shortcuts
     "filebrowser": "<?php echo scriptUrl("filebrowser"); ?>",
     "fileMetadataFormDownload": "<?php echo scriptUrl("filemetadataeditor", array("action" => "getform")); ?>",
     "fileMetadataUpdate": "<?php echo scriptUrl("filemetadataeditor", array("action" => "update")); ?>",
+    "fileMetadataAutocompleteData": "<?php echo scriptUrl("filemetadataeditor", array("action" => "getautocompletedata")); ?>",
     "download": "<?php echo scriptUrl("loadimage"); ?>",
     "downloadFile": "<?php echo scriptUrl("download"); ?>",
     "getalbumdetails": "<?php echo scriptUrl("albumdetails", array("access_mode" => "manage")); ?>",
@@ -294,8 +296,10 @@ Keyboard<br>shortcuts
 <script type="text/javascript" src="<?php echo assetUrl("js", "jquery-extensions.js"); ?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js" integrity="sha256-4Cr335oZDYg4Di3OwgUOyqSTri0jUm2+7Gf2kH3zp1I=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js" integrity="sha256-GXUdrV9FHGDyzoSGD3O+jR3eYZaZZsjbsMvFhK3C0qg=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js" integrity="sha256-RWiU4omUU7tQ2M3wmRQNW9UL50MB4CucbRPCbsQv+X0=" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="<?php echo assetUrl("js", "domtools.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "autocomplete-searcher.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo assetUrl("js", "clipboard.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "visible-state.js"); ?>"></script>
