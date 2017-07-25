@@ -4,8 +4,12 @@ function FileViewer(modal, loader, templater, modalManager, fileDownloader, file
     this.carousel = modal.find("[data-modal-carousel]");
     this.carouselDots = modal.find("[data-modal-carousel-dots]");
     this.details = modal.find("[data-modal-image-details]");
+    // TOOD: re-work download, share, edit buttons to use generic action system.
+    // There's a bunch of logic that doesn't need to be in here, and the only
+    // thing the file viewer actually needs to do is pass along the current relpath.
     this.downloadBtn = modal.find("[data-modal-download-btn]");
     this.shareBtn = modal.find("[data-modal-share-btn]");
+    this.editMetadataBtn = modal.find("[data-modal-editmetadata-btn]");
     this.rotateBtns = modal.find("[data-modal-rotate-btn]");
     this.loader = loader;
     this.templater = templater;
@@ -34,6 +38,10 @@ FileViewer.prototype = {
         this.shareBtn.on("click", function() {
             var file = self.getCurrentCarouselSlide().find("img").data("relpath");
             jQuery(document).trigger("pictorials:share_files", { "pathID": self._currentPathID, "files": [file] });
+        });
+        this.editMetadataBtn.on("click", function() {
+            var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
+            jQuery(document).trigger("pictorials:edit_file_metadata", {relpath: relpath});
         });
         this.modal.on("shown.bs.modal", function() {
             self.carousel.slick({appendDots: self.carouselDots, dots: true, dotsClass: "slick-dots list-inline"});
