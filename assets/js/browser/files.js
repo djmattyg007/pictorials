@@ -8,7 +8,7 @@ function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFa
     this.thumbnailLoader = null;
     this.fileDownloader = fileDownloader;
 
-    this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 900);
+    this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 750);
     this.lazyLoader = null;
 
     this.initEvents();

@@ -32,7 +32,7 @@
         this.images = images;
         this.callback = callback;
         this.threshold = threshold || 0;
-        this.timeout = timeout || 100;
+        this.timeout = timeout || 200;
 
         this.timer = null;
         this.running = false;

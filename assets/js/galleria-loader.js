@@ -71,7 +71,7 @@ window.galleriaLoaderInit = function(albums, imageDownloaderFactory, dummyImage)
         imageCrop: false,
         imageTimeout: 60000,
         slideshowInterval: 5000,
-        theme: 'classicmod',
-        transition: 'fade'
+        theme: "classicmod",
+        transition: "fade"
     });
 };

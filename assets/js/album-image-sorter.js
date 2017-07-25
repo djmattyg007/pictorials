@@ -12,7 +12,7 @@ function AlbumImageSorter(container, albums, loader, userInputHandler, notificat
     this.albumGetSortedFilesUrl = albumGetSortedFilesUrl;
     this.albumSaveSortedFilesUrl = albumSaveSortedFilesUrl;
 
-    this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 900);
+    this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 800);
     this.lazyLoader = null;
 
     this._alive = false;
