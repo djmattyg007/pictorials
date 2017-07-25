@@ -133,7 +133,7 @@ class PicFile
     {
         if ($this->tags === null) {
             $select = PicDB::newSelect();
-            $select->cols(array("name"))
+            $select->cols(array("tag"))
                 ->from("file_metadata_tags")
                 ->where("file_id = :id")
                 ->bindValue("id", $this->id);

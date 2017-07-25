@@ -9,10 +9,17 @@ if (empty($_GET["action"])) {
 }
 
 $validateData = function($field) {
-    if (isset($_POST[$field]) && !empty(trim($_POST[$field]))) {
+    if (isset($_POST[$field]) && is_string($_POST[$field]) && !empty(trim($_POST[$field]))) {
         return trim($_POST[$field]);
     } else {
         return "";
+    }
+};
+$validateArrayData = function($field) {
+    if (isset($_POST[$field]) && is_array($_POST[$field])) {
+        return array_unique(array_filter(array_map("trim", $_POST[$field])));
+    } else {
+        return array();
     }
 };
 
@@ -43,6 +50,7 @@ if ($_GET["action"] === "getform") {
         sendError(400);
     }
 
+    PicDB::beginTransaction();
     if ($file === null) {
         $insert = PicDB::newInsert();
         $insert->into("file_metadata")
@@ -55,6 +63,24 @@ if ($_GET["action"] === "getform") {
                 "location" => $validateData("location"),
             ));
         PicDB::crud($insert);
+        $fileId = PicDB::lastInsertId();
+
+        if ($people = $validateArrayData("people")) {
+            $peopleInsert = PicDB::newInsert();
+            $peopleInsert->into("file_metadata_people")
+                ->addRows(array_map(function($name) use ($fileId) {
+                    return array("file_id" => $fileId, "name" => $name);
+                }, $people));
+            PicDB::crud($peopleInsert);
+        }
+        if ($tags = $validateArrayData("tags")) {
+            $tagsInsert = PicDB::newInsert();
+            $tagsInsert->into("file_metadata_tags")
+                ->addRows(array_map(function($tag) use ($fileId) {
+                    return array("file_id" => $fileId, "tag" => $tag);
+                }, $tags));
+            PicDB::crud($tagsInsert);
+        }
     } else {
         $update = PicDB::newUpdate();
         $update->table("file_metadata")
@@ -71,7 +97,52 @@ if ($_GET["action"] === "getform") {
             ->bindValue("path_id", $path->id)
             ->bindValue("file", $filename);
         PicDB::crud($update);
+
+        $peopleCurrent = $validateArrayData("people");
+        $peopleNew = array_diff($peopleCurrent, $file->people);
+        $peopleRemove = array_diff($file->people, $peopleCurrent);
+
+        if (!empty($peopleRemove)) {
+            $peopleDelete = PicDB::newDelete();
+            $peopleDelete->from("file_metadata_people")
+                ->where("file_id = :file_id")
+                ->where("name IN (:names)")
+                ->bindValue("file_id", $file->id)
+                ->bindValue("names", $peopleRemove);
+            PicDB::crud($peopleDelete);
+        }
+        if (!empty($peopleNew)) {
+            $peopleInsert = PicDB::newInsert();
+            $peopleInsert->into("file_metadata_people")
+                ->addRows(array_map(function($name) use ($file) {
+                    return array("file_id" => $file->id, "name" => $name);
+                }, $peopleNew));
+            PicDB::crud($peopleInsert);
+        }
+
+        $tagsCurrent = $validateArrayData("tags");
+        $tagsNew = array_diff($tagsCurrent, $file->tags);
+        $tagsRemove = array_diff($file->tags, $tagsCurrent);
+
+        if (!empty($tagsRemove)) {
+            $tagsDelete = PicDB::newDelete();
+            $tagsDelete->from("file_metadata_tags")
+                ->where("file_id = :file_id")
+                ->where("tag IN (:tags)")
+                ->bindValue("file_id", $file->id)
+                ->bindValue("tags", $tagsRemove);
+            PicDB::crud($tagsDelete);
+        }
+        if (!empty($tagsNew)) {
+            $tagsInsert = PicDB::newInsert();
+            $tagsInsert->into("file_metadata_tags")
+                ->addRows(array_map(function($tag) use ($file) {
+                    return array("file_id" => $file->id, "tag" => $tag);
+                }, $tagsNew));
+            PicDB::crud($tagsInsert);
+        }
     }
+    PicDB::commit();
 } elseif ($_GET["action"] === "getautocompletedata") {
     $authorSelect = PicDB::newSelect();
     $authorSelect->cols(array("author"))

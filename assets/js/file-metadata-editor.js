@@ -29,6 +29,10 @@ FileMetadataEditor.prototype = {
         });
 
         this.modal.on("hidden.bs.modal", function() {
+            self.form.find("input[name='author']").typeahead("destroy");
+            self.form.find("input[name='location']").typeahead("destroy");
+            self.form.find("select[name='people']").tagsinput("destroy");
+            self.form.find("select[name='tags']").tagsinput("destroy");
             self.formContainer.empty();
         });
 
@@ -93,7 +97,7 @@ FileMetadataEditor.prototype = {
             self.loader.hide();
             self.modalManager.addModal(self.modal, function() {
                 self.imageDownloader.addFile(filename);
-                self._initAutocomplete();
+                self._initForm();
             });
         }).fail(function() {
             self.loader.hide();
@@ -105,13 +109,13 @@ FileMetadataEditor.prototype = {
         this.modal.find("img[data-relpath='" + filename + "']").attr("src", imgsrc);
     },
 
-    _initAutocomplete: function() {
+    _initForm: function() {
         if (Object.keys(this.autocompleters).length === 0) {
-            this.initAutocompleteData(this._initAutocomplete.bind(this));
+            this.initAutocompleteData(this._initForm.bind(this));
             return;
         }
-        var typeaheadBinder = function(fieldName) {
-            this.form.find("input[name='" + fieldName + "']").typeahead({
+        var typeaheadConfig = function(fieldName) {
+            return [{
                 hint: true,
                 highlight: true,
                 minLength: 1
@@ -119,10 +123,20 @@ FileMetadataEditor.prototype = {
                 name: fieldName,
                 source: this.autocompleters[fieldName],
                 limit: 8
-            });
+            }];
         }.bind(this);
-        typeaheadBinder("author");
-        typeaheadBinder("location");
+        jQuery.fn.typeahead.apply(this.form.find("input[name='author']"), typeaheadConfig("author"));
+        jQuery.fn.typeahead.apply(this.form.find("input[name='location']"), typeaheadConfig("location"));
+        this.form.find("select[name='people']").tagsinput({
+            trimValue: true,
+            allowDuplicates: false,
+            typeaheadjs: typeaheadConfig("people")
+        });
+        this.form.find("select[name='tags']").tagsinput({
+            trimValue: true,
+            allowDuplicates: false,
+            typeaheadjs: typeaheadConfig("people")
+        });
     },
 
     _updateAutocompleteData: function(formData) {
@@ -135,6 +149,12 @@ FileMetadataEditor.prototype = {
 
     updateFile: function(formData) {
         formData["path"] = this.paths.getSelectedPathID();
+        if (formData["people"] && typeof formData["people"] === "string") {
+            formData["people"] = [formData["people"]];
+        }
+        if (formData["tags"] && typeof formData["tags"] === "string") {
+            formData["tags"] = [formData["tags"]];
+        }
 
         var self = this;
         this.loader.show(false);

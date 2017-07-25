@@ -276,7 +276,7 @@ class PicDBInstall
                 id INTEGER PRIMARY KEY NOT NULL,
                 file_id INTEGER NOT NULL,
                 tag TEXT NOT NULL,
-                FOREIGN KEY (file_id) REFERENCES file_tags (id) ON DELETE CASCADE ON UPDATE CASCADE
+                FOREIGN KEY (file_id) REFERENCES file_metadata (id) ON DELETE CASCADE ON UPDATE CASCADE
             )");
         }
     }

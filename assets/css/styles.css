@@ -252,14 +252,14 @@ body {
 }
 #filemetadataeditor-modal .grid .file-image img {
     max-width: 100%;
-    max-height: 300px;
+    max-height: 275px;
 }
 
 @media (min-width: 992px) {
     #filemetadataeditor-modal .grid {
         display: grid;
         grid-gap: 20px;
-        grid-template-columns: 29% 69%;
+        grid-template-columns: 38% 60%;
     }
 
     #filemetadataeditor-modal .grid .file-image {
@@ -281,6 +281,15 @@ body {
         grid-column: 1 / span 1;
         grid-row: 3 / span 1;
     }
+}
+
+#filemetadataeditor-modal .form-group .bootstrap-tagsinput {
+    width: 100%;
+}
+
+.bootstrap-tagsinput .tag.label {
+    font-size: 85%;
+    padding: 0.2em 0.5em;
 }
 
 #keyboard-shortcut-notify {

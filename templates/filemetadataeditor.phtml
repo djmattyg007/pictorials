@@ -23,9 +23,25 @@
         </div>
     </div>
     <div class="file-people">
-        People
+        <div class="form-group">
+            <label for="filemetadataeditor-people" class="control-label">People</label>
+            <br>
+            <select id="filemetadataeditor-people" name="people" multiple data-role="tagsinput">
+                <?php foreach ($file->people as $name): ?>
+                <option value="<?php echo picescape($name); ?>" selected><?php echo picescape($name); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
     <div class="file-tags">
-        Tags
+        <div class="form-group">
+            <label for="filemetadataeditor-tags" class="control-label">Tags</label>
+            <br>
+            <select id="filemetadataeditor-tags" name="tags" multiple data-role="tagsinput">
+                <?php foreach ($file->tags as $tag): ?>
+                <option value="<?php echo picescape($tag); ?>" selected><?php echo picescape($tag); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
 </div>
