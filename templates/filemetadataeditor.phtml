@@ -1,25 +1,25 @@
 <input type="hidden" name="fileid" value="<?php echo $file->id; ?>">
-<input type="hidden" name="filename" value="<?php echo htmlspecialchars($file->filename); ?>">
+<input type="hidden" name="filename" value="<?php echo picescape($file->filename); ?>">
 <div class="grid">
     <div class="file-image">
-        <img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="<?php echo htmlspecialchars($file->filename); ?>" alt="<?php echo htmlspecialchars(basename($file->filename)); ?>">
+        <img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="<?php echo picescape($file->filename); ?>" alt="<?php echo picescape(basename($file->filename)); ?>">
     </div>
     <div class="file-details">
         <div class="form-group">
             <label for="filemetadataeditor-title" class="control-label">Title</label>
-            <input type="text" class="form-control" id="filemetadataeditor-title" name="title" value="<?php echo htmlspecialchars($file->title); ?>">
+            <input type="text" class="form-control" id="filemetadataeditor-title" name="title" value="<?php echo picescape($file->title); ?>">
         </div>
         <div class="form-group">
             <label for="filemetadataeditor-description" class="control-label">Description</label>
-            <textarea class="form-control" id="filemetadataeditor-description" name="description" rows="3"><?php echo htmlspecialchars($file->description); ?></textarea>
+            <textarea class="form-control" id="filemetadataeditor-description" name="description" rows="3"><?php echo picescape($file->description); ?></textarea>
         </div>
         <div class="form-group">
             <label for="filemetadataeditor-author" class="control-label">Author</label>
-            <input type="text" class="form-control" id="filemetadataeditor-author" name="author" value="<?php echo htmlspecialchars($file->author); ?>">
+            <input type="text" class="form-control" id="filemetadataeditor-author" name="author" value="<?php echo picescape($file->author); ?>">
         </div>
         <div class="form-group">
             <label for="filemetadataeditor-location" class="control-label">Location</label>
-            <input type="text" class="form-control" id="filemetadataeditor-location" name="location" value="<?php echo htmlspecialchars($file->location); ?>">
+            <input type="text" class="form-control" id="filemetadataeditor-location" name="location" value="<?php echo picescape($file->location); ?>">
         </div>
     </div>
     <div class="file-people">

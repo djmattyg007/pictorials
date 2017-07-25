@@ -46,6 +46,15 @@ if (loadPicFile("conf/app.json")["assets_through_php"] === true) {
 }
 
 /**
+ * @param string $string
+ * @return string
+ */
+function picescape($string)
+{
+    return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5, "UTF-8", true);
+}
+
+/**
  * @param int $code
  */
 function sendError($code)
