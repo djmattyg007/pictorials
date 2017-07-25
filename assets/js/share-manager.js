@@ -13,6 +13,9 @@ ShareManager.prototype = {
         jQuery(document).on("pictorials:share_files", function(event, eventData) {
             self.activate(eventData.pathID, eventData.files);
         });
+        jQuery(document).on("pictorials:share_file", function(event, eventData) {
+            self.activate(eventData.pathID, [eventData.relpath]);
+        });
     },
 
     activate: function(pathID, files) {

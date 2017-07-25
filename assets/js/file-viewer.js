@@ -36,12 +36,12 @@ FileViewer.prototype = {
             self.fileDownloader.downloadFile(self._currentPathID, file);
         });
         this.shareBtn.on("click", function() {
-            var file = self.getCurrentCarouselSlide().find("img").data("relpath");
-            jQuery(document).trigger("pictorials:share_files", { "pathID": self._currentPathID, "files": [file] });
+            var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
+            jQuery(document).trigger("pictorials:share_file", {"pathID": self._currentPathID, "relpath": relpath});
         });
         this.editMetadataBtn.on("click", function() {
             var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
-            jQuery(document).trigger("pictorials:edit_file_metadata", {relpath: relpath});
+            jQuery(document).trigger("pictorials:edit_file_metadata", {"pathID": self._currentPathID, "relpath": relpath});
         });
         this.modal.on("shown.bs.modal", function() {
             self.carousel.slick({appendDots: self.carouselDots, dots: true, dotsClass: "slick-dots list-inline"});
