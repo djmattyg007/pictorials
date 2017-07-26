@@ -1,4 +1,4 @@
-function FileViewer(modal, loader, templater, modalManager, fileDownloader, fileMap, concurrencyLimit, flFactory)
+function FileViewer(modal, loader, templater, modalManager, fileMap, concurrencyLimit, flFactory)
 {
     this.modal = modal;
     this.carousel = modal.find("[data-modal-carousel]");
@@ -14,7 +14,6 @@ function FileViewer(modal, loader, templater, modalManager, fileDownloader, file
     this.loader = loader;
     this.templater = templater;
     this.modalManager = modalManager;
-    this.fileDownloader = fileDownloader;
     this.fileMap = fileMap;
     this.concurrencyLimit = concurrencyLimit;
     this.flFactory = flFactory;
@@ -32,8 +31,8 @@ FileViewer.prototype = {
             self.loadFiles(eventData.pathID, eventData.files);
         });
         this.downloadBtn.on("click", function() {
-            var file = self.getCurrentCarouselSlide().find("img").data("relpath");
-            self.fileDownloader.downloadFile(self._currentPathID, file);
+            var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
+            jQuery(document).trigger("pictorials:download_file", {"pathID": self._currentPathID, "relpath": relpath});
         });
         this.shareBtn.on("click", function() {
             var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");

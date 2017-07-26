@@ -2,15 +2,20 @@ function Downloader(flFactory, loader)
 {
     this.flFactory = flFactory;
     this.loader = loader;
+
+    this.initEvents();
 }
 
 Downloader.prototype = {
-    downloadFile: function(pathID, file) {
-        this.download(pathID, [file]);
+    initEvents: function() {
+        var self = this;
+        jQuery(document).on("pictorials:download_file", function(event, eventData) {
+            self.downloadFile(eventData.pathID, eventData.relpath);
+        });
     },
 
-    download: function(pathID, files) {
-        var fl = this.flFactory.create(pathID, files);
+    downloadFile: function(pathID, file) {
+        var fl = this.flFactory.create(pathID, [file]);
         var self = this;
         jQuery(fl).on("pictorials:file_load_start", function() {
             self.loader.show();

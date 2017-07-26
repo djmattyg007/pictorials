@@ -27,7 +27,7 @@ if (mapboxConfig) {
     fileMap.setMapboxConfig(mapboxConfig);
 }
 var paths = new Paths(jQuery("#paths"));
-var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileDownloader, fileMap, 3, galleryFlFactory);
+var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileMap, 3, galleryFlFactory);
 
 var fileLocator = new FileLocator(shareString, userInputHandler);
 var fileAlbumAdder = new FileAlbumAdder(paths, loader, userInputHandler, notificationManager, ajaxUrls.getalbumdetails, ajaxUrls.addFileToAlbum);
@@ -35,7 +35,7 @@ var fileAlbumAdder = new FileAlbumAdder(paths, loader, userInputHandler, notific
 var $browserContainer = jQuery("#browser-container");
 var browserCurpath = new BrowserCurPath($browserContainer.find("[data-browser-curpath]"));
 var browserDirs = new BrowserDirectories($browserContainer.find("table tbody[data-browser-directories]"), templater);
-var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-browser-files]"), "success", templater, paths, progressiveFlFactory, fileDownloader);
+var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-browser-files]"), "success", templater, paths, progressiveFlFactory);
 var browser = new Browser($browserContainer, ajaxUrls.filebrowser, paths, loader, browserCurpath, browserDirs, browserFiles);
 
 var searchAutocompleterFactory = new AutocompleteSearcherFactory();

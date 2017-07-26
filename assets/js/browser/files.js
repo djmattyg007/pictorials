@@ -1,4 +1,4 @@
-function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFactory, fileDownloader)
+function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFactory)
 {
     this.container = container;
     this.activeRowClass = activeRowClass;
@@ -6,7 +6,6 @@ function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFa
     this.paths = paths;
     this.thumbnailLoaderFactory = thumbnailFlFactory;
     this.thumbnailLoader = null;
-    this.fileDownloader = fileDownloader;
 
     this.lazyLoaderFactory = new window.LazyLoadFactory(this._imgInView.bind(this), 100, 750);
     this.lazyLoader = null;
@@ -18,17 +17,17 @@ BrowserFiles.prototype = {
     initEvents: function() {
         var self = this;
         this.container.on("click", "[data-file-action='download']", function(event) {
-            var file = jQuery(this).closest("[data-relpath]").data("relpath");
-            self.fileDownloader.downloadFile(self.paths.getSelectedPathID(), file);
+            var relpath = jQuery(this).closest("[data-relpath]").data("relpath");
+            jQuery(document).trigger("pictorials:download_file", {"pathID": self.paths.getSelectedPathID(), "relpath": relpath});
         });
         this.container.on("click", "[data-file-action='edit-metadata']", function(event) {
             var file = jQuery(this).closest("[data-relpath]").data("relpath");
-            jQuery(document).trigger("pictorials:edit_file_metadata", {"relpath": file});
+            jQuery(document).trigger("pictorials:edit_file_metadata", {"pathID": self.paths.getSelectedPathID(), "relpath": file});
         });
         this.container.on("change", "input.file-chk", function(event) {
             self._rowClick.call(self, this, this.checked);
             var selectedCount = self.container.find("input.file-chk:checked").length;
-            jQuery(document).trigger("pictorials:selection_changed", { "selectedCount": selectedCount });
+            jQuery(document).trigger("pictorials:selection_changed", {"selectedCount": selectedCount});
         });
 
         jQuery(document).popover({
