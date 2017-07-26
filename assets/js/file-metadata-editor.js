@@ -1,4 +1,4 @@
-function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderFactory, autocompleteSearcherFactory, notificationManager, downloadFormUrl, metadataUpdateUrl, autocompleteDataUrl)
+function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderFactory, autocompleteSearcherFactory, formSerializerFactory, notificationManager, downloadFormUrl, metadataUpdateUrl, autocompleteDataUrl)
 {
     this.modal = modal;
     this.form = modal.find("form");
@@ -10,6 +10,7 @@ function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderF
     this.imageDownloaderFactory = imageDownloaderFactory;
     this.imageDownloader = null;
     this.autocompleteSearcherFactory = autocompleteSearcherFactory;
+    this.formSerializer = formSerializerFactory.create(this.form);
     this.notificationManager = notificationManager;
     this.downloadFormUrl = downloadFormUrl;
     this.metadataUpdateUrl = metadataUpdateUrl;
@@ -38,7 +39,7 @@ FileMetadataEditor.prototype = {
 
         this.form.on("submit", function(event) {
             event.preventDefault();
-            var formData = jQuery(this).serializeObject();
+            var formData = self.formSerializer.getSerializedFormData();
             self.updateFile(formData);
         });
 
@@ -149,12 +150,6 @@ FileMetadataEditor.prototype = {
 
     updateFile: function(formData) {
         formData["path"] = this.paths.getSelectedPathID();
-        if (formData["people"] && typeof formData["people"] === "string") {
-            formData["people"] = [formData["people"]];
-        }
-        if (formData["tags"] && typeof formData["tags"] === "string") {
-            formData["tags"] = [formData["tags"]];
-        }
 
         var self = this;
         this.loader.show(false);

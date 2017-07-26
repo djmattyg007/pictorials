@@ -1,9 +1,10 @@
-function AlbumDetailEditor(albumDetailsContainer, albums, loader, templater, userInputHandler, notificationManager, albumGetDetailsUrl, albumEditUrl, albumDeleteUrl)
+function AlbumDetailEditor(albumDetailsContainer, albums, loader, templater, formSerializerFactory, userInputHandler, notificationManager, albumGetDetailsUrl, albumEditUrl, albumDeleteUrl)
 {
     this.albumDetailsContainer = albumDetailsContainer;
     this.albums = albums;
     this.loader = loader;
     this.templater = templater;
+    this.formSerializerFactory = formSerializerFactory;
     this.userInputHandler = userInputHandler;
     this.notificationManager = notificationManager;
     this.albumGetDetailsUrl = albumGetDetailsUrl;
@@ -38,7 +39,8 @@ AlbumDetailEditor.prototype = {
 
         jQuery(document).on("submit", "[data-album-edit-form]", function(event) {
             event.preventDefault();
-            var formData = jQuery(this).serializeObject();
+            var formSerializer = self.formSerializerFactory.create(jQuery(this));
+            var formData = formSerializer.getSerializedFormData();
             self.updateCurrentAlbum(formData);
         });
     },
