@@ -144,7 +144,7 @@ FileViewer.prototype = {
     },
 
     addImageToCarousel: function(fl, relpath, src, metadata, gps) {
-        var templateData = {"src": src, "relpath": relpath, "filename": relpath.split(/[\\/]/).pop(), "date_taken": "", "metadata": "", "gps": ""};
+        var templateData = {"src": src, "relpath": relpath, "filename": relpath.split("/").pop(), "date_taken": "", "metadata": "", "gps": ""};
         if (metadata) {
             if (typeof metadata["date_taken"] !== "undefined" && metadata["date_taken"]) {
                 templateData["date_taken"] = metadata["date_taken"];
