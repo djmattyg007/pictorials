@@ -15,7 +15,7 @@ Downloader.prototype = {
     },
 
     downloadFile: function(pathID, file) {
-        var fl = this.flFactory.create(pathID, [file]);
+        var fl = this.flFactory.create(pathID, [file], 1, this._downloadCallback);
         var self = this;
         jQuery(fl).on("pictorials:file_load_start", function() {
             self.loader.show();
@@ -29,7 +29,7 @@ Downloader.prototype = {
     _downloadCallback: function(relpath, src) {
         var a = document.createElement("a");
         a.href = src;
-        a.download = relpath.split(/[\\/]/).pop();
+        a.download = relpath.split("/").pop();
         document.body.appendChild(a);
         a.click();
         a.remove();

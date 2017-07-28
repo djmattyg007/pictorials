@@ -20,8 +20,9 @@ sysloadChecker.start();
 var concurrencyManagerFactory = new ConcurrencyManagerFactory();
 var galleryFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.download, ajaxUrls.sysload);
 var downloadFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.downloadFile, ajaxUrls.sysload);
+var downloadFlFactory2 = new FileLoaderFactory2(notificationManager, ajaxUrls.downloadFile, concurrencyManagerFactory);
 var progressiveFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
-var fileDownloader = new Downloader(downloadFlFactory, loader);
+var fileDownloader = new Downloader(downloadFlFactory2, loader);
 var fileMap = new FileMap(jQuery("#map-modal"), modalManager);
 if (mapboxConfig) {
     fileMap.setMapboxConfig(mapboxConfig);
