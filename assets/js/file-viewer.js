@@ -106,8 +106,10 @@ FileViewer.prototype = {
 
     loadFiles: function(pathID, files) {
         this._currentPathID = pathID;
-        var fl = this.flFactory.create(pathID, files, this.concurrencyLimit);
         var self = this;
+        var fl = this.flFactory.create(pathID, files, this.concurrencyLimit, function(relpath, src, extraData) {
+            self.addImageToCarousel(fl, relpath, src, extraData);
+        });
         jQuery(fl).on("pictorials:file_load_start", function() {
             self.loader.show(true);
         });
@@ -120,7 +122,7 @@ FileViewer.prototype = {
             }
         });
         this.carousel.empty();
-        fl.load(this.addImageToCarousel.bind(this, fl));
+        fl.load();
     },
 
     getCurrentCarouselSlide: function() {
@@ -143,9 +145,10 @@ FileViewer.prototype = {
         curImage.css("transform", "rotate(" + rotation + "deg)");
     },
 
-    addImageToCarousel: function(fl, relpath, src, metadata, gps) {
+    addImageToCarousel: function(fl, relpath, src, extraData) {
         var templateData = {"src": src, "relpath": relpath, "filename": relpath.split("/").pop(), "date_taken": "", "metadata": "", "gps": ""};
-        if (metadata) {
+        if (extraData["metadata"]) {
+            var metadata = extraData["metadata"];
             if (typeof metadata["date_taken"] !== "undefined" && metadata["date_taken"]) {
                 templateData["date_taken"] = metadata["date_taken"];
                 delete metadata["date_taken"];
@@ -154,8 +157,8 @@ FileViewer.prototype = {
                 templateData["metadata"] = JSON.stringify(metadata);
             }
         }
-        if (gps && this.fileMap.isAvailable()) {
-            templateData["gps"] = JSON.stringify(gps);
+        if (extraData["gps"] && this.fileMap.isAvailable()) {
+            templateData["gps"] = JSON.stringify(extraData["gps"]);
         }
         var html = this.templater.render("carousel-file", templateData);
         this.carousel.append(html);
