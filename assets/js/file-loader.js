@@ -75,7 +75,7 @@ FileLoader.prototype = {
                 }
             );
         }).fail(function(jqXHR, textStatus, errorThrown) {
-            var msg = "An error occurred while loading '" + value;
+            var msg = "An error occurred while loading '" + filename;
             if (textStatus == "error") {
                 msg += ":\n" + errorThrown;
             }
@@ -90,7 +90,7 @@ FileLoader.prototype = {
         });
     },
 
-    _defaultLoadErrorCallback: function(msg, value) {
+    _defaultLoadErrorCallback: function(msg, filename) {
         this.notificationManager.displayError("Error", msg);
     }
 };
