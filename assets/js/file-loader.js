@@ -80,7 +80,7 @@ FileLoader.prototype = {
                 msg += ":\n" + errorThrown;
             }
             msg += "\nPlease report this to the owner"
-            this.errorCallback(msg, filename);
+            self.errorCallback(msg, filename);
         }).always(function() {
             self.openCount--;
             self.processedCount++;
