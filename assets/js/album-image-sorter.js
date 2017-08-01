@@ -42,8 +42,16 @@ AlbumImageSorter.prototype = {
         });
 
         jQuery(document).on("click", "[data-album-file-remove]", function(event) {
-            jQuery(this).closest("[data-album-image]").remove();
+            var image = jQuery(this).closest("[data-album-image]");
+            var deletedIndex = image.data("index");
+            image.remove();
             self._warnDelete = true;
+
+            var imageCount = self.sortContainer.find("[data-album-image]").length;
+            for (var idx = deletedIndex + 1; idx <= imageCount; idx++) {
+                self.sortContainer.find("[data-album-image][data-index='" + idx + "']").get(0).dataset.index = idx - 1;
+            }
+
             if (this.tagName === "A") {
                 event.preventDefault();
                 return false;
