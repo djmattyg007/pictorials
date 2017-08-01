@@ -83,7 +83,7 @@ AlbumGallery.prototype = {
     _startGalleria: function(galleryData) {
         this.container.show();
         this.galleryData = galleryData;
-        this.galleryContainer.galleria({dataSource: galleryData.slice(0, 10)});
+        this.galleryContainer.galleria({"dataSource": galleryData.slice(0, 10)});
         this.galleria = this.galleryContainer.data("galleria");
 
         var curPage = 1;
