@@ -98,7 +98,7 @@ AlbumGallery.prototype = {
             self.galleria.push(images);
             curPage++;
             if (curPage < totalPages) {
-                setTimeout(moreLoad, curPage <= 3 ? 2500 : 4000);
+                setTimeout(moreLoad, curPage <= 3 ? 2500 : (curPage <= 6 ? 4000 : 6000));
             }
         };
         setTimeout(moreLoad, 3000);
