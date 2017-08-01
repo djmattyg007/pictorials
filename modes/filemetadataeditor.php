@@ -17,7 +17,10 @@ $validateData = function($field) {
 };
 $validateArrayData = function($field) {
     if (isset($_POST[$field]) && is_array($_POST[$field])) {
-        return array_unique(array_filter(array_map("trim", $_POST[$field])));
+        $data = array_filter(array_map("trim", $POST[$field]), function($datum) {
+            return !empty($datum) && strpos($datum, ",") === false;
+        });
+        return array_unique($data);
     } else {
         return array();
     }
