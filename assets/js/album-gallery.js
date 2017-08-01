@@ -75,7 +75,9 @@ AlbumGallery.prototype = {
             return {
                 "image": image.relpath + "?large",
                 "thumb": image.relpath + "?small",
-                "big": image.relpath + "?" + bigSize
+                "big": image.relpath + "?" + bigSize,
+                "title": image.title,
+                "description": image.description
             };
         });
     },

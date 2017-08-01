@@ -5,7 +5,30 @@ if (empty($_GET["action"])) {
 
     $album = Access::getCurrentAlbum();
     $canNSFW = $album->path->hasPermission("nsfw");
-    $files = array_map(function($relpath) use ($canNSFW) {
+    $fileMetadataSelect = PicDB::newSelect();
+    $fileMetadataSelect->cols(array("f.file", "f.title", "f.description", "f.author", "f.location"))
+        ->from("file_metadata AS f")
+        ->join("inner", "album_files AS af", "af.file = f.file")
+        ->where("album_id = :album_id")
+        ->bindValue("album_id", $album->id);
+    $fileMetadata = PicDB::fetch($fileMetadataSelect, "assoc");
+    $peopleMetadataSelect = PicDB::newSelect();
+    $peopleMetadataSelect->cols(array("f.file", "p.name"))
+        ->from("file_metadata_people AS p")
+        ->join("inner", "file_metadata AS f", "f.id = p.file_id")
+        ->join("inner", "album_files AS af", "af.file = f.file")
+        ->where("album_id = :album_id")
+        ->bindValue("album_id", $album->id);
+    $peopleMetadata = PicDB::fetch($peopleMetadataSelect, "group");
+    $tagMetadataSelect = PicDB::newSelect();
+    $tagMetadataSelect->cols(array("f.file", "t.tag"))
+        ->from("file_metadata_tags AS t")
+        ->join("inner", "file_metadata AS f", "f.id = t.file_id")
+        ->join("inner", "album_files AS af", "af.file = f.file")
+        ->where("album_id = :album_id")
+        ->bindValue("album_id", $album->id);
+    $tagsMetadata = PicDB::fetch($tagMetadataSelect, "group");
+    $files = array_map(function($relpath) use ($canNSFW, $fileMetadata, $peopleMetadata, $tagsMetadata) {
         if ($canNSFW === false) {
             $nsfwRegexPathTest = preg_match("/.*\/NSFW\/.*/", $relpath);
             if ($nsfwRegexPathTest !== 0) {
@@ -19,6 +42,10 @@ if (empty($_GET["action"])) {
         return array(
             "filename" => basename($relpath),
             "relpath" => $relpath,
+            "title" => isset($fileMetadata[$relpath]) ? $fileMetadata[$relpath]["title"] : "",
+            "description" => isset($fileMetadata[$relpath]) ? $fileMetadata[$relpath]["description"] : "",
+            "people" => isset($peopleMetadata[$relpath]) ? $peopleMetadata[$relpath] : array(),
+            "tags" => isset($tagsMetadata[$relpath]) ? $tagsMetadata[$relpath] : array(),
         );
     }, $album->sortedFiles);
     header("Content-type: application/json");
