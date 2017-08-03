@@ -1,9 +1,10 @@
-function AlbumGallery(container, albums, loader, notificationManager, albumGetSortedFilesUrl)
+function AlbumGallery(container, albums, loader, escaper, notificationManager, albumGetSortedFilesUrl)
 {
     this.container = container;
     this.galleryContainer = container.find("[data-gallery-container]");
     this.albums = albums;
     this.loader = loader;
+    this.escaper = escaper;
     this.notificationManager = notificationManager;
     this.albumGetSortedFilesUrl = albumGetSortedFilesUrl;
 
@@ -76,10 +77,10 @@ AlbumGallery.prototype = {
                 "image": image.relpath + "?large",
                 "thumb": image.relpath + "?small",
                 "big": image.relpath + "?" + bigSize,
-                "title": image.title,
+                "title": this.escaper.escapeHTML(image.title),
                 "description": image.description
             };
-        });
+        }.bind(this));
     },
 
     _startGalleria: function(galleryData) {
