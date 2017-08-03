@@ -21,9 +21,10 @@ var TemplateHelper = {
     }
 };
 
-function Templater(templates)
+function Templater(templates, escaper)
 {
     this.templates = templates;
+    this.escaper = escaper;
 }
 
 Templater.prototype = {
@@ -40,13 +41,13 @@ Templater.prototype = {
             return "";
         }
         if (!Array.isArray(vals)) {
-            return template(TemplateHelper, vals);
+            return template(this.escaper, vals);
         }
         var result = "";
         vals.forEach(function(value, index) {
             value.index = index;
-            result += template(TemplateHelper, value);
-        });
+            result += template(this.escaper, value);
+        }.bind(this));
         return result;
     }
 };

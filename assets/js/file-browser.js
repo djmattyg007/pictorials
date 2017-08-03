@@ -8,7 +8,8 @@ if (mapboxConfigEl.length) {
 var clipboardHandler = new ClipboardHandler();
 var formSerializerFactory = new FormSerializerFactory();
 var shareString = new ShareString(ajaxUrls.shareReceive, ajaxUrls.shareSubmit);
-var templater = new Templater(window.templates);
+var escaper = (new EscaperFactory()).create();
+var templater = new Templater(window.templates, escaper);
 var modalManager = new ModalManager();
 var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);
 var notificationManager = new NotificationManager();

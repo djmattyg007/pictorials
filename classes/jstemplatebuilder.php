@@ -102,10 +102,10 @@ class JsTemplateBuilder
     {
         if ($control === '#') {
             // Escape for general HTML
-            return $this->formatLine('result += helper.escapeHtml(obj["' . $inside . '"], false);');
+            return $this->formatLine('result += escaper.escapeHTML(obj["' . $inside . '"]);');
         } elseif ($control === '$') {
             // Escape for HTML attribute
-            return $this->formatLine('result += helper.escapeHtml(obj["' . $inside . '"], true);');
+            return $this->formatLine('result += escaper.escapeHTML(obj["' . $inside . '"]);');
         } elseif ($control === '%') {
             // Do not escape
             return $this->formatLine('result += obj["' . $inside . '"];');
