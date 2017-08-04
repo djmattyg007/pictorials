@@ -70,6 +70,7 @@ window.galleriaLoaderInit = function(albums, imageDownloaderFactory, dummyImage)
         height: 0.5625, // 16 by 9
         imageCrop: false,
         imageTimeout: 60000,
+        layerFollow: false,
         slideshowInterval: 5000,
         theme: "classicmod",
         transition: "fade"

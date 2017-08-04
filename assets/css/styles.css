@@ -476,3 +476,28 @@ body {
     width: 25px !important;
     height: 25px !important;
 }
+
+.galleria-info {
+    width: auto;
+}
+.galleria-pictorials-layer-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.galleria-pictorials-layer {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 6px 8px 3px 8px;
+    background-color: rgba(30, 30, 30, 0.7);
+    color: white;
+    min-height: 30px;
+}
+.galleria-pictorials-layer h4 {
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid rgba(70, 70, 70, 0.9);
+}
+.galleria-pictorials-layer p {
+    margin: 0;
+    padding-bottom: 3px;
+}

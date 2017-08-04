@@ -4,6 +4,7 @@ var imageUrls = JSON.parse(document.getElementById("image-urls").innerHTML);
 var notificationManager = new NotificationManager();
 var loader = new Loader(jQuery("#loader"));
 var escaper = (new EscaperFactory()).create();
+var templater = new Templater(window.templates, escaper);
 var sysloadChecker = new SysloadChecker(ajaxUrls.sysload);
 sysloadChecker.start();
 var concurrencyManagerFactory = new ConcurrencyManagerFactory();
@@ -12,4 +13,4 @@ var thumbnailFlFactory = new ProgressiveFileLoaderFactory(notificationManager, a
 var albums = new Albums(jQuery("#albums"), notificationManager, ajaxUrls.getalbumdetails);
 
 window.galleriaLoaderInit(albums, thumbnailFlFactory, imageUrls.dummy);
-var albumGallery = new AlbumGallery(jQuery("#album-gallery"), albums, loader, escaper, notificationManager, ajaxUrls.getalbumsortedfiles);
+var albumGallery = new AlbumGallery(jQuery("#album-gallery"), albums, loader, templater, notificationManager, ajaxUrls.getalbumsortedfiles);

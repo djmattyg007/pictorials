@@ -44,6 +44,7 @@ if (empty($_GET["action"])) {
             "relpath" => $relpath,
             "title" => isset($fileMetadata[$relpath]) ? $fileMetadata[$relpath]["title"] : "",
             "description" => isset($fileMetadata[$relpath]) ? $fileMetadata[$relpath]["description"] : "",
+            "author" => isset($fileMetadata[$relpath]) ? $fileMetadata[$relpath]["author"] : "",
             "people" => isset($peopleMetadata[$relpath]) ? $peopleMetadata[$relpath] : array(),
             "tags" => isset($tagsMetadata[$relpath]) ? $tagsMetadata[$relpath] : array(),
         );
