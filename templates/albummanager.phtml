@@ -160,7 +160,7 @@
             <form data-album-edit-form>
                 <div class="form-group">
                     <label for="album-edit-name">Name</label>
-                    <input type="text" id="album-edit-name" name="album_name" class="form-control" value="${name}">
+                    <input type="text" id="album-edit-name" name="album_name" class="form-control" value="#{name}">
                 </div>
                 <button type="submit" class="btn btn-success" disabled>Save</button>
                 <button type="reset" class="btn btn-warning" data-toggle="flip">Cancel</button>
@@ -172,8 +172,8 @@
 </script>
 
 <script type="text/x-html-template" id="album-image-sorter-block-template">
-<div class="album-thumb-container" data-album-image data-relpath="${relpath}" data-index="${index}">
-    <img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="${relpath}" alt="${filename}" title="${filename}" class="album-thumb">
+<div class="album-thumb-container" data-album-image data-relpath="#{relpath}" data-index="#{index}">
+    <img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="#{relpath}" alt="#{filename}" title="#{filename}" class="album-thumb">
     <button type="button" class="btn-remove" data-album-file-remove title="Remove">&times;</button>
 </div>
 </script>

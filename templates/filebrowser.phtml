@@ -229,15 +229,15 @@ Keyboard<br>shortcuts
 <tr class="dir-row">
     <td>&nbsp;</td>
     <td><img src="<?php echo assetUrl("img", "folder.svg"); ?>" alt="Folder" class="folder-icon"></td>
-    <td><a href="#" class="dir" data-relpath="${path}">#{name}</a></td>
+    <td><a href="#" class="dir" data-relpath="#{path}">#{name}</a></td>
     <td colspan="3">&nbsp;</td>
 </tr>
 </script>
 
 <script type="text/x-html-template" id="browser-file-row-template">
-<tr class="file-row" data-relpath="${relpath}">
+<tr class="file-row" data-relpath="#{relpath}">
     <td><input type="checkbox" class="checkbox file-chk"></td>
-    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="${relpath}" alt="${filename}" class="file-thumb" data-toggle="popover" data-placement="right"></td>
+    <td><img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="#{relpath}" alt="#{filename}" class="file-thumb" data-toggle="popover" data-placement="right"></td>
     <td>#{filename}</td>
     <td>#{size}</td>
     <td>#{mtime}</td>
@@ -254,7 +254,7 @@ Keyboard<br>shortcuts
 
 <script type="text/x-html-template" id="carousel-file-template">
 <div class="carousel-file">
-    <img src="%{src}" alt="${relpath}" title="${filename}" data-relpath="${relpath}" @{if date_taken}data-date-taken="${date_taken}"@{endif} @{if metadata}data-metadata="${metadata}"@{endif} @{if gps}data-gps="${gps}"@{endif} class="img-responsive img-center">
+    <img src="%{src}" alt="#{relpath}" title="#{filename}" data-relpath="#{relpath}" @{if date_taken}data-date-taken="#{date_taken}"@{endif} @{if metadata}data-metadata="#{metadata}"@{endif} @{if gps}data-gps="#{gps}"@{endif} class="img-responsive img-center">
 </div>
 </script>
 
