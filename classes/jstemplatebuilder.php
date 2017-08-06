@@ -5,7 +5,7 @@
  */
 class JsTemplateBuilder
 {
-    const REGEX = '/([#\$%@])\{(.*?)\}/';
+    const REGEX = '/([#%@])\{(.*?)\}/';
 
     /**
      * @var int
