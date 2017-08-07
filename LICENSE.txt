@@ -51,16 +51,6 @@ Where the file format allows, links to and/or copies of the appropriate
 licenses for each file can be found at the top of each file.
 
 
-The following file(s) fall under the BSD 3-clause license, and have not had
-any modifications made to them:
-
-assets/css/fuelux.css
-assets/js/fuelux.js
-
-Copies of the appropriate licenses for each file can be found at the top of
-each file.
-
-
 The following file(s) fall under the MIT license, and have had modifications
 made to them for the purpose of use within this codebase:
 
