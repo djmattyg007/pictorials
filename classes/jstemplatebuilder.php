@@ -114,7 +114,7 @@ class JsTemplateBuilder
         } elseif ($control === '@') {
             $logic = explode(" ", $inside, 2);
             if ($logic[0] === 'if') {
-                return $this->formatLine('if (typeof obj["' . $logic[1] . '"] !== "undefined" && obj["' . $logic[1] . '"]) {', 0, 1);
+                return $this->formatLine('if (helper.notEmpty(obj["' . $logic[1] . '"])) {', 0, 1);
             } elseif ($logic[0] === 'else') {
                 return $this->formatLine('} else {', -1, 1);
             } elseif ($logic[0] === 'endif') {

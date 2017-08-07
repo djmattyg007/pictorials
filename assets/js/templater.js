@@ -6,8 +6,17 @@
     }
 
     TemplateHelper.prototype = {
+        notEmpty: function(val) {
+            if (typeof val === "object") {
+                // Arrays are considered objects by typeof
+                return Object.keys(val).length > 0;
+            } else {
+                return Boolean(val);
+            }
+        },
+
         csv: function(strings) {
-            return strings.split(",");
+            return strings.join(", ");
         }
     };
 
