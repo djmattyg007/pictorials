@@ -26,7 +26,7 @@ header("Content-type: application/javascript");
 ?>
 window.templates = {
 <?php foreach ($jsTemplates as $identifier => $funcCode): ?>
-    "<?php echo $identifier; ?>": function(escaper, obj) {
+    "<?php echo $identifier; ?>": function(escaper, helper, obj) {
         var result = "";
 <?php echo $funcCode; ?>
         return result;

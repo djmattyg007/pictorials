@@ -101,8 +101,13 @@ class JsTemplateBuilder
     private function buildTemplatePart($control, $inside)
     {
         if ($control === '#') {
-            // Escape for general HTML
-            return $this->formatLine('result += escaper.escapeHTML(obj["' . $inside . '"]);');
+            if (strpos($inside, "|") > 0) {
+                $exploded = explode("|", $inside, 2);
+                return $this->formatLine('result += escaper.escapeHTML(helper["' . $exploded[1] . '"](obj["' . $exploded[0] . '"]));');
+            } else {
+                // Escape for general HTML
+                return $this->formatLine('result += escaper.escapeHTML(obj["' . $inside . '"]);');
+            }
         } elseif ($control === '%') {
             // Do not escape
             return $this->formatLine('result += obj["' . $inside . '"];');
