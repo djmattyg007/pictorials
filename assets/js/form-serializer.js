@@ -35,6 +35,8 @@
                 result = val.map(function(item) {
                     return item.replace(newlineNormalizerRegex, "\r\n");
                 });
+            } else if (val === null) {
+                return;
             } else {
                 result = val.replace(newlineNormalizerRegex, "\r\n");
             }
