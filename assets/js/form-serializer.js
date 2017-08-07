@@ -1,6 +1,11 @@
 (function(root, $) {
     "use strict";
 
+    /**
+     * This was inspired by jQuery's form serialization code, but was
+     * actually designed for humans.
+     */
+
     var formElementTypesRegex = /^(?:input|select|textarea)/i;
     var submitterInputTypesRegex = /^(?:submit|button|image|reset|file)$/i;
     var checkableInputTypesRegex = /^(?:checkbox|radio)$/i;
