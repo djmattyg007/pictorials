@@ -24,12 +24,12 @@ var galleryFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.downl
 var downloadFlFactory = new FileLoaderFactory(notificationManager, ajaxUrls.downloadFile, concurrencyManagerFactory);
 var progressiveFlFactory = new ProgressiveFileLoaderFactory(notificationManager, ajaxUrls.download, concurrencyManagerFactory);
 var fileDownloader = new Downloader(downloadFlFactory, loader);
-var fileMap = new FileMap(jQuery("#map-modal"), modalManager);
+var map = new PictorialsMap(jQuery("#map-modal"), modalManager);
 if (mapboxConfig) {
-    fileMap.setMapboxConfig(mapboxConfig);
+    map.setMapboxConfig(mapboxConfig);
 }
 var paths = new Paths(jQuery("#paths"));
-var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, fileMap, 3, galleryFlFactory);
+var fileViewer = new FileViewer(jQuery("#files-modal"), loader, templater, modalManager, 3, galleryFlFactory);
 
 var fileLocator = new FileLocator(shareString, userInputHandler);
 var fileAlbumAdder = new FileAlbumAdder(paths, loader, userInputHandler, notificationManager, ajaxUrls.getalbumdetails, ajaxUrls.addFileToAlbum);

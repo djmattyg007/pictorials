@@ -1,4 +1,4 @@
-function FileViewer(modal, loader, templater, modalManager, fileMap, concurrencyLimit, flFactory)
+function FileViewer(modal, loader, templater, modalManager, concurrencyLimit, flFactory)
 {
     this.modal = modal;
     this.carousel = modal.find("[data-modal-carousel]");
@@ -8,7 +8,6 @@ function FileViewer(modal, loader, templater, modalManager, fileMap, concurrency
     this.loader = loader;
     this.templater = templater;
     this.modalManager = modalManager;
-    this.fileMap = fileMap;
     this.concurrencyLimit = concurrencyLimit;
     this.flFactory = flFactory;
 
@@ -66,7 +65,7 @@ FileViewer.prototype = {
         this.details.on("click", "[data-map-display-trigger]", function() {
             var curImage = self.getCurrentCarouselSlide().find("img");
             var coords = curImage.data("gps");
-            self.fileMap.activateMap([coords.lat, coords.lon]);
+            jQuery(document).trigger("pictorials:show_map", {"latitude": coords.lat, "longitude": coords.lon});
         });
         this.details.on("hidden.bs.popover", "[data-metadata-container-trigger]", function() {
             // I can't find any reliable way to determine the current state of the popover through
@@ -151,7 +150,7 @@ FileViewer.prototype = {
                 templateData["metadata"] = JSON.stringify(metadata);
             }
         }
-        if (extraData["gps"] && this.fileMap.isAvailable()) {
+        if (extraData["gps"]) {
             templateData["gps"] = JSON.stringify(extraData["gps"]);
         }
         var html = this.templater.render("carousel-file", templateData);
@@ -167,10 +166,7 @@ FileViewer.prototype = {
         if (metadata) {
             metadataListHTML = this.templater.render("file-metadata-list", metadata);
         }
-        var gps = null;
-        if (this.fileMap.isAvailable()) {
-            gps = curImage.data("gps");
-        }
+        gps = curImage.data("gps");
         this.details.html(this.templater.render("carousel-file-details", {"date_taken": dateTaken, "metadata": metadataListHTML, "gps": (gps ? true : false)}));
     },
 
