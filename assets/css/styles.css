@@ -402,7 +402,7 @@ body {
 #album-image-sorter .album-thumb-container {
     position: relative;
     display: inline-block;
-    margin: 10px;
+    margin: 10px 10px 20px;
     width: 100px;
     height: 100px;
 }
@@ -417,16 +417,32 @@ body {
     font-size: 0.8em;
 }
 #album-image-sorter .album-thumb {
-    vertical-align: middle;
+    vertical-align: top;
     border: 0;
     cursor: move;
+    max-height: 120%;
 }
-#album-image-sorter .btn-remove {
+#album-image-sorter .buttons-container {
     position: absolute;
     top: 0;
     right: 0;
+    width: 25px;
+}
+#album-image-sorter .btn-remove {
+    display: block;
+    padding: 2px 4px 1px;
     font-size: 22px;
-    line-height: 16px;
+    line-height: 13px;
+    width: 100%;
+}
+#album-image-sorter .btn-editmetadata {
+    width: 100%;
+    height: 20px;
+    padding-top: 2px;
+}
+#album-image-sorter .btn-editmetadata img {
+    height: 12px;
+    vertical-align: top;
 }
 
 #album-images-container {

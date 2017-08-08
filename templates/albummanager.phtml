@@ -174,7 +174,10 @@
 <script type="text/x-html-template" id="album-image-sorter-block-template">
 <div class="album-thumb-container" data-album-image data-relpath="#{relpath}" data-index="#{index}">
     <img src="<?php echo assetUrl("img", "cross.svg"); ?>" data-relpath="#{relpath}" alt="#{filename}" title="#{filename}" class="album-thumb">
-    <button type="button" class="btn-remove" data-album-file-remove title="Remove">&times;</button>
+    <div class="buttons-container">
+        <button type="button" class="btn-remove" data-album-file-remove title="Remove">&times;</button>
+        <button type="button" class="btn-editmetadata" data-album-file-editmetadata title="Edit Metadata"><img src="<?php echo assetUrl("img", "pencil.svg"); ?>" alt="Edit Metadata"></button>
+    </div>
 </div>
 </script>
 </div>
