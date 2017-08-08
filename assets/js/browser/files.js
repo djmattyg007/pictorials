@@ -16,13 +16,13 @@ function BrowserFiles(container, activeRowClass, templater, paths, thumbnailFlFa
 BrowserFiles.prototype = {
     initEvents: function() {
         var self = this;
-        this.container.on("click", "[data-file-action='download']", function(event) {
+        this.container.on("click", "[data-file-action='download']", function() {
             var relpath = jQuery(this).closest("[data-relpath]").data("relpath");
             jQuery(document).trigger("pictorials:download_file", {"pathID": self.paths.getSelectedPathID(), "relpath": relpath});
         });
-        this.container.on("click", "[data-file-action='edit-metadata']", function(event) {
-            var file = jQuery(this).closest("[data-relpath]").data("relpath");
-            jQuery(document).trigger("pictorials:edit_file_metadata", {"pathID": self.paths.getSelectedPathID(), "relpath": file});
+        this.container.on("click", "[data-file-action='editmetadata']", function() {
+            var relpath = jQuery(this).closest("[data-relpath]").data("relpath");
+            jQuery(document).trigger("pictorials:edit_file_metadata", {"pathID": self.paths.getSelectedPathID(), "relpath": relpath});
         });
         this.container.on("change", "input.file-chk", function(event) {
             self._rowClick.call(self, this, this.checked);

@@ -4,12 +4,6 @@ function FileViewer(modal, loader, templater, modalManager, fileMap, concurrency
     this.carousel = modal.find("[data-modal-carousel]");
     this.carouselDots = modal.find("[data-modal-carousel-dots]");
     this.details = modal.find("[data-modal-image-details]");
-    // TOOD: re-work download, share, edit buttons to use generic action system.
-    // There's a bunch of logic that doesn't need to be in here, and the only
-    // thing the file viewer actually needs to do is pass along the current relpath.
-    this.downloadBtn = modal.find("[data-modal-download-btn]");
-    this.shareBtn = modal.find("[data-modal-share-btn]");
-    this.editMetadataBtn = modal.find("[data-modal-editmetadata-btn]");
     this.rotateBtns = modal.find("[data-modal-rotate-btn]");
     this.loader = loader;
     this.templater = templater;
@@ -30,15 +24,15 @@ FileViewer.prototype = {
         jQuery(document).on("pictorials:display_files", function(event, eventData) {
             self.loadFiles(eventData.pathID, eventData.files);
         });
-        this.downloadBtn.on("click", function() {
+        this.modal.on("click", "[data-file-action='download']", function() {
             var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
             jQuery(document).trigger("pictorials:download_file", {"pathID": self._currentPathID, "relpath": relpath});
         });
-        this.shareBtn.on("click", function() {
+        this.modal.on("click", "[data-file-action='share']", function() {
             var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
             jQuery(document).trigger("pictorials:share_file", {"pathID": self._currentPathID, "relpath": relpath});
         });
-        this.editMetadataBtn.on("click", function() {
+        this.modal.on("click", "[data-file-action='editmetadata']", function() {
             var relpath = self.getCurrentCarouselSlide().find("img").data("relpath");
             jQuery(document).trigger("pictorials:edit_file_metadata", {"pathID": self._currentPathID, "relpath": relpath});
         });
@@ -177,7 +171,7 @@ FileViewer.prototype = {
         if (this.fileMap.isAvailable()) {
             gps = curImage.data("gps");
         }
-        this.details.html(this.templater.render("carousel-file-details", { "date_taken": dateTaken, "metadata": metadataListHTML, "gps": (gps ? true : false) }));
+        this.details.html(this.templater.render("carousel-file-details", {"date_taken": dateTaken, "metadata": metadataListHTML, "gps": (gps ? true : false)}));
     },
 
     _getCurrentMetadataList: function() {

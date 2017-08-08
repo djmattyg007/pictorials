@@ -109,9 +109,9 @@
         <div class="modal-body">
             <div class="row toolset">
                 <div class="col-xs-6">
-                    <button type="button" id="btn-modal-download" data-modal-download-btn>Download</button>
-                    <button type="button" id="btn-modal-share" data-modal-share-btn>Share</button>
-                    <button type="button" id="btn-modal-editmetadata" data-modal-editmetadata-btn>Edit Metadata</button>
+                    <button type="button" id="btn-modal-download" data-file-action="download">Download</button>
+                    <button type="button" id="btn-modal-share" data-file-action="share">Share</button>
+                    <button type="button" id="btn-modal-editmetadata" data-file-action="editmetadata">Edit Metadata</button>
                 </div>
                 <div class="col-xs-6 text-right">
                     <button type="button" id="btn-rotate-left" data-modal-rotate-btn data-rotate-direction="left">
@@ -242,7 +242,7 @@ Keyboard<br>shortcuts
     <td>#{size}</td>
     <td>#{mtime}</td>
     <td>
-        <button type="button" data-file-action="edit-metadata" class="btn btn-link btn-file-action">
+        <button type="button" data-file-action="editmetadata" class="btn btn-link btn-file-action">
             <img src="<?php echo assetUrl("img", "pencil.svg"); ?>" alt="Edit Metadata" title="Edit Metadata">
         </button>
         <button type="button" data-file-action="download" class="btn btn-link btn-file-action">
