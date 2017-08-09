@@ -33,15 +33,15 @@ AlbumImageSorter.prototype = {
             self.deinit();
         });
 
-        jQuery(document).on("click", "[data-album-image-sorter-save]", function() {
+        this.container.on("click", "[data-album-image-sorter-save]", function() {
             self.save();
         });
 
-        jQuery(document).on("click", "[data-album-image-sorter-close]", function() {
+        this.container.on("click", "[data-album-image-sorter-close]", function() {
             self.deinit();
         });
 
-        jQuery(document).on("click", "[data-album-file-remove]", function(event) {
+        this.sortContainer.on("click", "[data-album-file-remove]", function(event) {
             var image = jQuery(this).closest("[data-album-image]");
             var deletedIndex = image.data("index");
             image.remove();
