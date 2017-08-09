@@ -73,11 +73,12 @@ AlbumGallery.prototype = {
     _prepareGalleryData(imageData) {
         var bigSize = jQuery(window).height() > 950 ? "xlarge" : "large";
         return imageData.map(function(image) {
+            var layerHTML = this.templater.render("image-layer", image);
             return {
                 "image": image.relpath + "?large",
                 "thumb": image.relpath + "?small",
                 "big": image.relpath + "?" + bigSize,
-                "layer": this.templater.render("image-layer", image)
+                "layer": layerHTML.trim()
             };
         }.bind(this));
     },

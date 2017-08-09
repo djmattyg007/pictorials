@@ -509,6 +509,9 @@ body {
     color: white;
     min-height: 30px;
 }
+.galleria-pictorials-layer:empty {
+    display: none;
+}
 .galleria-pictorials-layer h4 {
     margin: 0 0 5px 0;
     border-bottom: 1px solid rgba(70, 70, 70, 0.9);

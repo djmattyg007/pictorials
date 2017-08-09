@@ -1,6 +1,8 @@
 (function(root) {
     "use strict";
 
+    var domParser = new root.DOMParser();
+
     function TemplateHelper()
     {
     }
@@ -13,6 +15,15 @@
             } else {
                 return Boolean(val);
             }
+        },
+
+        htmlTrim: function(html) {
+            var doc = domParser.parseFromString(html, "text/html");
+            var trimElements = doc.querySelectorAll("[data-templater-trim]");
+            Array.prototype.forEach.call(trimElements, function(el) {
+                el.innerHTML = el.innerHTML.trim();
+            });
+            return doc.querySelector("body").innerHTML;
         },
 
         csv: function(strings) {

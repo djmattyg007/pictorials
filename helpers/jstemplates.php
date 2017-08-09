@@ -29,6 +29,7 @@ window.templates = {
     "<?php echo $identifier; ?>": function(escaper, helper, obj) {
         var result = "";
 <?php echo $funcCode; ?>
+        result = helper.htmlTrim(result);
         return result;
     },
 <?php endforeach; ?>
