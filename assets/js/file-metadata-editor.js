@@ -131,7 +131,7 @@ FileMetadataEditor.prototype = {
         this.form.find("select[name='tags']").tagsinput({
             trimValue: true,
             allowDuplicates: false,
-            typeaheadjs: typeaheadConfig("people")
+            typeaheadjs: typeaheadConfig("tags")
         });
     },
 
