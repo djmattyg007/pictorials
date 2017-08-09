@@ -1,10 +1,9 @@
-function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderFactory, autocompleteSearcherFactory, formSerializerFactory, notificationManager, downloadFormUrl, metadataUpdateUrl, autocompleteDataUrl)
+function FileMetadataEditor(modal, loader, modalManager, imageDownloaderFactory, autocompleteSearcherFactory, formSerializerFactory, notificationManager, downloadFormUrl, metadataUpdateUrl, autocompleteDataUrl)
 {
     this.modal = modal;
     this.form = modal.find("form");
     this.formHeading = this.form.find("[data-form-heading]");
     this.formContainer = this.form.find("[data-form-container]");
-    this.paths = paths;
     this.loader = loader;
     this.modalManager = modalManager;
     this.imageDownloaderFactory = imageDownloaderFactory;
@@ -17,6 +16,7 @@ function FileMetadataEditor(modal, paths, loader, modalManager, imageDownloaderF
     this.autocompleteDataUrl = autocompleteDataUrl;
 
     this.autocompleters = {};
+    this.pathID = null;
 
     this.initEvents();
 }
@@ -44,6 +44,7 @@ FileMetadataEditor.prototype = {
         });
 
         jQuery(document).on("pictorials:path_changed", function() {
+            self.pathID = null;
             self.autocompleters = {};
             if (self.imageDownloader) {
                 self.imageDownloader.stop();
@@ -52,23 +53,17 @@ FileMetadataEditor.prototype = {
             }
         });
         jQuery(document).on("pictorials:path_chosen", function(event, eventData) {
-            var currentPath = self.paths.getSelectedPathID();
-            self.imageDownloader = self.imageDownloaderFactory.create(currentPath, 1, self._imgLoad.bind(self), {size: "medium"});
+            self.pathID = eventData.pathID;
+            self.imageDownloader = self.imageDownloaderFactory.create(self.pathID, 1, self._imgLoad.bind(self), {size: "medium"});
             self.imageDownloader.start();
         });
     },
 
-    initAutocompleteData: function(callback) {
-        var pathID = this.paths.getSelectedPathID();
-        if (!pathID) {
-            // This code path should never occur, so just use a regular alert.
-            alert("No path selected.");
-            return;
-        }
+    _initAutocompleteData: function(callback) {
         var self = this;
         jQuery.ajax({
             "method": "POST",
-            "data": {"path": pathID},
+            "data": {"path": this.pathID},
             "dataType": "json",
             "url": this.autocompleteDataUrl
         }).done(function(data) {
@@ -89,7 +84,7 @@ FileMetadataEditor.prototype = {
         this.loader.show(false);
         jQuery.ajax({
             "method": "POST",
-            "data": {"path": this.paths.getSelectedPathID(), "filename": filename},
+            "data": {"path": this.pathID, "filename": filename},
             "dataType": "html",
             "url": this.downloadFormUrl
         }).done(function(formHtml) {
@@ -112,7 +107,7 @@ FileMetadataEditor.prototype = {
 
     _initForm: function() {
         if (Object.keys(this.autocompleters).length === 0) {
-            this.initAutocompleteData(this._initForm.bind(this));
+            this._initAutocompleteData(this._initForm.bind(this));
             return;
         }
         var typeaheadConfig = function(fieldName) {
@@ -149,7 +144,7 @@ FileMetadataEditor.prototype = {
     },
 
     updateFile: function(formData) {
-        formData["path"] = this.paths.getSelectedPathID();
+        formData["path"] = this.pathID;
 
         var self = this;
         this.loader.show(false);

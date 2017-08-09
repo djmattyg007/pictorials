@@ -57,6 +57,11 @@ AlbumImageSorter.prototype = {
                 return false;
             }
         });
+
+        this.sortContainer.on("click", "[data-album-file-editmetadata]", function() {
+            var relpath = jQuery(this).closest("[data-album-image]").data("relpath");
+            jQuery(document).trigger("pictorials:edit_file_metadata", {"pathID": self.albums.getPathID(self.albums.getSelectedAlbumID()), "relpath": relpath});
+        });
     },
 
     open: function() {

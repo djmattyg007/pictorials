@@ -4,6 +4,7 @@ function Albums(container, notificationManager, albumGetDetailsUrl)
     this.notificationManager = notificationManager;
     this.albumGetDetailsUrl = albumGetDetailsUrl;
 
+    this.__curAlbumID = null;
     this.initEvents();
     this._loadAlbums();
 }
@@ -14,11 +15,21 @@ Albums.prototype = {
 
         this.container.on("change", "select", function(event) {
             jQuery(document).trigger("pictorials:album_changed");
-            var curAlbumID = self.getSelectedAlbumID();
-            if (curAlbumID == null) {
+            var oldPathID = self.__curAlbumID === null ? null : self.getPathID(self.__curAlbumID);
+            self.__curAlbumID = self.getSelectedAlbumID();
+            if (self.__curAlbumID == null) {
+                jQuery(document).trigger("pictorials:path_changed");
                 return;
             }
-            jQuery(document).trigger("pictorials:album_chosen", {albumID: curAlbumID});
+            var newPathID = self.getPathID(self.__curAlbumID);
+            if (newPathID != oldPathID) {
+                jQuery(document).trigger("pictorials:path_changed");
+            }
+
+            jQuery(document).trigger("pictorials:album_chosen", {albumID: self.__curAlbumID});
+            if (newPathID != oldPathID) {
+                jQuery(document).trigger("pictorials:path_chosen", {pathID: newPathID});
+            }
         });
 
         jQuery(document).on("pictorials:album_created", function() {

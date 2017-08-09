@@ -9,6 +9,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo assetUrl("css", "fontawesome.css"); ?>" media="all">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.css" integrity="sha256-d0mtrHsQZQe2+DIl6Z+F1rVWLI++ycF3BEXQUWf04xs=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.0/pnotify.mobile.css" integrity="sha256-jXmPL1Q5E9IDaGmoKFLCbahYWC8zrPDwq8oNBQlzoyM=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css" integrity="sha256-ASp4bvLQ21NxBA4wvjJMyb/mZfPm2/HWSCTvQPhg3wE=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha256-uKEg9s9/RiqVVOIWQ8vq0IIqdJTdnxDMok9XhiqnApU=" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -101,6 +103,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="filemetadataeditor-modal" tabindex="-1" role="dialog" aria-labelledby="filemetadataeditor-dialog-heading">
+<div class="modal-dialog modal-lg">
+    <form class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="filemetadataeditor-dialog-heading" data-form-heading>Metadata</h4>
+        </div>
+        <div class="modal-body" data-form-container></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
+</div>
+
 <div style="display:none;">
 
 <script type="application/json" id="paths">
@@ -116,6 +134,9 @@
     "getalbumdetails": "<?php echo scriptUrl("albumdetails", array("access_mode" => "manage")); ?>",
     "getalbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("access_mode" => "manage")); ?>",
     "savealbumsortedfiles": "<?php echo scriptUrl("albumfiles", array("action" => "save", "access_mode" => "manage")); ?>",
+    "fileMetadataFormDownload": "<?php echo scriptUrl("filemetadataeditor", array("action" => "getform")); ?>",
+    "fileMetadataUpdate": "<?php echo scriptUrl("filemetadataeditor", array("action" => "update")); ?>",
+    "fileMetadataAutocompleteData": "<?php echo scriptUrl("filemetadataeditor", array("action" => "getautocompletedata")); ?>",
     "sysload": "<?php echo scriptUrl("sysload"); ?>"
 }
 </script>
@@ -191,7 +212,10 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/bootbox-dev-4.4.1.js"); ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js" integrity="sha256-ncVUo40HSaxFORNNlffKfkkhbsUHNLAzQ2SFlRUw7gA=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "vendor/sortable-jquery-binding.js"); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js" integrity="sha256-nORlj0J8ZjvGz+6rtHb2Jcc0QDASsDUNOwUkfcwoW8A=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha256-tQ3x4V2JW+L0ew/P3v2xzL46XDjEWUExFkCDY0Rflqc=" crossorigin="anonymous"></script>
 
+<script type="text/javascript" src="<?php echo assetUrl("js", "autocomplete-searcher.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "form-serializer.js"); ?>"></script>
 
 <script type="text/javascript" src="<?php echo assetUrl("js", "visible-state.js"); ?>"></script>
@@ -205,6 +229,7 @@
 <script type="text/javascript" src="<?php echo assetUrl("js", "sysload-checker.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "concurrency-manager.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "progressive-file-loader.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo assetUrl("js", "file-metadata-editor.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "albums.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-creator.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo assetUrl("js", "album-detail-editor.js"); ?>"></script>

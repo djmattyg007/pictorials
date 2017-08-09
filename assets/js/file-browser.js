@@ -41,7 +41,7 @@ var browserFiles = new BrowserFiles($browserContainer.find("table tbody[data-bro
 var browser = new Browser($browserContainer, ajaxUrls.filebrowser, paths, loader, browserCurpath, browserDirs, browserFiles);
 
 var searchAutocompleterFactory = new AutocompleteSearcherFactory();
-var fileMetadataEditor = new FileMetadataEditor(jQuery("#filemetadataeditor-modal"), paths, loader, modalManager, progressiveFlFactory, searchAutocompleterFactory, formSerializerFactory, notificationManager, ajaxUrls.fileMetadataFormDownload, ajaxUrls.fileMetadataUpdate, ajaxUrls.fileMetadataAutocompleteData);
+var fileMetadataEditor = new FileMetadataEditor(jQuery("#filemetadataeditor-modal"), loader, modalManager, progressiveFlFactory, searchAutocompleterFactory, formSerializerFactory, notificationManager, ajaxUrls.fileMetadataFormDownload, ajaxUrls.fileMetadataUpdate, ajaxUrls.fileMetadataAutocompleteData);
 
 var documentKeyListener = new KeyListener(document);
 browserFiles.registerWithKeyListener(documentKeyListener);

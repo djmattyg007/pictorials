@@ -18,3 +18,6 @@ var albums = new Albums(jQuery("#albums"), notificationManager, ajaxUrls.getalbu
 var albumCreator = new AlbumCreator(userInputHandler, notificationManager, loader, paths, ajaxUrls.createalbum);
 var albumDetailEditor = new AlbumDetailEditor(jQuery("#album-details-container"), albums, loader, templater, formSerializerFactory, userInputHandler, notificationManager, ajaxUrls.getalbumdetails, ajaxUrls.editalbum, ajaxUrls.deletealbum);
 var albumImageSorter = new AlbumImageSorter(jQuery("#album-image-sorter"), albums, loader, userInputHandler, notificationManager, templater, thumbnailFlFactory, ajaxUrls.getalbumsortedfiles, ajaxUrls.savealbumsortedfiles);
+
+var searchAutocompleterFactory = new AutocompleteSearcherFactory();
+var fileMetadataEditor = new FileMetadataEditor(jQuery("#filemetadataeditor-modal"), loader, modalManager, thumbnailFlFactory, searchAutocompleterFactory, formSerializerFactory, notificationManager, ajaxUrls.fileMetadataFormDownload, ajaxUrls.fileMetadataUpdate, ajaxUrls.fileMetadataAutocompleteData);
