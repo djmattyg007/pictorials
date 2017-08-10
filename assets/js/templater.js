@@ -8,6 +8,10 @@
     }
 
     TemplateHelper.prototype = {
+        /**
+         * @param val
+         * @return {Boolean}
+         */
         notEmpty: function(val) {
             if (typeof val === "object") {
                 // Arrays are considered objects by typeof
@@ -17,6 +21,10 @@
             }
         },
 
+        /**
+         * @param {String} html
+         * @return {String}
+         */
         htmlTrim: function(html) {
             var doc = domParser.parseFromString(html, "text/html");
             var trimElements = doc.querySelectorAll("[data-templater-trim]");
@@ -26,11 +34,20 @@
             return doc.querySelector("body").innerHTML;
         },
 
+        /**
+         * @param {String[]} strings
+         * @return {String}
+         */
         csv: function(strings) {
             return strings.join(", ");
         }
     };
 
+    /**
+     * @param {Object} templates
+     * @param {Escaper} escaper
+     * @param {TemplateHelper} helper
+     */
     function Templater(templates, escaper, helper)
     {
         this.templates = templates;
@@ -39,6 +56,10 @@
     }
 
     Templater.prototype = {
+        /**
+         * @param {String} name
+         * @return {Function}
+         */
         get: function(name) {
             if (typeof this.templates[name] === "undefined") {
                 throw new Error("Unrecognised template: " + name);
@@ -46,6 +67,11 @@
             return this.templates[name];
         },
 
+        /**
+         * @param {String} name
+         * @param {Object|Object[]} vals
+         * @return {String}
+         */
         render: function(name, vals) {
             var template = this.get(name);
             if (!Array.isArray(vals)) {
@@ -60,6 +86,10 @@
         }
     };
 
+    /**
+     * @param {Escaper} escaper
+     * @param {TemplateHelper} helper
+     */
     function TemplaterFactory(escaper, helper)
     {
         this.escaper = escaper;
@@ -67,6 +97,10 @@
     }
 
     TemplaterFactory.prototype = {
+        /**
+         * @param {Object[]} templates
+         * @return {Templater}
+         */
         create: function(templates) {
             return new Templater(templates, this.escaper, this.helper);
         }
