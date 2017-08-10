@@ -1,7 +1,38 @@
 (function(root) {
     "use strict";
 
-    var domParser = new root.DOMParser();
+    /**
+     * @param {NodeList} nodes
+     * @return {String}
+     */
+    function nodesToHtml(nodes)
+    {
+        var html = "";
+        Array.prototype.forEach.call(nodes, function(node) {
+            if (node.nodeType === 1) {
+                html += node.outerHTML;
+            } else if (node.nodeType === 3) {
+                html += node.textContent;
+            }
+        });
+        return html;
+    }
+
+    /**
+     * @param {String} html
+     * @return {String}
+     */
+    function htmlTrim(html)
+    {
+        var template = document.createElement("template");
+        template.innerHTML = html;
+        var trimElements = template.content.querySelectorAll("[data-templater-trim]");
+        Array.prototype.forEach.call(trimElements, function(el) {
+            el.innerHTML = el.innerHTML.trim();
+            el.removeAttribute("data-templater-trim");
+        });
+        return nodesToHtml(template.content.childNodes);
+    }
 
     function TemplateHelper()
     {
@@ -26,12 +57,11 @@
          * @return {String}
          */
         htmlTrim: function(html) {
-            var doc = domParser.parseFromString(html, "text/html");
-            var trimElements = doc.querySelectorAll("[data-templater-trim]");
-            Array.prototype.forEach.call(trimElements, function(el) {
-                el.innerHTML = el.innerHTML.trim();
-            });
-            return doc.querySelector("body").innerHTML;
+            if (html.indexOf("data-templater-trim") >= 0) {
+                return htmlTrim(html);
+            } else {
+                return html;
+            }
         },
 
         /**
