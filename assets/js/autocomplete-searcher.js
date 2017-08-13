@@ -38,7 +38,7 @@
                 return;
             }
             var curPos = this.items.indexOf(item);
-            if (curPos > -1) {
+            if (curPos >= 0) {
                 this.items.splice(curPos, 1);
             }
             this.addedItems.unshift(item);
