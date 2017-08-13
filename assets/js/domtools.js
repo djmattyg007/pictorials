@@ -7,7 +7,7 @@ window.DOMTools = {
             setTimeout(function() {
                 $el.removeClass("element-focus-transition");
             }, 1000);
-        }, 500);
+        }, 800);
     },
 
     scrollIfNeeded: function(el) {
