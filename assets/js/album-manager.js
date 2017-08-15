@@ -3,10 +3,10 @@ var paths = JSON.parse(jQuery("#paths").html());
 
 var formSerializerFactory = new FormSerializerFactory();
 var modalManager = new ModalManager();
-var userInputHandler = new BootboxWrapper(window.bootbox, modalManager);
+var escaper = (new EscaperFactory()).create();
+var userInputHandler = new BootboxWrapper(window.bootbox, modalManager, escaper);
 var notificationManager = new NotificationManager();
 var loader = new Loader(jQuery("#loader"));
-var escaper = (new EscaperFactory()).create();
 var templaterFactory = new TemplaterFactory(escaper, new TemplateHelper());
 var templater = templaterFactory.create(window.templates);
 var sysloadChecker = new SysloadChecker(ajaxUrls.sysload);

@@ -37,12 +37,6 @@ ShareManager.prototype = {
     },
 
     _handleCopyFailure: function(shareID) {
-        var inputId = "pic-share-copy-" + Math.random();
-        var message = '<p>Copy the share ID and send it to your friend</p><input type="text" id="' + inputId + '" class="form-control" readonly value="' + shareID + '">';
-        this.userInputHandler.showMessage(message, function() {
-            var input = document.getElementById(inputId);
-            input.focus();
-            input.setSelectionRange(0, input.value.length);
-        });
+        this.userInputHandler.showCopyBox("Copy the share ID and send it to your friends", shareID);
     }
 };
