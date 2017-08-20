@@ -65,13 +65,24 @@ window.galleriaLoaderInit = function(albums, imageDownloaderFactory, dummyImage)
         return this.container;
     };
 
+    Galleria.prototype.classicmap = function() {
+        alert("No map available yet.");
+    };
+
+    jQuery(document).on("galleria:theme_init_classicmod", function(event, eventData) {
+        eventData.gallery.$("mapbutton").click(function(event) {
+            event.preventDefault();
+            eventData.gallery.classicmap();
+        });
+    });
+
     Galleria.configure({
         dummy: dummyImage,
         height: 0.5625, // 16 by 9
         imageCrop: false,
-        imageTimeout: 60000,
+        imageTimeout: 60000, // 60 seconds
         layerFollow: false,
-        slideshowInterval: 5000,
+        slideshowInterval: 5000, // 5 seconds
         theme: "classicmod",
         transition: "fade"
     });

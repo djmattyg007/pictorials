@@ -1,17 +1,35 @@
 /**
  * Galleria Classicmod Theme
  * Copyright (c) 2013 Jan-Philip Gehrcke, http://gehrcke.de
+ * Copyright (c) 2017 Matthew Gamble, https://pictorials-demo.matthewgamble.net
  *
  * Bases on Galleria Classic Theme, Copyright (c) 2012 Aino, http://aino.se
+ * Modified as necessary by Matthew Gamble to support Galleria 1.5, as well
+ * as some additional customisations for Pictorials.
  *
  * Licensed under the MIT license
  * https://raw.github.com/aino/galleria/master/LICENSE
  *
  */
 
-(function($) {
+(function($, Galleria) {
 
 /*global jQuery, Galleria */
+
+Galleria.prototype.classicplay = function () {
+    // I've observed this to be required in certain situations (recheck)
+    this.setPlaytime(this._options.slideshowInterval);
+    this.playToggle();
+};
+
+Galleria.prototype.classicfullscreen = function () {
+    this.toggleFullscreen(function() {
+        // Trigger carousel animation according to currently active
+        // image index. In case of fullscreen activation, this way the
+        // carousel makes use of the increased space.
+        this._carousel.set(this.getIndex());
+    }.bind(this));
+};
 
 Galleria.addTheme({
     name: 'classicmod',
@@ -39,6 +57,7 @@ Galleria.addTheme({
             "navbar",
             "navbarhelper",
             "playbutton",
+            "mapbutton",
             "fullscreenbutton"
             );
         gallery.append({
@@ -46,6 +65,7 @@ Galleria.addTheme({
             navbar: "navbarhelper",
             navbarhelper: [
                 "playbutton",
+                "mapbutton",
                 "thumbnails-container",
                 "fullscreenbutton"]
             });
@@ -55,21 +75,6 @@ Galleria.addTheme({
                 "container",
                 "tooltip"
                 );
-
-        gallery.classicplay = function () {
-            // I've observed this to be required in certain situations (recheck)
-            gallery.setPlaytime(options.slideshowInterval);
-            gallery.playToggle();
-            };
-
-        gallery.classicfullscreen = function () {
-            gallery.toggleFullscreen(function() {
-                // Trigger carousel animation according to currently active
-                // image index. In case of fullscreen activation, this way the
-                // carousel makes use of the increased space.
-                gallery._carousel.set(gallery.getIndex());
-                });
-            };
 
         gallery.$("fullscreenbutton").click(function(e) {
             e.preventDefault();
@@ -170,7 +175,9 @@ Galleria.addTheme({
         this.bind('loadfinish', function(e) {
             this.$('loader').fadeOut(200);
         });
+
+        $(document).trigger("galleria:theme_init_classicmod", {gallery: gallery});
     }
 });
 
-}(jQuery));
+}(jQuery, Galleria));
